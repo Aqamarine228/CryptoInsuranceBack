@@ -1,3 +1,4 @@
 {
-    "ClientApi": true
+    "ClientApi": true,
+    "Admin": true
 }

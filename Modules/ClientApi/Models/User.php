@@ -12,6 +12,7 @@ class User extends \App\Models\User
         'password',
         'first_name',
         'last_name',
+        'inviter_id',
     ];
 
     public function sendEmailVerificationNotification(): void
