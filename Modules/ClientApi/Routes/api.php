@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use Modules\ClientApi\Http\Controllers\EmailVerificationController;
+use Modules\ClientApi\Http\Controllers\LoginController;
+use Modules\ClientApi\Http\Controllers\LogoutController;
+use Modules\ClientApi\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/clientapi', function (Request $request) {
-    return $request->user();
+Route::post('/login', LoginController::class);
+Route::post('/register', RegisterController::class);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', LogoutController::class);
+    Route::prefix('/email')->middleware('throttle:6,1')->group(function () {
+        Route::post('/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('api.v1.email.verify');
+        Route::post('/resend-verification', [EmailVerificationController::class, 'resendVerificationEmail']);
+    });
 });
