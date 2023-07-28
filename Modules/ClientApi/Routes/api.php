@@ -3,6 +3,7 @@
 use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\LoginController;
 use Modules\ClientApi\Http\Controllers\LogoutController;
+use Modules\ClientApi\Http\Controllers\ReferralRequestController;
 use Modules\ClientApi\Http\Controllers\RegisterController;
 
 /*
@@ -25,4 +26,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('api.v1.email.verify');
         Route::post('/resend-verification', [EmailVerificationController::class, 'resendVerificationEmail']);
     });
+});
+
+//TODO: add notifications routes
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::post('/referral-request', ReferralRequestController::class);
 });

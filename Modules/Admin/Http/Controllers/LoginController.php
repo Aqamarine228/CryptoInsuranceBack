@@ -33,6 +33,6 @@ class LoginController extends BaseAdminController
 
         Messages::error('Wrong credentials');
 
-        return redirect('admin.login');
+        return redirect()->route('admin.login');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Modules\ClientApi\Tests;
 
-use Illuminate\Foundation\Auth\User;
 use Modules\ClientApi\Database\Factories\UserFactory;
+use Modules\ClientApi\Models\User;
 use Tests\TestCase;
 
 class ClientApiTestCase extends TestCase
