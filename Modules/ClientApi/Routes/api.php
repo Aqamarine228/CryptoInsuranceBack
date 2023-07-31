@@ -1,5 +1,6 @@
 <?php
 
+use Modules\ClientApi\Http\Controllers\DatabaseNotificationController;
 use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\LoginController;
 use Modules\ClientApi\Http\Controllers\LogoutController;
@@ -28,8 +29,13 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-//TODO: add notifications routes
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/referral-request', ReferralRequestController::class);
+
+    Route::prefix('/notifications')->group(function () {
+        Route::get('/', [DatabaseNotificationController::class, 'index']);
+        Route::delete('/', [DatabaseNotificationController::class, 'destroy']);
+        Route::post('/mark-as-read', [DatabaseNotificationController::class, 'markAsRead']);
+    });
 });
