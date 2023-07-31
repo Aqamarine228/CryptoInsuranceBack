@@ -31,6 +31,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.insurance-option.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-scroll"></i>
+                        <p>
+                            Insurance Options
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

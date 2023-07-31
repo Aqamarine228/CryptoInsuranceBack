@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \App\Providers\LocaleServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -185,4 +186,14 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'supported_locales' => [
+        'en' => [
+            'name' => 'English',
+            'dir' => 'en',
+        ],
+        'ru' => [
+            'name' => 'Russian',
+            'dir' => 'ru'
+        ],
+    ]
 ];

@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\InsuranceOptionController;
 use Modules\Admin\Http\Controllers\LoginController;
 use Modules\Admin\Http\Controllers\ReferralRequestController;
 
@@ -27,4 +28,5 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/{referralRequest}/reject', [ReferralRequestController::class, 'submitReject'])->name('reject');
         Route::get('/{referralRequest}/reject', [ReferralRequestController::class, 'reject'])->name('reject');
     });
+    Route::resource('insurance-option', InsuranceOptionController::class)->except('show');
 });
