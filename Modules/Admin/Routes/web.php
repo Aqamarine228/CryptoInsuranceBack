@@ -2,6 +2,7 @@
 
 use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
+use Modules\Admin\Http\Controllers\InsurancePackController;
 use Modules\Admin\Http\Controllers\LoginController;
 use Modules\Admin\Http\Controllers\ReferralRequestController;
 
@@ -29,4 +30,7 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('/{referralRequest}/reject', [ReferralRequestController::class, 'reject'])->name('reject');
     });
     Route::resource('insurance-option', InsuranceOptionController::class)->except('show');
+    Route::get('/insurance-option/search', [InsuranceOptionController::class, 'search'])
+        ->name('insurance-option.search');
+    Route::resource('insurance-pack', InsurancePackController::class)->except('show');
 });

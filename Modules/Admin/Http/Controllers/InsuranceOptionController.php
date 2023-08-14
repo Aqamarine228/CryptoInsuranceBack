@@ -3,16 +3,19 @@
 namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
+use Modules\Admin\Http\Resources\InsuranceOptionResource;
 use Modules\Admin\Models\InsuranceOption;
 
 class InsuranceOptionController extends BaseAdminController
 {
 
-    //TODO: add tests
+    const ITEMS_PER_SEARCH = 10;
+
     public function index(): Renderable
     {
         $insuranceOptions = InsuranceOption::paginate(15);
@@ -31,6 +34,8 @@ class InsuranceOptionController extends BaseAdminController
         $validated = $request->validate([
             'name_ru' => 'required|string|max:255',
             'name_en' => 'required|string|max:255',
+            'description_en' => 'required|string|max:250',
+            'description_ru' => 'required|string|max:250',
             'price' => 'required|decimal:0,2'
         ]);
 
@@ -53,6 +58,8 @@ class InsuranceOptionController extends BaseAdminController
         $validated = $request->validate([
             'name_ru' => 'string|max:255',
             'name_en' => 'string|max:255',
+            'description_en' => 'string|max:250',
+            'description_ru' => 'string|max:250',
             'price' => 'decimal:0,2'
         ]);
 
@@ -69,5 +76,20 @@ class InsuranceOptionController extends BaseAdminController
         Messages::success('Insurance option deleted successfully!');
 
         return redirect()->route('admin.insurance-option.index');
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => 'string|nullable|max:255',
+        ]);
+
+        if (array_key_exists('name', $validated) && $validated['name']) {
+            $options = InsuranceOption::search($validated['name'])->take(self::ITEMS_PER_SEARCH)->get();
+        } else {
+            $options = InsuranceOption::take(self::ITEMS_PER_SEARCH)->get();
+        }
+
+        return new JsonResponse(InsuranceOptionResource::collection($options));
     }
 }

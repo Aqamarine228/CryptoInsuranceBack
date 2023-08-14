@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Currencies: string
+enum Currency: string
 {
 
     use EnumToArray;

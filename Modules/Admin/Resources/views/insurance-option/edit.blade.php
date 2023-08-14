@@ -59,9 +59,29 @@
                                        value="{{$insuranceOption['name_en']}}">
                             </div>
                             <div class="form-group">
+                                <label for="Description EN">Description EN</label>
+                                <textarea
+                                    type="text"
+                                    class="form-control"
+                                    name="description_en"
+                                    placeholder="Description EN"
+                                    maxlength="240"
+                                >{{$insuranceOption['description_en']}}</textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="Name RU">Name RU</label>
                                 <input type="text" class="form-control" name="name_ru" placeholder="Name RU"
                                        value="{{$insuranceOption['name_ru']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="Description RU">Description RU</label>
+                                <textarea
+                                    type="text"
+                                    class="form-control"
+                                    name="description_ru"
+                                    placeholder="Description RU"
+                                    maxlength="240"
+                                >{{$insuranceOption['description_ru']}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="Price">Price</label>
@@ -83,12 +103,14 @@
             </div>
         </div>
     </div>
-    <form
-        action="{{route('admin.insurance-option.destroy', $insuranceOption->id)}}"
-        method="post"
-        id="delete-insurance-option"
-    >
-        @csrf
-        @method('DELETE')
-    </form>
+    @if($insuranceOption->exists)
+        <form
+            action="{{route('admin.insurance-option.destroy', $insuranceOption->id)}}"
+            method="post"
+            id="delete-insurance-option"
+        >
+            @csrf
+            @method('DELETE')
+        </form>
+    @endif
 @endsection

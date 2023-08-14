@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\Currencies;
+use App\Enums\Currency;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +12,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name_en');
             $table->string('name_ru');
+            $table->string('description_en');
+            $table->string('description_ru');
             $table->string('slug');
             $table->decimal('price');
-            $table->enum('currency', Currencies::values())->default(Currencies::USDT->value);
+            $table->enum('currency', Currency::values())->default(Currency::USDT->value);
             $table->timestamps();
             $table->softDeletes();
         });

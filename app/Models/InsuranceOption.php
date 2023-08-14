@@ -8,5 +8,5 @@ class InsuranceOption extends LocalizableModel
 {
     use SoftDeletes;
 
-    protected array $localizable = ['name_ru', 'name_en'];
+    protected array $localizable = ['name', 'description'];
 }
