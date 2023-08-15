@@ -2,6 +2,7 @@
 
 use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
+use Modules\Admin\Http\Controllers\InsuranceOptionFieldController;
 use Modules\Admin\Http\Controllers\InsurancePackController;
 use Modules\Admin\Http\Controllers\LoginController;
 use Modules\Admin\Http\Controllers\ReferralRequestController;
@@ -32,5 +33,18 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('insurance-option', InsuranceOptionController::class)->except('show');
     Route::get('/insurance-option/search', [InsuranceOptionController::class, 'search'])
         ->name('insurance-option.search');
+
+    Route::post('/insurance-option/{insuranceOption}/fields', [InsuranceOptionFieldController::class, 'add'])
+        ->name('insurance-option.field.add');
+    Route::put(
+        '/insurance-option/fields/{insuranceOptionField}',
+        [InsuranceOptionFieldController::class, 'update']
+    )
+        ->name('insurance-option.field.update');
+    Route::delete(
+        '/insurance-option/fields/{insuranceOptionField}',
+        [InsuranceOptionFieldController::class, 'delete']
+    )
+        ->name('insurance-option.field.destroy');
     Route::resource('insurance-pack', InsurancePackController::class)->except('show');
 });

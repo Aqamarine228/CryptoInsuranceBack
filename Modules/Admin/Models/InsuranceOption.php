@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 
 class InsuranceOption extends \App\Models\InsuranceOption
@@ -24,9 +25,17 @@ class InsuranceOption extends \App\Models\InsuranceOption
         'currency',
     ];
 
-
     public function searchableAs(): string
     {
         return 'name_en';
+    }
+
+    /**
+     * Relations
+     */
+
+    public function fields(): HasMany
+    {
+        return $this->hasMany(InsuranceOptionField::class);
     }
 }

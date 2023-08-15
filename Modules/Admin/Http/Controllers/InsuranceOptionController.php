@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Enums\InsuranceOptionFieldType;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -50,6 +51,7 @@ class InsuranceOptionController extends BaseAdminController
 
     public function edit(InsuranceOption $insuranceOption): Renderable
     {
+        $insuranceOption->load('fields');
         return $this->view('insurance-option.edit', ['insuranceOption' => $insuranceOption]);
     }
 
@@ -77,6 +79,7 @@ class InsuranceOptionController extends BaseAdminController
 
         return redirect()->route('admin.insurance-option.index');
     }
+
 
     public function search(Request $request): JsonResponse
     {
