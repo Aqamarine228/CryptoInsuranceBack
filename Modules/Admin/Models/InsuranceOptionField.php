@@ -12,5 +12,6 @@ class InsuranceOptionField extends \App\Models\InsuranceOptionField
         'name_en',
         'name_ru',
         'type',
+        'required',
     ];
 }

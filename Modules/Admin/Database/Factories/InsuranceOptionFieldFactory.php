@@ -22,7 +22,8 @@ class InsuranceOptionFieldFactory extends Factory
             'name_ru' => $this->faker->name,
             'name_en' => $this->faker->name,
             'type' => InsuranceOptionFieldType::TEXT->value,
-            'insurance_option_id' => InsuranceOptionFactory::new()->create()->id
+            'insurance_option_id' => InsuranceOptionFactory::new()->create()->id,
+            'required' => $this->faker->boolean,
         ];
     }
 }

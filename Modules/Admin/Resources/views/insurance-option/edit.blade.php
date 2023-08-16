@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 @if($insuranceOption->exists)
-                    <div class="card collapsed-card">
+                    <div class="card {{$insuranceOption->fields ?: 'collapsed-card'}}">
                         <div class="card-header">
                             <h3 class="card-title">Update Fields</h3>
                             <div class="card-tools">
@@ -134,6 +134,14 @@
                                     @csrf
                                     @method('PUT')
                                     <label class="d-flex">
+                                        <div class="form-check d-flex align-items-center">
+                                            <input class="form-check-input size-50"
+                                                   name="required"
+                                                   type="checkbox"
+                                                {{$field->required ? 'checked' : ''}}
+                                            >
+                                            <label class="form-check-label ml-1">Required</label>
+                                        </div>
                                         <input
                                             type="text"
                                             required
@@ -173,7 +181,7 @@
                                             data-ask="1"
                                             data-title="Delete"
                                             data-confirm-button-color="danger"
-                                            data-message="Delete '{{$insuranceOption['name_en']}}' insurance option field?"
+                                            data-message="Delete '{{$field->name_en}}' insurance option field?"
                                             data-type="warning"
                                         >
                                             Delete
@@ -243,11 +251,14 @@
 @push('scripts')
     <script type="application/javascript" defer>
 
+        let index = 0;
+
         document.getElementById('addField').onclick = () => {
             const container = document.getElementById('new-fields');
             const label = document.createElement('label');
             label.classList.add('d-flex');
 
+            label.appendChild(createRequiredCheckbox());
             label.appendChild(createFieldName('en'));
             label.appendChild(createFieldName('ru'));
             label.appendChild(createTypeSelector());
@@ -255,6 +266,38 @@
 
             container.appendChild(label);
         };
+
+        function createRequiredCheckbox() {
+            const checkboxContainer = document.createElement('div');
+            checkboxContainer.classList.add('form-check');
+            checkboxContainer.classList.add('d-flex');
+            checkboxContainer.classList.add('align-items-center');
+
+            const checkboxHiddenInput = document.createElement('input');
+            checkboxHiddenInput.type = 'hidden';
+            checkboxHiddenInput.value = '0'
+            checkboxHiddenInput.name = `required[${index}]`;
+
+            const checkboxInput = document.createElement('input');
+            checkboxInput.type = 'checkbox';
+            checkboxInput.classList.add('form-check-input');
+            checkboxInput.classList.add('size-50');
+            checkboxInput.name = `required[${index}]`;
+            checkboxInput.value = '1'
+
+            const checkboxLabel = document.createElement('label');
+            checkboxLabel.innerText = 'Required'
+            checkboxLabel.classList.add('form-check-label');
+            checkboxLabel.classList.add('ml-1');
+
+            checkboxContainer.appendChild(checkboxHiddenInput)
+            checkboxContainer.appendChild(checkboxInput)
+            checkboxContainer.appendChild(checkboxLabel)
+
+            index++;
+
+            return checkboxContainer
+        }
 
         function createFieldName(locale) {
             const fieldNameInput = document.createElement('input');

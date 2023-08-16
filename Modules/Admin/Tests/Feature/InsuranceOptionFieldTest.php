@@ -15,18 +15,21 @@ class InsuranceOptionFieldTest extends AdminTestCase
         $namesRu = [];
         $namesEn = [];
         $types = [];
+        $required = [];
 
         $insuranceOption = InsuranceOptionFactory::new()->create();
         for ($i = 0; $i < 3; $i++) {
             $namesEn[] = $this->faker->name;
             $namesRu[] = $this->faker->name;
             $types[] = InsuranceOptionFieldType::TEXT->value;
+            $required[] = $this->faker->boolean;
         }
         $this
             ->post(route('admin.insurance-option.field.add', $insuranceOption->id), [
                 'names_en' => $namesEn,
                 'names_ru' => $namesRu,
-                'types' => $types
+                'types' => $types,
+                'required' => $required,
             ])
             ->assertRedirect();
 
@@ -37,6 +40,7 @@ class InsuranceOptionFieldTest extends AdminTestCase
                 'name_ru' => $namesRu[$i],
                 'name_en' => $namesEn[$i],
                 'type' => $types[$i],
+                'required' => $required[$i],
                 'insurance_option_id' => $insuranceOption->id,
             ];
         }
@@ -67,7 +71,7 @@ class InsuranceOptionFieldTest extends AdminTestCase
         $option = InsuranceOptionFieldFactory::new()->create();
         $this->delete(route('admin.insurance-option.field.destroy', $option->id))->assertRedirect();
 
-        $this->assertDatabaseMissing('insurance_option_fields', [
+        $this->assertSoftDeleted('insurance_option_fields', [
             'id' => $option->id,
         ]);
     }
