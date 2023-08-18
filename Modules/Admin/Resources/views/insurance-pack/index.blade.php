@@ -18,16 +18,14 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>Name EN</th>
-                                <th>Name RU</th>
+                                <th>Name</th>
                                 <th style="width: 100px">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($insurancePacks as $insurancePack)
                                 <tr>
-                                    <td>{{$insurancePack['name_en']}}</td>
-                                    <td>{{$insurancePack['name_ru']}}</td>
+                                    <td>{{$insurancePack['name_en'] . locale()->default()}}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
                                            href="{{route('admin.insurance-pack.edit', $insurancePack->id)}}">

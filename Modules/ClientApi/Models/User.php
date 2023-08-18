@@ -14,6 +14,7 @@ class User extends \App\Models\User
         'first_name',
         'last_name',
         'inviter_id',
+        'locale',
     ];
 
     public function sendEmailVerificationNotification(): void
@@ -28,5 +29,15 @@ class User extends \App\Models\User
     public function referralRequests(): HasMany
     {
         return $this->hasMany(ReferralRequest::class);
+    }
+
+    public function insurances(): HasMany
+    {
+        return $this->hasMany(Insurance::class);
+    }
+
+    public function insuranceRequests(): HasMany
+    {
+        return $this->hasMany(InsuranceRequest::class);
     }
 }

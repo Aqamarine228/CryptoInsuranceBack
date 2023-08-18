@@ -24,9 +24,11 @@
                               id="reject-form">
                             @csrf
                             <div class="form-group">
-                                <label>Rejection Reason</label>
-                                <textarea class="form-control" rows="3" placeholder="Reason..."
-                                          name="rejection_reason"  maxlength="200"></textarea>
+                                @foreach(locale()->supported() as $locale)
+                                    <label>Rejection Reason {{Str::upper($locale)}}</label>
+                                    <textarea class="form-control" rows="3" placeholder="Reason..."
+                                              name="rejection_reason_{{$locale}}"  maxlength="200"></textarea>
+                                @endforeach
                             </div>
                             <div class="d-flex">
                                 <a href="{{ route('admin.referral-request.show', $referralRequest->id) }}"
@@ -38,7 +40,7 @@
                                     data-ask="1"
                                     data-title="Reject"
                                     data-confirm-button-color="danger"
-                                    data-message="Approve '{{$referralRequest->user->email}}' user?"
+                                    data-message="Reject '{{$referralRequest->user->email}}' user?"
                                     data-type="warning"
                                 >Reject
                                 </button>

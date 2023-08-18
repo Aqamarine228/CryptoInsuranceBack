@@ -19,6 +19,8 @@ class RegisterController extends BaseClientApiController
             'password' => ['required', 'string', 'confirmed', new StrongPasswordRule],
         ]);
 
+        $validated['locale'] = locale()->current();
+
         $user = User::create($validated);
         $user->sendEmailVerificationNotification();
 

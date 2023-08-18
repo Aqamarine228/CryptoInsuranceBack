@@ -3,8 +3,10 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Enums\InsuranceOptionFieldType;
+use App\Rules\AllLanguagesRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Enum;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Models\InsuranceOption;
@@ -14,25 +16,32 @@ class InsuranceOptionFieldController extends BaseAdminController
 {
     public function add(Request $request, InsuranceOption $insuranceOption): RedirectResponse
     {
+        $localeNames = [];
+        foreach (locale()->supported() as $locale) {
+            $localeNames["names_$locale.*"] = ['required', 'string', 'max:255'];
+        }
+
         $validated = $request->validate([
-            'names_ru' => 'required|array',
-            'names_ru.*' => 'required|string|max:255',
-            'names_en' => 'required|array',
-            'names_en.*' => 'required|string|max:255',
+            'names' => new AllLanguagesRule('required', 'array'),
             'types' => 'required|array',
             'types.*' => ['required', 'string', new Enum(InsuranceOptionFieldType::class)],
             'required' => 'required|array',
-            'required.*' => 'required|boolean'
+            'required.*' => 'required|boolean',
+            ...$localeNames,
         ]);
 
         $fields = [];
         for ($i = 0; $i < count($validated['types']); $i++) {
+            $nameFields = [];
+            foreach (locale()->supported() as $locale) {
+                $nameFields["name_$locale"] = $validated["names_$locale"][$i];
+            }
             $fields[] = [
-                'name_ru' => $validated['names_ru'][$i],
-                'name_en' => $validated['names_en'][$i],
                 'type' => $validated['types'][$i],
                 'required' => $validated['required'][$i],
+                'slug' => Str::slug($validated['names_' . locale()->default()][$i]),
                 'insurance_option_id' => $insuranceOption->id,
+                ...$nameFields
             ];
         }
 
@@ -45,8 +54,7 @@ class InsuranceOptionFieldController extends BaseAdminController
     public function update(Request $request, InsuranceOptionField $insuranceOptionField): RedirectResponse
     {
         $validated = $request->validate([
-            'name_ru' => 'string|max:255',
-            'name_en' => 'string|max:255',
+            'name' => new AllLanguagesRule('string', 'max:255'),
             'required' => 'string|in:on',
         ]);
 

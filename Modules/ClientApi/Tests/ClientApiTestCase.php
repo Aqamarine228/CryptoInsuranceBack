@@ -14,6 +14,7 @@ class ClientApiTestCase extends TestCase
     {
         parent::setUp();
         $this->createAndSetDefaultUser();
+        $this->withHeader("Accept-Language", 'en');
     }
 
     private function createAndSetDefaultUser(): void

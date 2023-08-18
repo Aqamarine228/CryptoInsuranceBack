@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Enums\ReferralRequestStatus;
+use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class ReferralRequestController extends BaseAdminController
             ->where('status', ReferralRequestStatus::REJECTED)
             ->latest()
             ->first();
-        $lastRejectionReason = $lastReferralRequest?->rejection_reason;
+        $lastRejectionReason = $lastReferralRequest?->toArray()['rejection_reason_'.locale()->default()];
         return $this->view('referral-request.show', [
             'referralRequest' => $referralRequest,
             'lastRejectionReason' => $lastRejectionReason,
@@ -62,11 +63,11 @@ class ReferralRequestController extends BaseAdminController
     public function submitReject(Request $request, ReferralRequest $referralRequest): RedirectResponse
     {
         $validated = $request->validate([
-            'rejection_reason' => 'required|string|max:255'
+            'rejection_reason' => new AllLanguagesRule('required', 'string', 'max:255'),
         ]);
 
         DB::transaction(static function () use ($referralRequest, $validated) {
-            $referralRequest->reject($validated['rejection_reason']);
+            $referralRequest->reject($validated);
             $referralRequest->user->notify(new ReferralRequestNotification($referralRequest->fresh()));
         });
 

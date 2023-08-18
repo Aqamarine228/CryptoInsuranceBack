@@ -195,5 +195,7 @@ return [
             'name' => 'Russian',
             'dir' => 'ru'
         ],
-    ]
+    ],
+
+    'default_locale' => 'en',
 ];

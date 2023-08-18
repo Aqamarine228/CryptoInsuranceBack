@@ -4,6 +4,7 @@ use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionFieldController;
 use Modules\Admin\Http\Controllers\InsurancePackController;
+use Modules\Admin\Http\Controllers\InsuranceRequestController;
 use Modules\Admin\Http\Controllers\LoginController;
 use Modules\Admin\Http\Controllers\ReferralRequestController;
 
@@ -47,4 +48,16 @@ Route::middleware('auth:admin')->group(function () {
     )
         ->name('insurance-option.field.destroy');
     Route::resource('insurance-pack', InsurancePackController::class)->except('show');
+
+    Route::prefix('/insurance-request')->name('insurance-request.')->group(function () {
+        Route::get('/', [InsuranceRequestController::class, 'index'])->name('index');
+        Route::get('/{insuranceRequest}', [InsuranceRequestController::class, 'show'])
+            ->name('show');
+        Route::post('/{insuranceRequest}/approve', [InsuranceRequestController::class, 'approve'])
+            ->name('approve');
+        Route::get('/{insuranceRequest}/reject', [InsuranceRequestController::class, 'reject'])
+            ->name('reject');
+        Route::post('/{insuranceRequest}/reject', [InsuranceRequestController::class, 'rejectSubmit'])
+            ->name('reject');
+    });
 });

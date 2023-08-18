@@ -5,6 +5,7 @@ namespace Modules\ClientApi\Notifications;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 
@@ -18,13 +19,13 @@ class VerifyEmailNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         $verificationUrl = $this->verificationUrl($notifiable);
-        return $this->buildMailMessage($verificationUrl);
+        return $this->buildMailMessage($notifiable->locale, $verificationUrl);
     }
 
-    protected function buildMailMessage($url): MailMessage
+    protected function buildMailMessage($locale, $url): MailMessage
     {
         return (new MailMessage)
-            ->view('emails.verification', ['url' => $url]);
+            ->view("emails.$locale.verification", ['url' => $url]);
     }
 
     protected function verificationUrl($notifiable): string

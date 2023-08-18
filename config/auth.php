@@ -43,6 +43,10 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+        'api-v1' => [
+            'driver' => 'sanctum',
+            'provider' => 'client-api-users',
         ]
     ],
 
@@ -64,9 +68,14 @@ return [
     */
 
     'providers' => [
+        'client-api-users' => [
+            'driver' => 'eloquent',
+            'model' => \Modules\ClientApi\Models\User::class,
+        ],
+
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => \App\Models\User::class,
         ],
 
          'admins' => [

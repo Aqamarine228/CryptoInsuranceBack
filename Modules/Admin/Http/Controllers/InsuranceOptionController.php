@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Enums\InsuranceOptionFieldType;
+use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -33,14 +34,12 @@ class InsuranceOptionController extends BaseAdminController
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name_ru' => 'required|string|max:255',
-            'name_en' => 'required|string|max:255',
-            'description_en' => 'required|string|max:250',
-            'description_ru' => 'required|string|max:250',
+            'name' => new AllLanguagesRule('required', 'string', 'max:255'),
+            'description' => new AllLanguagesRule('required', 'string', 'max:250'),
             'price' => 'required|decimal:0,2'
         ]);
 
-        $validated['slug'] = Str::slug($validated['name_en']);
+        $validated['slug'] = Str::slug($validated["name_" . locale()->default()]);
 
         $insuranceOption = InsuranceOption::create($validated);
 
@@ -58,10 +57,8 @@ class InsuranceOptionController extends BaseAdminController
     public function update(Request $request, InsuranceOption $insuranceOption): RedirectResponse
     {
         $validated = $request->validate([
-            'name_ru' => 'string|max:255',
-            'name_en' => 'string|max:255',
-            'description_en' => 'string|max:250',
-            'description_ru' => 'string|max:250',
+            'name' => new AllLanguagesRule('string', 'max:255'),
+            'description' => new AllLanguagesRule('string', 'max:250'),
             'price' => 'decimal:0,2'
         ]);
 

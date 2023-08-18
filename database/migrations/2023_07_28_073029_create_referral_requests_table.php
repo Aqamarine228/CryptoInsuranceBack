@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->timestamp('approved_at')->nullable();
             $table->enum('status', ReferralRequestStatus::values())->default(ReferralRequestStatus::PENDING->value);
             $table->string('telegram_account');
-            $table->text('rejection_reason')->nullable();
+            $table->text('rejection_reason_en')->nullable();
+            $table->text('rejection_reason_ru')->nullable();
             $table->string('document_photo');
             $table->string('address');
             $table->timestamps();

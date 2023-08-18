@@ -57,6 +57,11 @@ class Locale
         return in_array($locale, $this->supported());
     }
 
+    public function default(): string
+    {
+        return $this->app->make('config')['app.default_locale'];
+    }
+
     protected function getConfiguredSupportedLocales(): array|string
     {
 

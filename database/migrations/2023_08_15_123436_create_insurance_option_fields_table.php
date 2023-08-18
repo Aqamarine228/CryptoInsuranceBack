@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('insurance_option_id')->constrained();
             $table->enum('type', InsuranceOptionFieldType::values());
             $table->boolean('required')->default(false);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

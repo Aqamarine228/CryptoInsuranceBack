@@ -1,5 +1,6 @@
 @php
     $referralRequestsCount = \Modules\Admin\Models\ReferralRequest::getPendingCount();
+    $insuranceRequestsCount = \Modules\Admin\Models\InsuranceRequest::getPendingCount();
 @endphp
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -27,6 +28,17 @@
                             Referral Requests
                             @if($referralRequestsCount > 0)
                                 <span class="badge badge-info right">{{ $referralRequestsCount }}</span>
+                            @endif
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.insurance-request.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Insurance Requests
+                            @if($insuranceRequestsCount > 0)
+                                <span class="badge badge-info right">{{ $insuranceRequestsCount }}</span>
                             @endif
                         </p>
                     </a>

@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Notifications;
 
+use App;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -22,18 +23,23 @@ class ReferralRequestNotification extends Notification
 
     public function toMail($notifiable): MailMessage
     {
+        $locale = $notifiable->locale;
         return (new MailMessage)
-            ->view('emails.referral-request', [
+            ->view("emails.$locale.referral-request", [
                 'status' => $this->referralRequest->status,
-                'reason' => $this->referralRequest->rejection_reason
+                'reason' => $this->referralRequest["rejection_reason_$locale"]
             ]);
     }
 
     public function toArray($notifiable): array
     {
+        $reasons = [];
+        foreach (locale()->supported() as $locale) {
+            $reasons["rejection_reason_$locale"] = $this->referralRequest["rejection_reason_$locale"];
+        }
         return [
             'status' => $this->referralRequest->status->value,
-            'rejection_reason' => $this->referralRequest->rejection_reason
+            ...$reasons,
         ];
     }
 }

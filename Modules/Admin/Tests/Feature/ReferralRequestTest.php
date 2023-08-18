@@ -33,8 +33,12 @@ class ReferralRequestTest extends AdminTestCase
         $referralRequest = $referralRequest->fresh();
 
         assertNotNull($referralRequest->approved_at);
-        assertNull($referralRequest->rejection_reason);
         assertNotNull($referralRequest->user->referral_id);
+
+        foreach (locale()->supported() as $locale) {
+            assertNull($referralRequest["rejection_reason_$locale"]);
+        }
+
 
         Notification::assertSentTo(
             $referralRequest->user,
@@ -50,12 +54,14 @@ class ReferralRequestTest extends AdminTestCase
         Notification::fake();
         $referralRequest = ReferralRequestFactory::new()->create();
 
-        $rejectionReason = $this->faker->text;
+        $rejectionReasons = [];
+
+        foreach (locale()->supported() as $locale) {
+            $rejectionReasons["rejection_reason_$locale"] = $this->faker->text;
+        }
 
         $this
-            ->postJson(route('admin.referral-request.reject', $referralRequest->id), [
-                'rejection_reason' => $rejectionReason
-            ])
+            ->postJson(route('admin.referral-request.reject', $referralRequest->id), $rejectionReasons)
             ->assertRedirect(route('admin.referral-request.index'));
 
         $this->assertDatabaseHas('referral_requests', [
@@ -63,7 +69,7 @@ class ReferralRequestTest extends AdminTestCase
             'status' => ReferralRequestStatus::REJECTED,
             'user_id' => $referralRequest->user_id,
             'telegram_account' => $referralRequest->telegram_account,
-            'rejection_reason' => $rejectionReason
+            ...$rejectionReasons,
         ]);
 
         $referralRequest = $referralRequest->fresh();
@@ -84,14 +90,16 @@ class ReferralRequestTest extends AdminTestCase
     {
         $referralRequest = ReferralRequestFactory::new()->create();
 
+        $rejectionReasons = [];
+
+        foreach (locale()->supported() as $locale) {
+            $rejectionReasons["rejection_reason_$locale"] = $this->faker->realTextBetween(350, 500);
+        }
+
         $this
-            ->postJson(route('admin.referral-request.reject', $referralRequest->id), [
-                'rejection_reason' => $this->faker->realTextBetween(350, 500)
-            ])
+            ->postJson(route('admin.referral-request.reject', $referralRequest->id), $rejectionReasons)
             ->assertUnprocessable()
-            ->assertJsonValidationErrors([
-                'rejection_reason'
-            ]);
+            ->assertJsonValidationErrors(array_keys($rejectionReasons));
 
         self::assertSame($referralRequest->status, ReferralRequestStatus::PENDING);
         assertNull($referralRequest->approved_at);
@@ -102,12 +110,15 @@ class ReferralRequestTest extends AdminTestCase
     {
         $referralRequest = ReferralRequestFactory::new()->create();
 
+        $reasons = [];
+        foreach (locale()->supported() as $locale) {
+            $reasons[] = "rejection_reason_$locale";
+        }
+
         $this
             ->postJson(route('admin.referral-request.reject', $referralRequest->id))
             ->assertUnprocessable()
-            ->assertJsonValidationErrors([
-                'rejection_reason'
-            ]);
+            ->assertJsonValidationErrors($reasons);
 
         $referralRequest = $referralRequest->fresh();
 

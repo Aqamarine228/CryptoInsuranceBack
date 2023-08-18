@@ -9,7 +9,8 @@ use Exception;
 
 class ReferralRequest extends \App\Models\ReferralRequest
 {
-    protected $fillable = ['approved_at', 'status', 'rejection_reason'];
+    protected array $localizable = [];
+    protected $fillable = ['approved_at', 'status', 'rejection_reason_en', 'rejection_reason_ru'];
 
     /**
      * Methods
@@ -33,11 +34,12 @@ class ReferralRequest extends \App\Models\ReferralRequest
             'approved_at' => now(),
         ]);
     }
-    public function reject(string $reason): void
+
+    public function reject(array $reasons): void
     {
         $this->update([
             'status' => ReferralRequestStatus::REJECTED,
-            'rejection_reason' => $reason
+            ...$reasons,
         ]);
     }
 

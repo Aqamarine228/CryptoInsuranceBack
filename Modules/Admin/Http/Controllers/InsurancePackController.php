@@ -2,13 +2,13 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
-use Modules\Admin\Http\Resources\InsuranceOptionResource;
 use Modules\Admin\Models\InsurancePack;
 
 class InsurancePackController extends BaseAdminController
@@ -31,23 +31,26 @@ class InsurancePackController extends BaseAdminController
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ru' => 'required|string|max:255',
-            'description_en' => 'required|string|max:255',
-            'description_ru' => 'required|string|max:255',
+            'name' => new AllLanguagesRule('required', 'string', 'max:255'),
+            'description' => new AllLanguagesRule('required', 'string', 'max:250'),
             'price' => 'required|numeric|min:1',
             'insurance_options' => 'required|array',
             'insurance_options.*' => 'required|exists:insurance_options,id',
         ]);
 
-        $insurancePack = DB::transaction(static function () use ($validated) {
+        $names = [];
+        $descriptions = [];
+        foreach (locale()->supported() as $locale) {
+            $names["name_$locale"] = $validated["name_$locale"];
+            $descriptions["description_$locale"] = $validated["description_$locale"];
+        }
+
+        $insurancePack = DB::transaction(static function () use ($validated, $names, $descriptions) {
             $insurancePack = InsurancePack::create([
-                'name_en' => $validated['name_en'],
-                'name_ru' => $validated['name_ru'],
-                'description_en' => $validated['description_en'],
-                'description_ru' => $validated['description_ru'],
                 'price' => $validated['price'],
                 'slug' => Str::slug($validated['name_en']),
+                ...$names,
+                ...$descriptions
             ]);
 
             $insurancePack->insuranceOptions()->sync($validated['insurance_options']);
@@ -71,10 +74,8 @@ class InsurancePackController extends BaseAdminController
     public function update(Request $request, InsurancePack $insurancePack): RedirectResponse
     {
         $validated = $request->validate([
-            'name_en' => 'string|max:255',
-            'name_ru' => 'string|max:255',
-            'description_en' => 'string|max:255',
-            'description_ru' => 'string|max:255',
+            'name' => new AllLanguagesRule('required', 'string', 'max:255'),
+            'description' => new AllLanguagesRule('required', 'string', 'max:250'),
             'price' => 'numeric|min:1',
         ]);
 

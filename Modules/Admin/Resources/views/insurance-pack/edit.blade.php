@@ -53,36 +53,28 @@
                                 @method('PUT')
                             @endif
 
-                            <div class="form-group">
-                                <label for="Name EN">Name EN</label>
-                                <input type="text" class="form-control" name="name_en" placeholder="Name EN"
-                                       value="{{$insurancePack['name_en']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="Description EN">Description EN</label>
-                                <textarea
-                                    type="text"
-                                    class="form-control"
-                                    name="description_en"
-                                    placeholder="Description EN"
-                                    maxlength="240"
-                                >{{$insurancePack['description_en']}}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name RU">Name RU</label>
-                                <input type="text" class="form-control" name="name_ru" placeholder="Name RU"
-                                       value="{{$insurancePack['name_ru']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="Description RU">Description RU</label>
-                                <textarea
-                                    type="text"
-                                    class="form-control"
-                                    name="description_ru"
-                                    placeholder="Description RU"
-                                    maxlength="240"
-                                >{{$insurancePack['description_ru']}}</textarea>
-                            </div>
+                            @foreach(locale()->supported() as $locale)
+                                <div class="form-group">
+                                    <label for="Name {{Str::upper($locale)}}">Name {{Str::upper($locale)}}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="name_{{$locale}}"
+                                        placeholder="Name {{Str::upper($locale)}}"
+                                        value="{{$insurancePack["name_$locale"]}}"
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label for="Description {{Str::upper($locale)}}">Description {{Str::upper($locale)}}</label>
+                                    <textarea
+                                        type="text"
+                                        class="form-control"
+                                        name="description_{{$locale}}"
+                                        placeholder="Description {{Str::upper($locale)}}"
+                                        maxlength="240"
+                                    >{{$insurancePack["description_$locale"]}}</textarea>
+                                </div>
+                            @endforeach
                             <div class="form-group">
                                 <label for="Price">Price</label>
                                 <input type="number" step=".01" class="form-control" name="price" placeholder="Price"

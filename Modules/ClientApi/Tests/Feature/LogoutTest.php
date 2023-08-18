@@ -29,7 +29,7 @@ class LogoutTest extends ClientApiTestCase
         $token = $response->json()['response'];
         $headers = ['Authorization' => 'Bearer ' . $token];
 
-        $this->postJson('api/v1/logout', [], $headers);
+        $this->postJson('api/v1/logout', [], $headers)->assertOk();
 
         $this->assertDatabaseCount('personal_access_tokens', 0);
     }

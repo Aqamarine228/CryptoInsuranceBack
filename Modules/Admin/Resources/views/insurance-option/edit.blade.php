@@ -63,36 +63,27 @@
                                 @method('PUT')
                             @endif
 
-                            <div class="form-group">
-                                <label for="Name EN">Name EN</label>
-                                <input type="text" class="form-control" name="name_en" placeholder="Name EN"
-                                       value="{{$insuranceOption['name_en']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="Description EN">Description EN</label>
-                                <textarea
-                                    type="text"
-                                    class="form-control"
-                                    name="description_en"
-                                    placeholder="Description EN"
-                                    maxlength="240"
-                                >{{$insuranceOption['description_en']}}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="Name RU">Name RU</label>
-                                <input type="text" class="form-control" name="name_ru" placeholder="Name RU"
-                                       value="{{$insuranceOption['name_ru']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="Description RU">Description RU</label>
-                                <textarea
-                                    type="text"
-                                    class="form-control"
-                                    name="description_ru"
-                                    placeholder="Description RU"
-                                    maxlength="240"
-                                >{{$insuranceOption['description_ru']}}</textarea>
-                            </div>
+                            @foreach(locale()->supported() as $locale)
+                                <div class="form-group">
+                                    <label for="Name {{Str::upper($locale)}}">Name {{Str::upper($locale)}}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="name_{{$locale}}"
+                                        placeholder="Name {{Str::upper($locale)}}"
+                                        value="{{$insuranceOption["name_$locale"]}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Description {{Str::upper($locale)}}">Description {{Str::upper($locale)}}</label>
+                                    <textarea
+                                        type="text"
+                                        class="form-control"
+                                        name="description_{{$locale}}"
+                                        placeholder="Description {{Str::upper($locale)}}"
+                                        maxlength="240"
+                                    >{{$insuranceOption["description_$locale"]}}</textarea>
+                                </div>
+                            @endforeach
                             <div class="form-group">
                                 <label for="Price">Price</label>
                                 <input type="number" step=".01" class="form-control" name="price" placeholder="Price"
@@ -142,24 +133,17 @@
                                             >
                                             <label class="form-check-label ml-1">Required</label>
                                         </div>
-                                        <input
-                                            type="text"
-                                            required
-                                            placeholder="Name EN"
-                                            name="name_en"
-                                            style="max-width: 200px"
-                                            value="{{$field->name_en}}"
-                                            class="form-control ml-1"
-                                        >
-                                        <input
-                                            type="text"
-                                            required
-                                            placeholder="Name RU"
-                                            name="name_ru"
-                                            style="max-width: 200px"
-                                            value="{{$field->name_ru}}"
-                                            class="form-control ml-1"
-                                        >
+                                        @foreach(locale()->supported() as $locale)
+                                            <input
+                                                type="text"
+                                                required
+                                                placeholder="Name {{Str::upper($locale)}}"
+                                                name="name_{{$locale}}"
+                                                style="max-width: 200px"
+                                                value="{{$field["name_$locale"]}}"
+                                                class="form-control ml-1"
+                                            >
+                                        @endforeach
                                         <select
                                             disabled
                                             type="text"
@@ -259,8 +243,9 @@
             label.classList.add('d-flex');
 
             label.appendChild(createRequiredCheckbox());
-            label.appendChild(createFieldName('en'));
-            label.appendChild(createFieldName('ru'));
+            @foreach(locale()->supported() as $locale)
+            label.appendChild(createFieldName('{{$locale}}'));
+            @endforeach
             label.appendChild(createTypeSelector());
             label.appendChild(createDeleteButton());
 

@@ -12,24 +12,24 @@ class InsuranceOptionFieldTest extends AdminTestCase
 
     public function testAdd(): void
     {
-        $namesRu = [];
-        $namesEn = [];
+        $names = [];
         $types = [];
         $required = [];
 
         $insuranceOption = InsuranceOptionFactory::new()->create();
         for ($i = 0; $i < 3; $i++) {
-            $namesEn[] = $this->faker->name;
-            $namesRu[] = $this->faker->name;
+            foreach (locale()->supported() as $locale) {
+                $names["names_$locale"][] = $this->faker->name;
+            }
             $types[] = InsuranceOptionFieldType::TEXT->value;
             $required[] = $this->faker->boolean;
         }
+
         $this
             ->post(route('admin.insurance-option.field.add', $insuranceOption->id), [
-                'names_en' => $namesEn,
-                'names_ru' => $namesRu,
                 'types' => $types,
                 'required' => $required,
+                ...$names,
             ])
             ->assertRedirect();
 
@@ -37,12 +37,13 @@ class InsuranceOptionFieldTest extends AdminTestCase
 
         for ($i = 0; $i < 3; $i++) {
             $testData[] = [
-                'name_ru' => $namesRu[$i],
-                'name_en' => $namesEn[$i],
                 'type' => $types[$i],
                 'required' => $required[$i],
                 'insurance_option_id' => $insuranceOption->id,
             ];
+            foreach (locale()->supported() as $locale) {
+                $testData["name_$locale"] = $names["names_$locale"][$i];
+            }
         }
 
         for ($i = 0; $i < 3; $i++) {
@@ -53,10 +54,10 @@ class InsuranceOptionFieldTest extends AdminTestCase
     public function testUpdate(): void
     {
         $option = InsuranceOptionFieldFactory::new()->create();
-        $data = [
-            'name_ru' => $this->faker->name,
-            'name_en' => $this->faker->name,
-        ];
+        $data = [];
+        foreach (locale()->supported() as $locale) {
+            $data["name_$locale"] = $this->faker->name;
+        }
         $this->put(route('admin.insurance-option.field.update', $option->id), $data)->assertRedirect();
 
         $this->assertDatabaseHas('insurance_option_fields', [

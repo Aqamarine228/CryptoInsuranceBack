@@ -11,13 +11,7 @@ class InsuranceOptionTest extends AdminTestCase
 
     public function testStore(): void
     {
-        $data = [
-            'name_ru' => $this->faker->name,
-            'name_en' => $this->faker->name,
-            'description_en' => $this->faker->text(250),
-            'description_ru' => $this->faker->text(250),
-            'price' => 100
-        ];
+        $data = $this->generateTestData();
         $response = $this->postJson(route('admin.insurance-option.store'), $data);
         $insuranceOption = InsuranceOption::where($data)->first();
         self::assertNotNull($insuranceOption);
@@ -26,15 +20,8 @@ class InsuranceOptionTest extends AdminTestCase
 
     public function testUpdate(): void
     {
+        $data = $this->generateTestData();
         $insuranceOption = InsuranceOptionFactory::new()->create();
-        $data = [
-            'name_ru' => $this->faker->name,
-            'name_en' => $this->faker->name,
-            'description_en' => $this->faker->text(250),
-            'description_ru' => $this->faker->text(250),
-            'price' => 100
-        ];
-
         $this
             ->putJson(route('admin.insurance-option.update', $insuranceOption->id), $data)
             ->assertRedirect(route('admin.insurance-option.edit', $insuranceOption->id));
@@ -42,6 +29,19 @@ class InsuranceOptionTest extends AdminTestCase
             'id' => $insuranceOption->id,
             ...$data
         ]);
+    }
+
+    private function generateTestData(): array
+    {
+        $data = [];
+        foreach (locale()->supported() as $locale) {
+            $data["name_$locale"] = $this->faker->name;
+            $data["description_$locale"] = $this->faker->text(250);
+        }
+        return [
+            'price' => 100,
+            ...$data,
+        ];
     }
 
     public function testDestroy(): void

@@ -13,14 +13,7 @@ class InsurancePackTest extends AdminTestCase
     public function testStore(): void
     {
         $insuranceOptions = InsuranceOptionFactory::new()->count(10)->create();
-        $data = [
-            'name_ru' => $this->faker->name,
-            'name_en' => $this->faker->name,
-            'description_en' => $this->faker->text(250),
-            'description_ru' => $this->faker->text(250),
-            'price' => 100,
-            'insurance_options' => $insuranceOptions->pluck('id')->toArray(),
-        ];
+        $data = $this->generateTestData($insuranceOptions->pluck('id')->toArray());
         $response = $this->postJson(route('admin.insurance-pack.store'), $data);
         unset($data['insurance_options']);
         $insurancePack = InsurancePack::where($data)->first();
@@ -40,15 +33,7 @@ class InsurancePackTest extends AdminTestCase
         $previousInsuranceOptions = InsuranceOptionFactory::new()->count(10)->create();
         $newInsuranceOptions = InsuranceOptionFactory::new()->count(10)->create();
         $insurancePack->insuranceOptions()->sync($previousInsuranceOptions->pluck('id')->toArray());
-        $data = [
-            'name_ru' => $this->faker->name,
-            'name_en' => $this->faker->name,
-            'description_en' => $this->faker->text(250),
-            'description_ru' => $this->faker->text(250),
-            'price' => 100,
-            'insurance_options' => $newInsuranceOptions->pluck('id')->toArray(),
-        ];
-
+        $data = $this->generateTestData($newInsuranceOptions->pluck('id')->toArray());
         $this
             ->putJson(route('admin.insurance-pack.update', $insurancePack->id), $data)
             ->assertRedirect(route('admin.insurance-pack.edit', $insurancePack->id));
@@ -69,6 +54,20 @@ class InsurancePackTest extends AdminTestCase
             'id' => $insurancePack->id,
             ...$data
         ]);
+    }
+
+    private function generateTestData(array $insuranceOptionIds): array
+    {
+        $data = [];
+        foreach (locale()->supported() as $locale) {
+            $data["name_$locale"] = $this->faker->name;
+            $data["description_$locale"] = $this->faker->text(250);
+        }
+        return [
+            'price' => 100,
+            'insurance_options' => $insuranceOptionIds,
+            ...$data,
+        ];
     }
 
     public function testDestroy(): void
