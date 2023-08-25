@@ -19,5 +19,7 @@
         "psr-4": {
             "Modules\\ClientApi\\": ""
         }
-    }
+    },
+  "require": {
+  }
 }

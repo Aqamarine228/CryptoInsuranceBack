@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Insurance extends \App\Models\Insurance
 {
+    protected $fillable = [
+        'user_id',
+        'expires_at',
+    ];
 
     /**
      * Scopes

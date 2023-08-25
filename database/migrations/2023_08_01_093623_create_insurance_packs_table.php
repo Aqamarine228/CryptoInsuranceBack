@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('description_en');
             $table->string('slug');
             $table->decimal('price');
-            $table->enum('currency', Currency::values())->default(Currency::USDT->value);
+            $table->enum('currency', Currency::values())->default(Currency::USD->value);
             $table->softDeletes();
             $table->timestamps();
         });

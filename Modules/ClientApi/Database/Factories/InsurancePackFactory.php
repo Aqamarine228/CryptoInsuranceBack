@@ -5,12 +5,12 @@ namespace Modules\ClientApi\Database\Factories;
 use App\Enums\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Modules\ClientApi\Models\InsuranceOption;
+use Modules\Admin\Models\InsurancePack;
 
-class InsuranceOptionFactory extends Factory
+class InsurancePackFactory extends Factory
 {
 
-    protected $model = InsuranceOption::class;
+    protected $model = InsurancePack::class;
 
     public function definition(): array
     {

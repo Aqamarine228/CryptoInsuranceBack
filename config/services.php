@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'shkeeper' => [
+        'url' => env('SHKEEPER_URL'),
+        'callback_url' => 'api.v1.accept-shkeeper-payment',
+        'api_key' => env('SHKEEPER_API_KEY'),
+    ]
+
 ];

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Insurance extends Model
+class InsuranceSubscriptionOption extends Model
 {
 
     protected $casts = [
-        'expires_at' => 'datetime'
+        'sale_percentage' => 'decimal:2',
     ];
 }

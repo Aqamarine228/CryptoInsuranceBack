@@ -2,12 +2,9 @@
 
 namespace App\Enums;
 
-enum Currency: string
+enum Cryptocurrency: string
 {
-
     use EnumToArray;
-
-    case USD = 'USD';
 
     case BTC = 'BTC';
     case DODGE = 'DODGE';
