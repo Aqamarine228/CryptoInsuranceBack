@@ -65,3 +65,5 @@ Route::middleware('auth:admin')->group(function () {
             ->name('reject');
     });
 });
+
+include __DIR__ . '/posts.php';

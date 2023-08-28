@@ -67,6 +67,32 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a href="{{ route('admin.media-folder.index') }}" class="nav-link ">
+                        <i class="nav-icon fas fa-images"></i>
+                        <p>
+                            Images
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.post.all') }}" class="nav-link">
+                        <i class="fas fa-newspaper nav-icon"></i>
+                        <p>Posts</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.post-category.index') }}" class="nav-link">
+                        <i class="fas fa-project-diagram nav-icon"></i>
+                        <p>Post Categories</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.post-tag.index') }}" class="nav-link">
+                        <i class="fas fa-tag nav-icon"></i>
+                        <p>Post Tags</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
