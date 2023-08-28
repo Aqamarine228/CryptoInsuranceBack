@@ -10,8 +10,9 @@ return new class extends Migration {
         Schema::create('insurance_subscription_options', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('duration');
-            $table->decimal('sale_percentage', 3);
+            $table->decimal('sale_percentage', 5);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
