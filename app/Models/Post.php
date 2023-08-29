@@ -2,7 +2,13 @@
 
 namespace App\Models;
 
-class Post extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
 {
 
+    protected $casts = [
+        'published_at' => 'datetime',
+        'is_trending_now' => 'boolean',
+    ];
 }

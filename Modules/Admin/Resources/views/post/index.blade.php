@@ -2,7 +2,7 @@
 
 @section('title')
    <div class="d-flex">
-       Post
+       Posts
        <form class="ml-1" action="{{route('admin.post.store')}}" method="post">
            @csrf
            <button type="submit" class="btn btn-sm btn-primary">Create</button>
@@ -22,17 +22,17 @@
                     <table class="table table-bordered mb-4">
                         <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Title {{Str::upper(locale()->default())}}</th>
                             <th>Category</th>
                             <th>Status</th>
-                            <th></th>
+                            <th width="270"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($posts as $post)
                             <tr>
-                                <td>{{ $post->title ?? '-' }}</td>
-                                <td>{{ $post->category->name ?? '' }}</td>
+                                <td>{{ $post['title_'.locale()->default()] ?? '-' }}</td>
+                                <td>{{ $post->category['name_'.locale()->default()] ?? '' }}</td>
                                 <td>
                                     @if ($post->published_at === null)
                                         <span class="badge badge-warning">Not published</span>

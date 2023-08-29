@@ -1,12 +1,12 @@
 @extends('admin::layouts.master')
 
 @section('title')
-    Tag
+    Post Tags
     <a href="{{ route('admin.post-tag.create', ['tag_id' => request()->segment(3)]) }}" class="btn btn-sm btn-primary">Create</a>
 @stop
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Tags</li>
+    <li class="breadcrumb-item active">Post Tags</li>
 @stop
 
 @section('content')
@@ -26,7 +26,7 @@
                         @foreach($tags as $tag)
                             <tr>
                                 <td>{{ $tag['name_'.locale()->default()] }}</td>
-                                <td>{{ $tag->post_amount }}</td>
+                                <td>{{ $tag->posts_count }}</td>
                                 <td>
                                     <button data-form-id="delete-tag-{{ $tag->id }}" class="btn btn-sm btn-danger"
                                             data-ask="1" data-title="Delete tag"

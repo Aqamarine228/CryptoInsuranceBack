@@ -32,7 +32,6 @@ Route::middleware(['web', 'auth:admin'])
         Route::resource('post', PostController::class)->except('show', 'update');
 
         Route::prefix('/post')->name('post.')->group(function () {
-            Route::get('/all', [PostController::class, 'indexAllPosts'])->name('all');
             Route::prefix('/{post}')->group(function () {
                 Route::put('/content', [PostController::class, 'updateContent'])->name('update.content');
                 Route::put('/preview', [PostController::class, 'updatePreview'])->name('update.preview');

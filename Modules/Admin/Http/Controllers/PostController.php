@@ -18,20 +18,9 @@ use Modules\Admin\Models\Post;
 
 class PostController extends BaseAdminController
 {
-    public function index(Request $request): Renderable
+    public function index(): Renderable
     {
-        $posts = Post::where('author_id', $request->user()->id)
-            ->latest()
-            ->paginate(20);
-
-        return $this->view('post.index', [
-            'posts' => $posts
-        ]);
-    }
-
-    public function indexAllPosts(): Renderable
-    {
-        $posts = Post::latest()->paginate(20);
+        $posts = Post::orderBy('is_trending_now', 'desc')->latest()->with('category')->paginate();
 
         return $this->view('post.index', [
             'posts' => $posts
@@ -50,7 +39,7 @@ class PostController extends BaseAdminController
     public function mainPost(Post $post): RedirectResponse
     {
         if (!$post->isPublished()) {
-            Messages::error('Can not make this News main because it is not published yet');
+            Messages::error('Can not make this post main because it is not published yet');
             return back();
         }
 
@@ -59,7 +48,7 @@ class PostController extends BaseAdminController
             $post->update(['is_trending_now' => true]);
         });
 
-        Messages::success($post->short_title . ' is the main post now');
+        Messages::success('This is the main post now');
         return back();
     }
 

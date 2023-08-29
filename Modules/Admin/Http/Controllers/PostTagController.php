@@ -18,7 +18,7 @@ class PostTagController extends BaseAdminController
 
     public function index(): Renderable
     {
-        $tags = PostTag::orderBy('posts_amount', 'desc')->paginate(20);
+        $tags = PostTag::withCount('posts')->orderBy('posts_count', 'desc')->paginate();
 
         return $this->view('post-tag.index', [
             'tags' => $tags,

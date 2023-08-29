@@ -36,11 +36,14 @@
     <div class="card-footer">
         <div class="row">
             <div class="col-md-6">
-                <button form="post-destroy-{{ $post->id }}"
+                <button data-form-id="post-destroy-{{ $post->id }}"
                         data-ask="1"
                         data-title="Delete post"
-                        data-message="Are you sure you want to delete this post - '{{ $post->title }}'"
-                        class="btn btn-outline-danger text-right">
+                        data-message="Are you sure you want to delete this post'"
+                        class="btn btn-outline-danger text-right"
+                        data-type="warning"
+                        data-confirm-button-color="danger"
+                >
                     Delete
                 </button>
                 <form id="post-destroy-{{ $post->id }}" action="{{ route('admin.post.destroy', $post->id) }}"

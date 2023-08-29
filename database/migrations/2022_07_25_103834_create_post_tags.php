@@ -11,7 +11,6 @@ return new class() extends Migration {
             $table->id();
             $table->string('name_en');
             $table->string('name_ru');
-            $table->bigInteger('posts_amount')->default(0);
             $table->timestamps();
         });
     }

@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.post.all') }}" class="nav-link">
+                    <a href="{{ route('admin.post.index') }}" class="nav-link">
                         <i class="fas fa-newspaper nav-icon"></i>
                         <p>Posts</p>
                     </a>

@@ -1,7 +1,3 @@
-<button class="btn btn-sm bg-primary d-inline">
-    <a href="{{ route('admin.post.edit', $post->id) }}"><em class="fas fa-eye"></em> Edit </a>
-</button>
-
 @if ($post->isPublished())
     @if(!$post->is_trending_now)
         <button form="post-top-{{ $post->id }}" class="btn-sm btn bg-info">
@@ -12,6 +8,10 @@
     @endif
 
 @endif
+
+<button class="btn btn-sm bg-primary d-inline">
+    <a href="{{ route('admin.post.edit', $post->id) }}"><em class="fas fa-eye"></em> Edit </a>
+</button>
 
 <button form="post-destroy-{{ $post->id }}"
         class="btn btn-sm bg-danger d-inline" data-ask="1" data-title="Delete post"

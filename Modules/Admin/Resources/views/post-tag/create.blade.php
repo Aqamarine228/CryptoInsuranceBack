@@ -1,11 +1,11 @@
 @extends('admin::layouts.master')
 
 @section('title')
-    Create tag
+    Create Post Tag
 @stop
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.post-tag.index') }}">Tags</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.post-tag.index') }}">Post Tags</a></li>
     <li class="breadcrumb-item active">Create</li>
 @stop
 
