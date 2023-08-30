@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Enums\InsuranceOptionFieldType;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Http\RedirectResponse;
@@ -39,7 +40,7 @@ class InsuranceOptionFieldController extends BaseAdminController
             $fields[] = [
                 'type' => $validated['types'][$i],
                 'required' => $validated['required'][$i],
-                'slug' => Str::slug($validated['names_' . locale()->default()][$i]),
+                'slug' => GenerateSlug::execute($validated['names_' . locale()->default()][$i]),
                 'insurance_option_id' => $insuranceOption->id,
                 ...$nameFields
             ];

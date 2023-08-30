@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class PostCategory extends \Illuminate\Database\Eloquent\Model
+class PostCategory extends LocalizableModel
 {
 
 }

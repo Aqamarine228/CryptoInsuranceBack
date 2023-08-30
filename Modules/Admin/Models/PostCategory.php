@@ -10,7 +10,7 @@ class PostCategory extends \App\Models\PostCategory
 {
     use Searchable;
 
-    protected $fillable = ['name_en', 'name_ru', 'posts_amount', 'post_category_id'];
+    protected $fillable = ['name_en', 'name_ru', 'posts_amount', 'post_category_id', 'slug'];
 
     public function searchableAs(): string
     {

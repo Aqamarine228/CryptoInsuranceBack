@@ -40,7 +40,6 @@ class PublishPostController extends BaseAdminController
                 'published_at' => $validated['date']
             ]);
             $post->category()->increment('posts_amount');
-            $post->tags()->increment('posts_amount');
         });
 
         Messages::success('Post published successfully');

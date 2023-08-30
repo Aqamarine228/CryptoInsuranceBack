@@ -2,12 +2,14 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Http\Resources\PostCategoryResource;
 use Modules\Admin\Models\PostCategory;
@@ -44,6 +46,9 @@ class PostCategoryController extends BaseAdminController
             'post_category_id' => 'nullable|exists:post_categories,id',
             'name' => new AllLanguagesRule('required', 'string', 'max:255', 'unique:post_categories'),
         ]);
+
+        $validated['slug'] = GenerateSlug::execute($validated['name_' . locale()->default()]);
+
         PostCategory::create($validated);
         Messages::success('Category successfully created.');
 

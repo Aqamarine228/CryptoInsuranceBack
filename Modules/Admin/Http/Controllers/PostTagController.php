@@ -2,12 +2,12 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Http\Resources\PostTagResource;
 use Modules\Admin\Models\PostTag;
@@ -35,9 +35,7 @@ class PostTagController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('required', 'string', 'max:255', 'unique:post_tags'),
         ]);
-        foreach ($validated as $key => $value) {
-            $validated[$key] = Str::snake($value);
-        }
+        $validated['slug'] = GenerateSlug::execute($validated['name_' . locale()->default()]);
 
         PostTag::create($validated);
         Messages::success('Tag successfully created.');

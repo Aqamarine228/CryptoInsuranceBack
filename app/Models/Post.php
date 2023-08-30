@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Post extends Model
+class Post extends LocalizableModel
 {
 
     protected $casts = [
-        'published_at' => 'datetime',
+        'published_at' => 'date',
         'is_trending_now' => 'boolean',
     ];
 }

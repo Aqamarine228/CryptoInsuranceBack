@@ -9,7 +9,7 @@ class PostTag extends \App\Models\PostTag
 {
     use Searchable;
 
-    protected $fillable = ['name_en', 'name_ru', 'post_amount'];
+    protected $fillable = ['name_en', 'name_ru', 'post_amount', 'slug'];
 
     public function searchableAs(): string
     {

@@ -30,7 +30,7 @@ return [
             | This is disk that will be used to store media.
             |
             */
-            'disk' => 'public',
+            'disk' => 's3',
 
             /*
             |--------------------------------------------------------------------------

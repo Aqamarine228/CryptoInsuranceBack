@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -48,7 +49,7 @@ class InsurancePackController extends BaseAdminController
         $insurancePack = DB::transaction(static function () use ($validated, $names, $descriptions) {
             $insurancePack = InsurancePack::create([
                 'price' => $validated['price'],
-                'slug' => Str::slug($validated['name_en']),
+                'slug' => GenerateSlug::execute($validated['name_'.locale()->default()]),
                 ...$names,
                 ...$descriptions
             ]);

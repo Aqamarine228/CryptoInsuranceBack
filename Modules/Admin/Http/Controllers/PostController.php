@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Enums\PostMediaType;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
@@ -58,6 +59,10 @@ class PostController extends BaseAdminController
             'title' => new AllLanguagesRule('nullable', 'string'),
             'content' => new AllLanguagesRule('nullable', 'string'),
         ]);
+
+        if (array_key_exists('title_' . locale()->default(), $validated)) {
+            $validated['slug'] = GenerateSlug::execute($validated['title_' . locale()->default()]);
+        }
 
         $post->update($validated);
 
@@ -136,7 +141,7 @@ class PostController extends BaseAdminController
         $originalImage = $image->encode('png');
 
         Storage::put(
-            Config::get('alphanews.posts.filesystem.original_images_path') . '/' . $fileName,
+            Config::get('alphanews.media.filesystem.images_path') . '/' . $fileName,
             $originalImage->stream()
         );
 

@@ -1,4 +1,5 @@
 {
     "ClientApi": true,
-    "Admin": true
+    "Admin": true,
+    "Client": true
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateSlug;
 use App\Enums\InsuranceOptionFieldType;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
@@ -39,7 +40,7 @@ class InsuranceOptionController extends BaseAdminController
             'price' => 'required|decimal:0,2'
         ]);
 
-        $validated['slug'] = Str::slug($validated["name_" . locale()->default()]);
+        $validated['slug'] = GenerateSlug::execute($validated["name_" . locale()->default()]);
 
         $insuranceOption = InsuranceOption::create($validated);
 

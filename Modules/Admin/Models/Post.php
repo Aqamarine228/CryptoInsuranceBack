@@ -11,7 +11,7 @@ class Post extends \App\Models\Post
     protected $fillable = [
         'post_category_id', 'author_id', 'title_en', 'title_ru', 'short_content_en', 'short_content_ru',
         'short_title_en', 'short_title_ru', 'content_en', 'content_ru', 'picture', 'published_at', 'date_ico',
-        'is_trending_now', 'views', 'media_type',
+        'is_trending_now', 'views', 'media_type', 'slug',
     ];
 
     protected array $dates = [
@@ -92,7 +92,7 @@ class Post extends \App\Models\Post
 
     public function originalImage(): string
     {
-        return Storage::url(config('alphanews.posts.filesystem.original_images_path') . '/' . $this->picture);
+        return Storage::url(config('alphanews.media.filesystem.images_path') . '/' . $this->picture);
     }
 
 }
