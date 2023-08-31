@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="{{ Module::asset('admin:plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ Module::asset('admin:css/adminlte.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')
 </head>
 <body class="hold-transition sidebar-mini">

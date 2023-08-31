@@ -27,7 +27,10 @@
                         <ul class="list-unstyled main-header__top-menu">
                             @foreach(locale()->supported() as $locale)
                                 <li>
-                                    <a href="{{route(Route::current()->getName(), ['locale' => $locale])}}">
+                                    <a href="{{route(Route::current()->getName(), array_merge(
+                                        request()->route()->parameters,
+                                        ['locale' => $locale],
+                                    )) . str_replace(request()->url(), '',request()->fullUrl())}}">
                                         {{Str::upper($locale)}}
                                     </a>
                                 </li>

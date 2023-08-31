@@ -32,7 +32,7 @@
     </div>
     @if ($post->picture)
         <div class="card-body">
-            <img class="img-fluid" src="{{ $post->originalImage() }}" alt="picture">
+            <img class="img-fluid" src="{{ $post->picture }}" alt="picture">
         </div>
     @endif
 </div>

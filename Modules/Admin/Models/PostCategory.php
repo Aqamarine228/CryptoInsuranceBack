@@ -10,7 +10,7 @@ class PostCategory extends \App\Models\PostCategory
 {
     use Searchable;
 
-    protected $fillable = ['name_en', 'name_ru', 'posts_amount', 'post_category_id', 'slug'];
+    protected $fillable = ['name_en', 'name_ru', 'posts_amount', 'slug'];
 
     public function searchableAs(): string
     {
@@ -28,19 +28,5 @@ class PostCategory extends \App\Models\PostCategory
             'post_category_id',
             'id'
         );
-    }
-
-    public function childCategories(): HasMany
-    {
-        return $this->hasMany(
-            self::class,
-            'post_category_id',
-            'id'
-        );
-    }
-
-    public function parentCategory(): BelongsTo
-    {
-        return $this->belongsTo(self::class, 'post_category_id', 'id');
     }
 }

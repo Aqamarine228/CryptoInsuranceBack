@@ -2,18 +2,17 @@
 
 namespace Modules\Admin\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Modules\Admin\Models\Image;
 use Modules\Admin\Models\MediaFolder;
 
-class MediaFolderController extends \Modules\Admin\Http\Controllers\BaseAdminController
+class MediaFolderController extends BaseAdminController
 {
-    public function index(?MediaFolder $mediaFolder): Factory|View|Application
+    public function index(?MediaFolder $mediaFolder): Renderable
     {
         $subFolders = MediaFolder::where(
             'media_folder_id',
@@ -31,10 +30,10 @@ class MediaFolderController extends \Modules\Admin\Http\Controllers\BaseAdminCon
     /**
      * @throws ValidationException
      */
-    public function store(): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         // deny for advert folder
-        $validated = $this->validate(request(), [
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('media_folders')->where(function ($query) {
                 $query->where(
                     'media_folder_id',

@@ -11,12 +11,21 @@ class Post extends \App\Models\Post
     protected $fillable = [
         'post_category_id', 'author_id', 'title_en', 'title_ru', 'short_content_en', 'short_content_ru',
         'short_title_en', 'short_title_ru', 'content_en', 'content_ru', 'picture', 'published_at', 'date_ico',
-        'is_trending_now', 'views', 'media_type', 'slug',
+        'views', 'slug',
     ];
 
     protected array $dates = [
         'published_at'
     ];
+
+    /**
+     * Attributes
+     */
+
+    public function getPictureAttribute($value): string|null
+    {
+        return $value ? Storage::url(config('alphanews.media.filesystem.images_path') . '/' . $value) : null;
+    }
 
     /**
      * Relations
@@ -89,10 +98,4 @@ class Post extends \App\Models\Post
             && $this->isStep3Completed()
             && $this->isStep4Completed();
     }
-
-    public function originalImage(): string
-    {
-        return Storage::url(config('alphanews.media.filesystem.images_path') . '/' . $this->picture);
-    }
-
 }

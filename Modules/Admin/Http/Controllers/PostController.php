@@ -3,16 +3,13 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Actions\GenerateSlug;
-use App\Enums\PostMediaType;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\Enum;
 use Intervention\Image\ImageManagerStatic as Image;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Models\Post;
@@ -21,7 +18,7 @@ class PostController extends BaseAdminController
 {
     public function index(): Renderable
     {
-        $posts = Post::orderBy('is_trending_now', 'desc')->latest()->with('category')->paginate();
+        $posts = Post::latest()->with('category')->paginate();
 
         return $this->view('post.index', [
             'posts' => $posts
@@ -37,22 +34,6 @@ class PostController extends BaseAdminController
         ]);
     }
 
-    public function mainPost(Post $post): RedirectResponse
-    {
-        if (!$post->isPublished()) {
-            Messages::error('Can not make this post main because it is not published yet');
-            return back();
-        }
-
-        DB::transaction(function () use ($post) {
-            Post::where('is_trending_now', 1)->update(['is_trending_now' => false]);
-            $post->update(['is_trending_now' => true]);
-        });
-
-        Messages::success('This is the main post now');
-        return back();
-    }
-
     public function updateContent(Request $request, Post $post): RedirectResponse
     {
         $validated = $request->validate([
@@ -60,7 +41,8 @@ class PostController extends BaseAdminController
             'content' => new AllLanguagesRule('nullable', 'string'),
         ]);
 
-        if (array_key_exists('title_' . locale()->default(), $validated)) {
+        if (array_key_exists('title_' . locale()->default(), $validated)
+            && $validated['title_' . locale()->default()]) {
             $validated['slug'] = GenerateSlug::execute($validated['title_' . locale()->default()]);
         }
 
@@ -85,20 +67,6 @@ class PostController extends BaseAdminController
     {
         $validated = $request->validate([
             'post_category_id' => 'required|integer|exists:post_categories,id',
-        ]);
-
-        $post->update($validated);
-
-        return back();
-    }
-
-    public function updateMediaType(Request $request, Post $post): RedirectResponse
-    {
-        $validated = $request->validate([
-            'media_type' => [
-                'required',
-                new Enum(PostMediaType::class)
-            ]
         ]);
 
         $post->update($validated);

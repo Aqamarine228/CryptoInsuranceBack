@@ -1,13 +1,13 @@
 @extends('admin::layouts.master')
 
 @section('title')
-   <div class="d-flex">
-       Posts
-       <form class="ml-1" action="{{route('admin.post.store')}}" method="post">
-           @csrf
-           <button type="submit" class="btn btn-sm btn-primary">Create</button>
-       </form>
-   </div>
+    <div class="d-flex">
+        Posts
+        <form class="ml-1" action="{{route('admin.post.store')}}" method="post">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-primary">Create</button>
+        </form>
+    </div>
 @stop
 
 @section('breadcrumb')
@@ -22,25 +22,27 @@
                     <table class="table table-bordered mb-4">
                         <thead>
                         <tr>
+                            <th width="144">Picture</th>
                             <th>Title {{Str::upper(locale()->default())}}</th>
                             <th>Category</th>
                             <th>Status</th>
-                            <th width="270"></th>
+                            <th width="90"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($posts as $post)
-                            <tr>
-                                <td>{{ $post['title_'.locale()->default()] ?? '-' }}</td>
-                                <td>{{ $post->category['name_'.locale()->default()] ?? '' }}</td>
-                                <td>
+                            <tr style="text-align: center">
+                                <td><img src="{{$post->picture}}" width="144px" height="81px" alt="Post Image"></td>
+                                <td style="vertical-align: middle">{{ $post['title_'.locale()->default()] ?? '-' }}</td>
+                                <td style="vertical-align: middle">{{ $post->category['name_'.locale()->default()] ?? '' }}</td>
+                                <td style="vertical-align: middle">
                                     @if ($post->published_at === null)
                                         <span class="badge badge-warning">Not published</span>
                                     @else
                                         <span class="badge badge-success">Published</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td style="vertical-align: middle">
                                     @include('admin::post.blocks._actions')
                                 </td>
                             </tr>

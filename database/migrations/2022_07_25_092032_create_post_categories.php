@@ -11,7 +11,6 @@ return new class() extends Migration {
             $table->id();
             $table->string('name_en')->unique();
             $table->string('name_ru')->unique();
-            $table->foreignId('post_category_id')->nullable()->constrained();
             $table->unsignedInteger('posts_amount')->default(0);
             $table->timestamps();
         });

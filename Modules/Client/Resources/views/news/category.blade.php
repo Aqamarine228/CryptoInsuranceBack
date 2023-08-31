@@ -12,9 +12,11 @@
                 <ul class="thm-breadcrumb list-unstyled">
                     <li><a href="{{route('client.home')}}">{{__('pages.home')}}</a></li>
                     <li><span>/</span></li>
-                    <li>{{__('pages.news')}}</li>
+                    <li><a href="{{route('client.news.index')}}">{{__('pages.news')}}</a></li>
+                    <li><span>/</span></li>
+                    <li>{{$category->name}}</li>
                 </ul>
-                <h2>{{Str::ucfirst(__('pages.news'))}}</h2>
+                <h2>{{__('news.category')}}: {{Str::ucfirst($category->name)}}</h2>
             </div>
         </div>
     </section>

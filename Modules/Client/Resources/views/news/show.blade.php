@@ -10,11 +10,13 @@
         <div class="container">
             <div class="page-header__inner">
                 <ul class="thm-breadcrumb list-unstyled">
+                    <li><a href="{{route('client.home')}}">{{__('pages.home')}}</a></li>
+                    <li><span>/</span></li>
                     <li><a href="{{route('client.news.index')}}">{{__('pages.news')}}</a></li>
                     <li><span>/</span></li>
                     <li>{{$post->short_title}}</li>
                 </ul>
-                <h2>{{$post->title}}</h2>
+                <h2>{{$post->short_title}}</h2>
             </div>
         </div>
     </section>
@@ -22,12 +24,40 @@
     <section class="news-details">
         <div class="container">
             <div class="row">
-                <div class="col-xl-8 col-lg-7">
-                    <div class="news-details__left">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="news-details__left">
+                                <div class="news-details__img">
+                                    <img src="{{$post->picture}}" alt="">
+                                </div>
+                                <div class="news-details__content">
+                                    <ul class="list-unstyled news-details__meta">
+                                        <li><a href="#"><i class="far fa-calendar"></i> {{$post->published_at}}</a></li>
+                                    </ul>
+                                    <h3 class="news-details__title">{{$post->title}}</h3>
+                                    {!! $post->content !!}
+                                </div>
+                                <div class="news-details__bottom">
+                                    <p class="news-details__tags mb-1">
+                                        <span>{{__('news.category')}}</span>
+                                        <a href="{{route('client.news.category', $post->category->slug)}}">
+                                            {{$post->category->name}}
+                                        </a>
+                                    </p>
+                                    <p class="news-details__tags">
+                                        <span>{{trans_choice('news.tag', 2)}}</span>
+                                        @foreach($post->tags as $tag)
+                                            <a href="{{route('client.news.tag', $tag->slug)}}">{{$tag->name}}</a>
+                                        @endforeach
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        @include('client::news._sidebar')
                     </div>
                 </div>
             </div>
-            @include('client::news._sidebar')
         </div>
     </section>
 @endsection

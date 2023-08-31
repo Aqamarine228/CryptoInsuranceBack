@@ -12,6 +12,7 @@
 */
 
 
+use Modules\Client\Http\Controllers\LocaleController;
 use Modules\Client\Http\Controllers\NewsController;
 use Modules\Client\Http\Middleware\LocalizationMiddleware;
 use Modules\Client\Http\Controllers\HomeController;
@@ -24,5 +25,8 @@ Route::prefix('/{locale}')
     ->group(function () {
         Route::get('/', HomeController::class)->name('home');
         Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+        Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
         Route::get('/news/{post}', [NewsController::class, 'show'])->name('news.show');
+        Route::get('/news/tag/{postTag}', [NewsController::class, 'indexByTag'])->name('news.tag');
+        Route::get('/news/category/{postCategory}', [NewsController::class, 'indexByCategory'])->name('news.category');
     });

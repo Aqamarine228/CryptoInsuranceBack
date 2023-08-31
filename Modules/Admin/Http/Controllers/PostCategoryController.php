@@ -9,7 +9,6 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Http\Resources\PostCategoryResource;
 use Modules\Admin\Models\PostCategory;
@@ -18,20 +17,14 @@ class PostCategoryController extends BaseAdminController
 {
     const ITEMS_PER_SEARCH = 10;
 
-    public function index(?PostCategory $postCategory): Renderable
+    public function index(): Renderable
     {
-        $postCategories = PostCategory::where(
-            'post_category_id',
-            $postCategory?->id
-        )
-            ->withCount('childCategories')
-            ->withCount(['posts'])
+        $postCategories = PostCategory::withCount(['posts'])
             ->latest()
             ->paginate();
 
         return $this->view('post-category.index', [
             'categories' => $postCategories,
-            'rootCategory' => $postCategory,
         ]);
     }
 
@@ -43,7 +36,6 @@ class PostCategoryController extends BaseAdminController
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'post_category_id' => 'nullable|exists:post_categories,id',
             'name' => new AllLanguagesRule('required', 'string', 'max:255', 'unique:post_categories'),
         ]);
 
@@ -57,7 +49,6 @@ class PostCategoryController extends BaseAdminController
 
     public function edit(PostCategory $postCategory): Renderable
     {
-        $postCategory->load('parentCategory');
         return $this->view('post-category.edit', [
             'postCategory' => $postCategory,
         ]);
@@ -68,6 +59,10 @@ class PostCategoryController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('required', 'string', 'max:255'),
         ]);
+
+        if (array_key_exists('name_'.locale()->default(), $validated)) {
+            $validated['slug'] = GenerateSlug::execute($validated['name_' . locale()->default()]);
+        }
 
         try {
             $postCategory->update($validated);
@@ -85,8 +80,6 @@ class PostCategoryController extends BaseAdminController
     {
         if ($postCategory->posts()->exists()) {
             Messages::error('Can not delete category with posts');
-        } elseif ($postCategory->childCategories()->exists()) {
-            Messages::error('Can not delete parent category');
         } else {
             $postCategory->delete();
             Messages::success('Category successfully deleted');
@@ -99,19 +92,12 @@ class PostCategoryController extends BaseAdminController
     {
         $validated = $request->validate([
             'name' => 'string|nullable|max:255',
-            'current_id' => 'nullable|numeric|exists:post_categories,id',
         ]);
 
         if (array_key_exists('name', $validated) && $validated['name']) {
             $categories = PostCategory::search($validated['name'])->take(self::ITEMS_PER_SEARCH)->get();
         } else {
             $categories = PostCategory::take(self::ITEMS_PER_SEARCH)->get();
-        }
-
-        if (array_key_exists('current_id', $validated)) {
-            $categories = $categories->filter(function ($value) use ($validated) {
-                return $value['id'] !== $validated['current_id'];
-            });
         }
 
         return new JsonResponse(PostCategoryResource::collection($categories));

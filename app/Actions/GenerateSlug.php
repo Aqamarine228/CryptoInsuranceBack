@@ -9,6 +9,6 @@ class GenerateSlug
 
     public static function execute(string $key): string
     {
-        return Str::slug($key) . "_" . now()->format('u');
+        return Str::slug($key) . "-" . now()->format('u');
     }
 }

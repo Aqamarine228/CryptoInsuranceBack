@@ -6,5 +6,10 @@
     "news.readMore": "Read More",
     "news.latest": "Latest News",
     "news.categories": "Categories",
-    "news.mostPopularTags": "Most Popular Tags"
+    "news.mostPopularTags": "Most Popular Tags",
+    "news.tag": "Tag|Tags",
+    "news.category": "Category",
+    "news.searchFor": "Search results for",
+    "news.nothingFound": "Nothing Found",
+    "news.nothingFoundText": "Sorry, but nothing matched your search terms. Please try again with some different keywords."
 }

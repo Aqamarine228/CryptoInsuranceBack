@@ -6,5 +6,10 @@
     "news.readMore": "Читать больше",
     "news.latest": "Последние новости",
     "news.categories": "Категории",
-    "news.mostPopularTags": "Самые поплуярные тэги"
+    "news.mostPopularTags": "Самые поплуярные тэги",
+    "news.tag": "Тэг|Тэги",
+    "news.category": "Категория",
+    "news.searchFor": "Результаты поиска по",
+    "news.nothingFound": "Ничего не найдено",
+    "news.nothingFoundText": "Извините, но ничего не соответствует вашим критериям поиска. Пожалуйста, попытайтесь снова с другими словами."
 }

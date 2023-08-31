@@ -15,14 +15,14 @@ use Psr\Container\NotFoundExceptionInterface;
 use Modules\Admin\Models\Image;
 use Modules\Admin\Models\MediaFolder;
 
-class ImageController extends \Modules\Admin\Http\Controllers\BaseAdminController
+class ImageController extends BaseAdminController
 {
     /**
      * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
-        $fields = $this->validate(request(), [
+        $fields = $request->validate([
             'media_folder_id' => 'required|exists:media_folders,id',
             'images.*' => 'required|image|max:5120',
         ]);
@@ -44,9 +44,9 @@ class ImageController extends \Modules\Admin\Http\Controllers\BaseAdminControlle
      * @throws NotFoundExceptionInterface
      * @throws ValidationException
      */
-    public function storeFromTinymce(): array
+    public function storeFromTinymce(Request $request): array
     {
-        $fields = $this->validate(request(), [
+        $fields = $request->validate([
             'file' => 'required|image|max:5120',
         ]);
 

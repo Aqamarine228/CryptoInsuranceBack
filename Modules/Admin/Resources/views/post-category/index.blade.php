@@ -7,15 +7,7 @@
 @stop
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.post-category.index') }}">Root Categories</a></li>
-    @if ($rootCategory->id)
-        <li
-            class="breadcrumb-item">
-            <a href="{{ route('admin.post-category.index', $rootCategory->post_category_id) }}">
-                {{ $rootCategory['name_'.locale()->default()] }}
-            </a>
-        </li>
-    @endif
+    <li class="breadcrumb-item">Post Categories</li>
 @stop
 
 @section('content')
@@ -32,7 +24,6 @@
                         <tr>
                             <th>Name {{Str::upper(locale()->default())}}</th>
                             <th>News count</th>
-                            <th>Nested categories</th>
                             <th width="160px"></th>
                         </tr>
                         </thead>
@@ -44,11 +35,6 @@
                                 </td>
                                 <td>
                                     {{ $category->posts_count }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.post-category.index', $category->id) }}"><i
-                                            class="fas fa-project-diagram"></i> {{ $category->child_categories_count }}
-                                    </a>
                                 </td>
 
                                 <td>

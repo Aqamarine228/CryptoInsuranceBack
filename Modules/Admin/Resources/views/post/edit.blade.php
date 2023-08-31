@@ -47,9 +47,7 @@
         <div class="col-md-3">
             @include('admin::post.blocks._status')
             @include('admin::post.blocks._publish')
-            @include('admin::post.blocks._add-to-top')
             @include('admin::post.blocks._category')
-            @include('admin::post.blocks._media-type')
             @include('admin::post.blocks._tags')
             @include('admin::post.blocks._image')
         </div>

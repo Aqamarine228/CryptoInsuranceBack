@@ -2,6 +2,8 @@
 
 namespace Modules\Client\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class PostCategory extends \App\Models\PostCategory
 {
 
@@ -9,13 +11,17 @@ class PostCategory extends \App\Models\PostCategory
         'name'
     ];
 
-    /**
-     * Scopes
-     */
-
-    public function scopeRoot($q)
+    public function getRouteKeyName(): string
     {
-        return $q->whereNull('post_category_id');
+        return 'slug';
     }
 
+    /**
+     * Relations
+     */
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }

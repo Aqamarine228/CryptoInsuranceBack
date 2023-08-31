@@ -20,17 +20,6 @@
         </div>
     @endforeach
 
-    <div class="form-group">
-        <label for="Price">Parent Category</label>
-        <select id="parent" name="post_category_id" class="w-100" {{$model->exists ? 'disabled' : ''}}>
-            @if($model->post_category_id)
-                <option value="{{$model->post_category_id}}" selected>
-                    {{$model->parentCategory["name_".locale()->default()]}}
-                </option>
-            @endif
-        </select>
-    </div>
-
     <button class="btn btn-primary">
         <em class="fa fa-save"></em>
         Save

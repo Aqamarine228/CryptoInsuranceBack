@@ -12,13 +12,18 @@ class PostTag extends \App\Models\PostTag
         'name'
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     /**
      * Scopes
      */
 
     public function scopePopular($q)
     {
-        return $q->withCount(['posts' => fn ($q) => $q->published()])->orderBy('posts_count');
+        return $q->withCount(['posts' => fn ($q) => $q->published()])->orderBy('posts_count', 'desc');
     }
 
     /**
