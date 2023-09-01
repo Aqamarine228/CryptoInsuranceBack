@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\PostMediaType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,9 +19,6 @@ return new class() extends Migration {
             $table->string('short_content_en')->nullable();
             $table->string('short_content_ru')->nullable();
             $table->foreignId('post_category_id')->nullable()->constrained();
-            $table->foreignId('author_id')->nullable()->constrained('admins');
-            $table->unsignedInteger('views')->default(0);
-            $table->unsignedInteger('likes')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

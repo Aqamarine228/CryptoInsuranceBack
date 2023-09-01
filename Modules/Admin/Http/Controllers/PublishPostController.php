@@ -18,12 +18,16 @@ class PublishPostController extends BaseAdminController
             Messages::error('Post is already published');
             return back();
         }
+
         if (!$post->publishable()) {
             Messages::error("Post is not publishable because:");
-            $post->isStep1Completed() ?: Messages::error("Parent category is not selected");
-            $post->isStep2Completed() ?: Messages::error("Post has no title");
-            $post->isStep3Completed() ?: Messages::error("Post has no short title");
-            $post->isStep4Completed() ?: Messages::error("Post has no picture");
+            $post->hasCategory() ?: Messages::error("Parent category is not selected");
+            $post->hasTitle() ?: Messages::error("Not all titles are filled");
+            $post->hasShortTitle() ?: Messages::error("Not all short titles are filled");
+            $post->hasPicture() ?: Messages::error("Post has no picture");
+            $post->hasTags() ?: Messages::error("Post has no selected tags");
+            $post->hasContent() ?: Messages::error("Not all content fields are filled");
+            $post->hasShortContent() ?: Messages::error("Not all short content fields are filled");
             return back();
         }
 
@@ -35,12 +39,9 @@ class PublishPostController extends BaseAdminController
             ]
         ]);
 
-        DB::transaction(static function () use ($post, $validated) {
-            $post->update([
-                'published_at' => $validated['date']
-            ]);
-            $post->category()->increment('posts_amount');
-        });
+        $post->update([
+            'published_at' => $validated['date']
+        ]);
 
         Messages::success('Post published successfully');
         return back();
@@ -56,13 +57,9 @@ class PublishPostController extends BaseAdminController
             return back();
         }
 
-        DB::transaction(static function () use ($post) {
-            $post->update([
-                'published_at' => null
-            ]);
-            $post->category()->decrement('posts_amount');
-            $post->tags()->decrement('posts_amount');
-        });
+        $post->update([
+            'published_at' => null
+        ]);
 
         Messages::success('Post unpublished successfully');
         return back();

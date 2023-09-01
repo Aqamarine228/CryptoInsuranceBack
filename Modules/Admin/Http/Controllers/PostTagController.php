@@ -52,7 +52,7 @@ class PostTagController extends BaseAdminController
             Messages::error('Can not delete tag with posts');
         }
 
-        return back();
+        return redirect()->route('admin.post-tag.index');
     }
 
     public function search(Request $request): JsonResponse

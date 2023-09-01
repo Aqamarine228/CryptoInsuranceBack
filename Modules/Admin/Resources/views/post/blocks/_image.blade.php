@@ -8,7 +8,7 @@
         <h3 class="card-title">Image</h3>
     </div>
     <div class="card-body">
-        <form id="post-update-image" action="{{ route('admin.post.update.image', $post->id) }}" method="post"
+        <form id="post-update-image" action="{{ route('admin.post.update.picture', $post->id) }}" method="post"
               enctype="multipart/form-data">
             @csrf
             @method('put')
@@ -32,7 +32,7 @@
     </div>
     @if ($post->picture)
         <div class="card-body">
-            <img class="img-fluid" src="{{ $post->picture }}" alt="picture">
+            <img class="img-fluid" src="{{ Storage::url($post->getPicturePath()) }}" alt="picture">
         </div>
     @endif
 </div>

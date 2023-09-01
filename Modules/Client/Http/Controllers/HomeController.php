@@ -9,6 +9,8 @@ use Modules\Client\Models\Post;
 class HomeController extends BaseClientController
 {
 
+    private const POSTS_PER_PAGE_COUNT = 3;
+
     public function __invoke(): Renderable
     {
         return $this->view('home.home', [
@@ -18,6 +20,6 @@ class HomeController extends BaseClientController
 
     private function getNews(): Collection
     {
-        return Post::published()->latest()->with('category')->limit(3)->get();
+        return Post::published()->latest()->with('category')->limit(self::POSTS_PER_PAGE_COUNT)->get();
     }
 }

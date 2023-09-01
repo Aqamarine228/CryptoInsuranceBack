@@ -32,7 +32,7 @@
                         <tbody>
                         @foreach($posts as $post)
                             <tr style="text-align: center">
-                                <td><img src="{{$post->picture}}" width="144px" height="81px" alt="Post Image"></td>
+                                <td><img src="{{Storage::url($post->getPicturePath())}}" width="144px" height="81px" alt="Post Image"></td>
                                 <td style="vertical-align: middle">{{ $post['title_'.locale()->default()] ?? '-' }}</td>
                                 <td style="vertical-align: middle">{{ $post->category['name_'.locale()->default()] ?? '' }}</td>
                                 <td style="vertical-align: middle">

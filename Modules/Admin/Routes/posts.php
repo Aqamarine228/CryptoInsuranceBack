@@ -38,7 +38,7 @@ Route::middleware(['web', 'auth:admin'])
                 Route::put('/category', [PostController::class, 'updateCategory'])->name('update.category');
                 Route::put('/media-type', [PostController::class, 'updateMediaType'])->name('update.media-type');
                 Route::put('/tags', [PostController::class, 'updateTags'])->name('update.tags');
-                Route::put('/image', [PostController::class, 'updateImage'])->name('update.image');
+                Route::put('/picture', [PostController::class, 'updatePicture'])->name('update.picture');
                 Route::post('/publish', [PublishPostController::class, 'publish'])->name('publish');
                 Route::post('/unpublish', [PublishPostController::class, 'unPublish'])->name('unpublish');
             });

@@ -2,7 +2,6 @@
 
 namespace Modules\Admin\Models;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -17,15 +16,6 @@ class Post extends \App\Models\Post
     protected array $dates = [
         'published_at'
     ];
-
-    /**
-     * Attributes
-     */
-
-    public function getPictureAttribute($value): string|null
-    {
-        return $value ? Storage::url(config('alphanews.media.filesystem.images_path') . '/' . $value) : null;
-    }
 
     /**
      * Relations
@@ -58,17 +48,40 @@ class Post extends \App\Models\Post
         );
     }
 
+    /**
+     * Scopes
+     */
+
+    public function scopeEmpty($q)
+    {
+        foreach (locale()->supported() as $locale) {
+            $q = $q
+                ->whereNull('title_' . $locale)
+                ->whereNull('content_' . $locale)
+                ->whereNull('short_title_' . $locale)
+                ->whereNull('short_content_' . $locale);
+        }
+
+        return $q
+            ->whereNull('post_category_id')
+            ->whereNull('picture');
+    }
+
+    /**
+     * Methods
+     */
+
     public function isPublished(): bool
     {
         return null !== $this->published_at;
     }
 
-    public function isStep1Completed(): bool
+    public function hasCategory(): bool
     {
         return (bool)$this->post_category_id;
     }
 
-    public function isStep2Completed(): bool
+    public function hasTitle(): bool
     {
         $title = true;
         foreach (locale()->supported() as $locale) {
@@ -77,25 +90,57 @@ class Post extends \App\Models\Post
         return $title;
     }
 
-    public function isStep3Completed(): bool
+    public function hasContent(): bool
     {
-        $short_title = true;
+        $content = true;
         foreach (locale()->supported() as $locale) {
-            $short_title = $short_title && (bool)$this["short_title_$locale"];
+            $content = $content && (bool)$this["content_$locale"];
         }
-        return $short_title;
+        return $content;
     }
 
-    public function isStep4Completed(): bool
+    public function hasShortTitle(): bool
+    {
+        $shortTitle = true;
+        foreach (locale()->supported() as $locale) {
+            $shortTitle = $shortTitle && (bool)$this["short_title_$locale"];
+        }
+        return $shortTitle;
+    }
+
+    public function hasTags(): bool
+    {
+        return $this->tags()->exists();
+    }
+
+    public function hasPicture(): bool
     {
         return (bool)$this->picture;
     }
 
+    public function hasShortContent(): bool
+    {
+        $shortContent = true;
+        foreach (locale()->supported() as $locale) {
+            $shortContent = $shortContent && (bool)$this["short_content_$locale"];
+        }
+        return $shortContent;
+
+    }
+
     public function publishable(): bool
     {
-        return $this->isStep1Completed()
-            && $this->isStep2Completed()
-            && $this->isStep3Completed()
-            && $this->isStep4Completed();
+        return $this->hasCategory()
+            && $this->hasTitle()
+            && $this->hasShortTitle()
+            && $this->hasContent()
+            && $this->hasShortContent()
+            && $this->hasTags()
+            && $this->hasPicture();
+    }
+
+    public function getPicturePath(): string
+    {
+        return config('alphanews.media.filesystem.images_path') . '/' . $this->picture;
     }
 }

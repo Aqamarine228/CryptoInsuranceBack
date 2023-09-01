@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateFileName;
 use App\Actions\GenerateSlug;
 use App\Rules\AllLanguagesRule;
 use Illuminate\Contracts\Support\Renderable;
@@ -74,7 +75,7 @@ class PostController extends BaseAdminController
         return back();
     }
 
-    public function updateImage(Request $request, Post $post): RedirectResponse
+    public function updatePicture(Request $request, Post $post): RedirectResponse
     {
         $validated = $request->validate([
             'picture' => ['required', 'image', 'max:4096'],
@@ -90,7 +91,7 @@ class PostController extends BaseAdminController
         );
 
         if ($post->picture) {
-            Storage::delete(Config::get('alphanews.posts.filesystem.preview_images_path') . '/' . $post->picture);
+            Storage::delete($post->getPicturePath());
         }
 
         $post->update([
@@ -102,7 +103,7 @@ class PostController extends BaseAdminController
 
     protected function cropAndUploadImagesByName(UploadedFile $image, Post $post): string
     {
-        $fileName = $post->id . '_' . time() . '.png';
+        $fileName = GenerateFileName::execute('png');
 
         $image = Image::make($image)->crop(...array_values(request()->only(['width', 'height', 'x1', 'y1'])));
 
@@ -120,7 +121,7 @@ class PostController extends BaseAdminController
     {
         $validated = $request->validate([
             'tags' => 'nullable|array',
-            'tags.*' => 'required|string|max:255'
+            'tags.*' => 'required|exists:post_tags,id'
         ]);
 
         if (!array_key_exists('tags', $validated)) {
@@ -132,13 +133,11 @@ class PostController extends BaseAdminController
         return back();
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(): RedirectResponse
     {
-        $post = $this->getEmptyPost($request->user());
+        $post = $this->getEmptyPost();
         if ($post === null) {
-            $post = Post::create([
-                'author_id' => $request->user()->id,
-            ]);
+            $post = Post::create();
         }
 
         return redirect()->route('admin.post.edit', $post->id);
@@ -148,24 +147,21 @@ class PostController extends BaseAdminController
     {
         $post->delete();
         Messages::success('Post deleted successfully');
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.post.index');
     }
 
-    private function getEmptyPost(mixed $user): Post|null
+    private function getEmptyPost(): Post|null
     {
-        $emptyPost = Post::where('author_id', $user->id)
-            ->whereNull('post_category_id')
-            ->whereNull('title_en')
-            ->whereNull('title_ru')
-            ->whereNull('content_en')
-            ->whereNull('content_ru')
-            ->whereNull('short_title_en')
-            ->whereNull('short_title_ru')
-            ->whereNull('short_content_en')
-            ->whereNull('short_content_ru')
-            ->whereNull('picture')
-            ->latest()
-            ->first();
+        $postQuery = Post::whereNull('picture')->whereNull('post_category_id');
+
+        foreach (locale()->supported() as $locale) {
+            $postQuery = $postQuery
+                ->whereNull('title_' . $locale)
+                ->whereNull('content_' . $locale)
+                ->whereNull('short_title_' . $locale)
+                ->whereNull('short_content_' . $locale);
+        }
+        $emptyPost = $postQuery->latest()->first();
 
         if ($emptyPost !== null && $emptyPost->tags()->count() === 0) {
             return $emptyPost;

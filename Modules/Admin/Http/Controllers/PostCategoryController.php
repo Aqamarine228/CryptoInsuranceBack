@@ -85,7 +85,7 @@ class PostCategoryController extends BaseAdminController
             Messages::success('Category successfully deleted');
         }
 
-        return back();
+        return redirect()->route('admin.post-category.index');
     }
 
     public function search(Request $request): JsonResponse

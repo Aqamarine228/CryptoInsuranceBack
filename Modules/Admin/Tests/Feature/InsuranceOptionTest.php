@@ -2,12 +2,15 @@
 
 namespace Modules\Admin\Tests\Feature;
 
+use Illuminate\Testing\Fluent\AssertableJson;
 use Modules\Admin\Database\Factories\InsuranceOptionFactory;
+use Modules\Admin\Http\Resources\InsuranceOptionResource;
 use Modules\Admin\Models\InsuranceOption;
 use Modules\Admin\Tests\AdminTestCase;
 
 class InsuranceOptionTest extends AdminTestCase
 {
+    const ITEMS_PER_SEARCH = 10;
 
     public function testStore(): void
     {
@@ -51,5 +54,17 @@ class InsuranceOptionTest extends AdminTestCase
             ->deleteJson(route('admin.insurance-option.destroy', $insuranceOption->id))
             ->assertRedirect(route('admin.insurance-option.index'));
         $this->assertSoftDeleted($insuranceOption);
+    }
+
+    public function testItSearchesCorrectly(): void
+    {
+        InsuranceOptionFactory::new()->count(10)->create();
+        $this
+            ->getJson(route('admin.insurance-option.search') . '?name=a')
+            ->assertJson(fn(AssertableJson $json) => $json
+                ->whereAll(InsuranceOptionResource::collection(InsuranceOption::search('a')
+                    ->take(self::ITEMS_PER_SEARCH)
+                    ->get()
+                )->response()->getData(true)['data']))->assertOk();
     }
 }
