@@ -22,5 +22,6 @@
 <script src="{{Module::asset('client:plugins/timepicker/timePicker.js')}}"></script>
 <script src="{{Module::asset('client:plugins/circleType/jquery.circleType.js')}}"></script>
 <script src="{{Module::asset('client:plugins/circleType/jquery.lettering.min.js')}}"></script>
+<script src="{{Module::asset('client:plugins/ion.rangeSlider/js/ion.rangeSlider.min.js')}}"></script>
 <!-- template js -->
 <script src="{{Module::asset('client:js/insur.js')}}"></script>

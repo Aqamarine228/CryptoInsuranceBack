@@ -26,6 +26,8 @@
     @include('client::layouts._footer')
     @include('client::layouts._mobile_navigation')
 </div>
+@include('client::layouts._search-popup')
+<a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 @include('client::layouts._scripts')
 </body>
 </html>

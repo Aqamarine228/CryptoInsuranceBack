@@ -11,5 +11,9 @@
     "news.category": "Category",
     "news.searchFor": "Search results for",
     "news.nothingFound": "Nothing Found",
-    "news.nothingFoundText": "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+    "news.nothingFoundText": "Sorry, but nothing matched your search terms. Please try again with some different keywords.",
+    "home.newsFeed": "recent news feed",
+    "home.latestNews": "Latest news & articles",
+    "home.latestNewsBolded": "from the blog",
+    "home.readMore": "Read More"
 }

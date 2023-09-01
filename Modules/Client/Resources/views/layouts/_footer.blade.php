@@ -8,7 +8,9 @@
                 <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
                     <div class="footer-widget__column footer-widget__about">
                         <div class="footer-widget__logo">
-                            <a href="index.html"><img src="assets/images/resources/footer-logo.png" alt=""></a>
+                            <a href="{{route('client.home')}}"><img
+                                    src="{{Module::asset('client:images/resources/footer-logo.png')}}"
+                                    alt=""></a>
                         </div>
                         <div class="footer-widget__about-text-box">
                             <p class="footer-widget__about-text">Aliqua id fugiat nostrud irure ex duis ea quis
@@ -56,37 +58,50 @@
                         <ul class="footer-widget__gallery-list list-unstyled clearfix">
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-1.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-1.jpg')}}"
+                                        alt="">
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-2.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-2.jpg')}}"
+                                        alt="">
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-3.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-3.jpg')}}"
+                                        alt=""
+                                    >
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-4.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-4.jpg')}}"
+                                        alt="">
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-5.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-5.jpg')}}"
+                                        alt="">
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
                             <li>
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-6.jpg" alt="">
+                                    <img
+                                        src="{{Module::asset('client:images/resources/footer-widget-gallery-img-6.jpg')}}"
+                                        alt="">
                                     <a href="#"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>

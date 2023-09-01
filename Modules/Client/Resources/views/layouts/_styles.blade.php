@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="{{Module::asset('client:plugins/vegas/vegas.min.css')}}">
 <link rel="stylesheet" href="{{Module::asset('client:plugins/jquery-ui/jquery-ui.css')}}">
 <link rel="stylesheet" href="{{Module::asset('client:plugins/timepicker/timePicker.css')}}">
+<script src="{{Module::asset('client:plugins/ion.rangeSlider/css/ion.rangeSlider.min.css')}}"></script>
 
 <!-- template styles -->
 <link rel="stylesheet" href="{{Module::asset('client:css/insur.css')}}">
