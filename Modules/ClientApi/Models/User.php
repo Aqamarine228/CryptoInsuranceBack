@@ -28,7 +28,7 @@ class User extends \App\Models\User
 
     public function referralRequests(): HasMany
     {
-        return $this->hasMany(ReferralRequest::class);
+        return $this->hasMany(ReferralRequest::class, 'user_id', 'id');
     }
 
     public function insurances(): HasMany

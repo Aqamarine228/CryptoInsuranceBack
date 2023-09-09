@@ -57,7 +57,7 @@
                                     data-ask="1"
                                     data-title="Approve"
                                     data-confirm-button-color="primary"
-                                    data-message="Approve '{{$insuranceRequest->option['name_' . locale()->default()]}}' insurance request?"
+                                    data-message="Approve referral request?"
                                     data-type="warning"
                                 >Approve</button>
                                 <a href="{{route('admin.referral-request.reject', $referralRequest->id)}}"

@@ -11,6 +11,7 @@ use Modules\ClientApi\Http\Controllers\LogoutController;
 use Modules\ClientApi\Http\Controllers\PaymentTransactionController;
 use Modules\ClientApi\Http\Controllers\ReferralRequestController;
 use Modules\ClientApi\Http\Controllers\RegisterController;
+use Modules\ClientApi\Http\Controllers\UserController;
 use Modules\ClientApi\Http\Middleware\ShkeeperMiddleware;
 use Modules\ClientApi\Models\InsuranceRequest;
 
@@ -35,10 +36,14 @@ Route::middleware(ShkeeperMiddleware::class)
 Route::middleware('auth:api-v1')->group(function () {
     Route::post('/logout', LogoutController::class);
     Route::prefix('/email')->middleware('throttle:6,1')->group(function () {
-        Route::post('/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('email.verify');
         Route::post('/resend-verification', [EmailVerificationController::class, 'resendVerificationEmail']);
     });
+    Route::get('/user', [UserController::class, 'show']);
 });
+
+Route::middleware('signed')
+    ->post('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->name('email.verify');
 
 
 Route::middleware(['auth:api-v1', 'verified'])->group(function () {

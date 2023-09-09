@@ -13,7 +13,7 @@ class Localization
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->hasHeader("Accept-Language") && !locale()->isSupported($request->header("Accept-Language"))) {
-            return $this->respondErrorMessage("Bad locale");
+            return $this->respondErrorMessage("Bad locale", 400);
         }
 
         if ($request->hasHeader("Accept-Language")) {

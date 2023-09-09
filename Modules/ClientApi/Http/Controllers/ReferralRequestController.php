@@ -22,11 +22,11 @@ class ReferralRequestController extends BaseClientApiController
         ]);
 
         if ($request->user()->referral_id) {
-            return $this->respondError('User is already a referral.');
+            return $this->respondErrorMessage('User is already a referral.');
         }
 
         if ($request->user()->referralRequests()->where('status', ReferralRequestStatus::PENDING)->exists()) {
-            return $this->respondError('Pending referral request already exists.');
+            return $this->respondErrorMessage('Pending referral request already exists.');
         }
 
         DB::transaction(static function () use ($request, $validated) {

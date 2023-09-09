@@ -2,13 +2,14 @@
 
 namespace Modules\ClientApi\Http\Controllers;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\ClientApi\Models\User;
 
 class EmailVerificationController extends BaseClientApiController
 {
-
     public function resendVerificationEmail(Request $request): JsonResponse
     {
         $request->user()->sendEmailVerificationNotification();
@@ -16,9 +17,24 @@ class EmailVerificationController extends BaseClientApiController
         return $this->respondSuccess("Verification link was sent successfully");
     }
 
-    public function verify(EmailVerificationRequest $request): JsonResponse
+    public function verify(Request $request): JsonResponse
     {
-        $request->fulfill();
+        $user = User::find($request->route('id'));
+
+        if (!$user) {
+            return $this->respondErrorMessage("Bad user");
+        }
+
+        if (! hash_equals(sha1($user->getEmailForVerification()), (string) $request->route('hash'))) {
+            throw new AuthorizationException;
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return $this->respondErrorMessage("Email already verified");
+        }
+
+        $user->markEmailAsVerified();
+
 
         return $this->respondSuccess("Email verified successfully");
     }

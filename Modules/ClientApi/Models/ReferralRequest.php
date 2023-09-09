@@ -2,6 +2,7 @@
 
 namespace Modules\ClientApi\Models;
 
+use App\Enums\ReferralRequestStatus;
 use Exception;
 
 class ReferralRequest extends \App\Models\ReferralRequest
@@ -22,5 +23,14 @@ class ReferralRequest extends \App\Models\ReferralRequest
     public static function getDocumentPath(string $filename): string
     {
         return 'kyc/' . $filename;
+    }
+
+    /**
+     * Scopes
+     */
+
+    public function scopePending($q)
+    {
+        return $q->where('status', ReferralRequestStatus::PENDING);
     }
 }
