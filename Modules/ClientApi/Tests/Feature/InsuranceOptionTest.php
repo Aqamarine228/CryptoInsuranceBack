@@ -4,6 +4,8 @@ namespace Modules\ClientApi\Tests\Feature;
 
 use Illuminate\Testing\Fluent\AssertableJson;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFactory;
+use Modules\ClientApi\Models\Insurance;
+use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Tests\ClientApiTestCase;
 
 class InsuranceOptionTest extends ClientApiTestCase

@@ -55,4 +55,19 @@ class User extends \App\Models\User
     {
         return $this->belongsTo(self::class, 'inviter_id', 'id');
     }
+
+    public function referralIncome(): HasMany
+    {
+        return $this->hasMany(ReferralIncome::class, 'user_id');
+    }
+
+    public function inviterIncome(): HasMany
+    {
+        return $this->hasMany(ReferralIncome::class, 'referral_id');
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(self::class, 'inviter_id', 'id');
+    }
 }

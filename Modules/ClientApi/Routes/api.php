@@ -9,7 +9,9 @@ use Modules\ClientApi\Http\Controllers\InsuranceRequestController;
 use Modules\ClientApi\Http\Controllers\LoginController;
 use Modules\ClientApi\Http\Controllers\LogoutController;
 use Modules\ClientApi\Http\Controllers\PaymentTransactionController;
+use Modules\ClientApi\Http\Controllers\ReferralIncomeController;
 use Modules\ClientApi\Http\Controllers\ReferralRequestController;
+use Modules\ClientApi\Http\Controllers\ReferralsController;
 use Modules\ClientApi\Http\Controllers\RegisterController;
 use Modules\ClientApi\Http\Controllers\UserController;
 use Modules\ClientApi\Http\Middleware\ShkeeperMiddleware;
@@ -48,6 +50,11 @@ Route::middleware('signed')
 
 Route::middleware(['auth:api-v1', 'verified'])->group(function () {
     Route::post('/referral-request', ReferralRequestController::class);
+    Route::prefix('/referrals')->group(function () {
+        Route::get('/', [ReferralsController::class, 'index']);
+        Route::get('/widgets-data', [ReferralsController::class, 'widgetsData']);
+    });
+    Route::get('/referral-income', [ReferralIncomeController::class, 'index']);
 
     Route::prefix('/notifications')->group(function () {
         Route::get('/', [DatabaseNotificationController::class, 'index']);
