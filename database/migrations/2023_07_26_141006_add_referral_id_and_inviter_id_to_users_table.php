@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->uuid('referral_id')->nullable();
-            $table->uuid('inviter_id')->nullable();
+            $table->foreignId('inviter_id')->nullable()->constrained('users');
         });
     }
 

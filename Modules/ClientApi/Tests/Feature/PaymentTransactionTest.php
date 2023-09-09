@@ -6,15 +6,22 @@ use App\Enums\PaymentTransactionStatus;
 use Modules\ClientApi\Database\Factories\InsuranceInvoiceFactory;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFactory;
 use Modules\ClientApi\Database\Factories\PaymentTransactionFactory;
+use Modules\ClientApi\Database\Factories\UserFactory;
 use Modules\ClientApi\Models\Insurance;
 use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Tests\ClientApiTestCase;
+use Str;
 
 class PaymentTransactionTest extends ClientApiTestCase
 {
 
     public function testItAcceptsShkeeperPaymentSuccessfully(): void
     {
+        $referral = UserFactory::new()->create();
+        $this->user->update([
+            'inviter_id' => $referral->id
+        ]);
+
         $insuranceInvoice = InsuranceInvoiceFactory::new()->state([
             'user_id' => $this->user->id,
         ])->create();
@@ -65,6 +72,19 @@ class PaymentTransactionTest extends ClientApiTestCase
                 now()->addSeconds($insuranceInvoice->subscriptionOption->duration)
             )
             ->first();
+
+        $this->assertDatabaseHas('referral_incomes', [
+            'payable_id' => $invoice->id,
+            'payable_type' => InsuranceInvoice::class,
+            'amount' => bcmul(
+                (string)$insuranceInvoice->amount,
+                bcdiv((string)config('referrals.income_percent'), "100.00", 2),
+                2
+            ),
+            'currency' => $insuranceInvoice->currency,
+            'user_id' => $referral->id,
+            'referral_id' => $this->user->id,
+        ]);
 
         self::assertNotNull($invoice);
         foreach ($insuranceOptions as $insuranceOption) {

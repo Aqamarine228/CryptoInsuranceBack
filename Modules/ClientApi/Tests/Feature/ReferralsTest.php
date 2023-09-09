@@ -11,7 +11,7 @@ class ReferralsTest extends ClientApiTestCase
     public function testAddSuccessful(): void
     {
         $referralId = $this->faker->uuid;
-        UserFactory::new()->state([
+        $referral = UserFactory::new()->state([
             'referral_id' => $referralId
         ])->create();
 
@@ -28,7 +28,7 @@ class ReferralsTest extends ClientApiTestCase
             'first_name' => 'Referral',
             'last_name' => 'Referred',
             'email' => 'goodReferral@example.com',
-            'inviter_id' => $referralId,
+            'inviter_id' => $referral->id,
         ]);
     }
 

@@ -20,6 +20,9 @@ class RegisterController extends BaseClientApiController
         ]);
 
         $validated['locale'] = locale()->current();
+        if (array_key_exists('inviter_id', $validated)) {
+            $validated['inviter_id'] = User::where('referral_id', $validated['inviter_id'])->first()->id;
+        }
 
         $user = User::create($validated);
         $user->sendEmailVerificationNotification();

@@ -2,6 +2,7 @@
 
 namespace Modules\ClientApi\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\ClientApi\Notifications\VerifyEmailNotification;
 
@@ -23,6 +24,15 @@ class User extends \App\Models\User
     }
 
     /**
+     * Methods
+     */
+
+    public function hasReferral(): bool
+    {
+        return $this->inviter_id;
+    }
+
+    /**
      * Relations
      */
 
@@ -39,5 +49,10 @@ class User extends \App\Models\User
     public function insuranceRequests(): HasMany
     {
         return $this->hasMany(InsuranceRequest::class);
+    }
+
+    public function inviter(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'inviter_id', 'id');
     }
 }
