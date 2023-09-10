@@ -18,6 +18,7 @@ class InsuranceInvoiceResource extends JsonResource
             'id' => $this->id,
             'amount' => (float)$this->amount,
             'currency' => $this->currency,
+            'created_at' => $this->created_at,
         ];
     }
 }

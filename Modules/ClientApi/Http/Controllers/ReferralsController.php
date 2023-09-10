@@ -20,7 +20,7 @@ class ReferralsController extends BaseClientApiController
     {
         return $this->respondSuccess([
             'count' => $request->user()->referrals()->count(),
-            'income_overall' => $request->user()->referralIncome()->sum('amount'),
+            'income_overall' => (float)$request->user()->referralIncome()->sum('amount'),
             'count_new_today' => $request->user()->referrals()->whereDate('created_at', today())->count(),
             'income_today' => $request->user()->referralIncome()->whereDate('created_at', today())->sum('amount'),
         ]);

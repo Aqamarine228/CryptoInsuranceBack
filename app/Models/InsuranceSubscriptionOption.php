@@ -9,6 +9,8 @@ class InsuranceSubscriptionOption extends Model
 {
     use SoftDeletes;
 
+    const DURATION_ENTITY = 60 * 60 * 24;
+
     protected $casts = [
         'sale_percentage' => 'decimal:2',
     ];

@@ -17,6 +17,10 @@ use Modules\ClientApi\Models\InsuranceSubscriptionOption;
 
 class InsuranceInvoiceController extends BaseClientApiController
 {
+    public function show(InsuranceInvoice $insuranceInvoice): JsonResponse
+    {
+        return $this->respondSuccess(new InsuranceInvoiceResource($insuranceInvoice));
+    }
     public function createCustom(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -25,14 +29,11 @@ class InsuranceInvoiceController extends BaseClientApiController
             'insurance_subscription_option_id' => 'required|exists:insurance_subscription_options,id',
         ]);
 
+        $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
         $summedPrice = InsuranceOption::whereIn('id', $validated['insurance_options'])->sum('price');
-        $price = $this->calculatePrice(
-            $summedPrice,
-            InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id'])->sale_percentage
-        );
 
         $insuranceInvoice = InsuranceInvoice::create([
-            'amount' => $price,
+            'amount' => $subscriptionOption->calculateEndPrice($summedPrice),
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
@@ -51,14 +52,10 @@ class InsuranceInvoiceController extends BaseClientApiController
         ]);
 
         $insurancePack = InsurancePack::find($validated['insurance_pack_id']);
-
-        $price = $this->calculatePrice(
-            $insurancePack->price,
-            InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id'])->sale_percentage
-        );
+        $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
 
         $insuranceInvoice = InsuranceInvoice::create([
-            'amount' => $price,
+            'amount' => $subscriptionOption->calculateEndPrice($insurancePack->price),
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
@@ -84,10 +81,5 @@ class InsuranceInvoiceController extends BaseClientApiController
             'wallet' => $transaction->wallet,
             'exchange_rate' > $transaction->exchangeRate,
         ]);
-    }
-
-    private function calculatePrice(float $price, float $salePercentage): float
-    {
-        return (float)bcmul($price, bcdiv($salePercentage, "100", 2), 2);
     }
 }

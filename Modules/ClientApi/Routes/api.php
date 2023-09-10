@@ -5,7 +5,9 @@ use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\InsuranceController;
 use Modules\ClientApi\Http\Controllers\InsuranceInvoiceController;
 use Modules\ClientApi\Http\Controllers\InsuranceOptionController;
+use Modules\ClientApi\Http\Controllers\InsurancePackController;
 use Modules\ClientApi\Http\Controllers\InsuranceRequestController;
+use Modules\ClientApi\Http\Controllers\InsuranceSubscriptionOptionController;
 use Modules\ClientApi\Http\Controllers\LoginController;
 use Modules\ClientApi\Http\Controllers\LogoutController;
 use Modules\ClientApi\Http\Controllers\PaymentTransactionController;
@@ -55,6 +57,7 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
         Route::get('/widgets-data', [ReferralsController::class, 'widgetsData']);
     });
     Route::get('/referral-income', [ReferralIncomeController::class, 'index']);
+    Route::get('/referral-income/history-data', [ReferralIncomeController::class, 'historyData']);
 
     Route::prefix('/notifications')->group(function () {
         Route::get('/', [DatabaseNotificationController::class, 'index']);
@@ -65,7 +68,11 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
     Route::post('/insurance-request/{insuranceOption}', InsuranceRequestController::class)
         ->can('create', [InsuranceRequest::class, 'insuranceOption']);
 
-    Route::get('/insurance-option', [InsuranceOptionController::class, 'paginate']);
+    Route::get('/insurance-pack', [InsurancePackController::class, 'index']);
+    Route::get('/insurance-option', [InsuranceOptionController::class, 'index']);
+    Route::get('/insurance-option/{insuranceOption}', [InsuranceOptionController::class, 'show']);
+    Route::get('/insurance-subscription-option', [InsuranceSubscriptionOptionController::class, 'index']);
+    Route::get('/insurance', [InsuranceController::class, 'show']);
     Route::post('/insurance/price', [InsuranceController::class, 'calculatePrice']);
     Route::prefix('/insurance-invoice')->group(function () {
         Route::post('/custom', [InsuranceInvoiceController::class, 'createCustom']);
@@ -74,5 +81,6 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
             '/{insuranceInvoice}/transaction',
             [InsuranceInvoiceController::class, 'createShkeeperTransaction']
         );
+        Route::get('/{insuranceInvoice}', [InsuranceInvoiceController::class, 'show']);
     });
 });

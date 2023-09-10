@@ -2,6 +2,7 @@
 
 namespace Modules\ClientApi\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\InsuranceSubscriptionOption;
@@ -11,15 +12,21 @@ use Modules\ClientApi\Models\InsuranceSubscriptionOption;
  *
  * @mixin InsuranceOption
  */
-class InsuranceOptionResource extends JsonResource
+class InsuranceOptionCalculatedResource extends JsonResource
 {
-    public function toArray($request): array
+    public function __construct($resource, private InsuranceSubscriptionOption $subscriptionOption)
+    {
+        parent::__construct($resource);
+    }
+
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'fields' => $this->when('fields', InsuranceOptionFieldResource::collection($this->fields)),
+            'price' => (float)$this->subscriptionOption->calculateEndPrice($this->price),
+            'currency' => $this->currency,
         ];
     }
 }

@@ -4,24 +4,31 @@ namespace Modules\ClientApi\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\ClientApi\Http\Resources\InsuranceOptionCalculatedResource;
 use Modules\ClientApi\Http\Resources\InsuranceOptionResource;
 use Modules\ClientApi\Models\InsuranceOption;
+use Modules\ClientApi\Models\InsuranceSubscriptionOption;
 
 class InsuranceOptionController extends BaseClientApiController
 {
+    public function show(InsuranceOption $insuranceOption): JsonResponse
+    {
+        $insuranceOption->load('fields');
+        return $this->respondSuccess(new InsuranceOptionResource($insuranceOption));
+    }
 
-    public function paginate(Request $request): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'search' => 'string|max:255',
+            'insurance_subscription_option_id' => 'required|exists:insurance_subscription_options,id',
         ]);
+        $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
 
-        if (array_key_exists('search', $validated)) {
-            $insuranceOptions = InsuranceOption::search($validated['search'])->paginate();
-        } else {
-            $insuranceOptions = InsuranceOption::paginate();
-        }
+        return $this->respondSuccess(
+            InsuranceOption::all()->map(
+                fn(InsuranceOption $insuranceOption) => new InsuranceOptionCalculatedResource($insuranceOption, $subscriptionOption)
+            )
+        );
 
-        return $this->respondSuccess(InsuranceOptionResource::collection($insuranceOptions)->response()->getData(true));
     }
 }

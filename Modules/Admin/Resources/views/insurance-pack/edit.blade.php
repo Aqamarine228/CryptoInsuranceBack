@@ -76,7 +76,7 @@
                                 </div>
                             @endforeach
                             <div class="form-group">
-                                <label for="Price">Price</label>
+                                <label for="Price">Price Per Day</label>
                                 <input type="number" step=".01" class="form-control" name="price" placeholder="Price"
                                        value="{{$insurancePack->price}}">
                             </div>

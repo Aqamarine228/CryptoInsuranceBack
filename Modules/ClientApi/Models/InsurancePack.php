@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class InsurancePack extends \App\Models\InsurancePack
 {
 
+    protected array $localizable = ['name', 'description'];
+
     /**
      * Relations
      */

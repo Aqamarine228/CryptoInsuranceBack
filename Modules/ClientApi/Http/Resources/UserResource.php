@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'email_verified' => (bool)$this->email_verified_at,
             'created_at' => $this->created_at,
             'has_referral_request' => $this->referralRequests()->pending()->exists(),
+            'has_insurance' => $this->insurances()->active()->exists(),
         ];
     }
 

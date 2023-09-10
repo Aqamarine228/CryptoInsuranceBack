@@ -5,7 +5,7 @@ namespace Modules\ClientApi\Database\Factories;
 use App\Enums\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Modules\Admin\Models\InsurancePack;
+use Modules\ClientApi\Models\InsurancePack;
 
 class InsurancePackFactory extends Factory
 {

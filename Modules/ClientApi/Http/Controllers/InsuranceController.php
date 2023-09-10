@@ -5,11 +5,19 @@ namespace Modules\ClientApi\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\ClientApi\Http\Resources\InsurancePriceResource;
+use Modules\ClientApi\Http\Resources\InsuranceResource;
 use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\InsuranceSubscriptionOption;
 
 class InsuranceController extends BaseClientApiController
 {
+    public function show(Request $request): JsonResponse
+    {
+        $insurance = $request->user()->insurances()->active()->first();
+        return $this->respondSuccess(
+            $insurance ? new InsuranceResource($insurance) : null
+        );
+    }
 
     public function calculatePrice(Request $request): JsonResponse
     {
