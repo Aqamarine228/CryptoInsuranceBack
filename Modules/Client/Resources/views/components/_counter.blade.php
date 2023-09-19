@@ -21,7 +21,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="counter-one__text">Gave insurances</p>
+                    <p class="counter-one__text">{{__('components.counter.gaveInsurances')}}</p>
                 </div>
             </div>
             <!--Counter One Single End-->
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="counter-one__text">Professional team</p>
+                    <p class="counter-one__text">{{__('components.counter.professionalTeam')}}</p>
                 </div>
             </div>
             <!--Counter One Single End-->
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="counter-one__text">Satisfied customers</p>
+                    <p class="counter-one__text">{{__('components.counter.satisfiedCustomers')}}</p>
                 </div>
             </div>
             <!--Counter One Single End-->
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="counter-one__text">Our success rate</p>
+                    <p class="counter-one__text">{{__('components.counter.ourSuccessRate')}}</p>
                 </div>
             </div>
             <!--Counter One Single End-->

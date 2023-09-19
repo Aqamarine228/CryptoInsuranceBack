@@ -25,7 +25,7 @@
                 <div class="why-choose-one__left">
                     <div class="section-title text-left">
                         <div class="section-sub-title-box">
-                            <p class="section-sub-title">Why choose</p>
+                            <p class="section-sub-title">{{__('home.whyChoseTitle')}}</p>
                             <div class="section-title-shape-1">
                                 <img src="{{Module::asset('client:images/shapes/section-title-shape-3.png')}}" alt="">
                             </div>
@@ -33,10 +33,9 @@
                                 <img src="{{Module::asset('client:images/shapes/section-title-shape-4.png')}}" alt="">
                             </div>
                         </div>
-                        <h2 class="section-title__title">Few reasons for people choosing insur</h2>
+                        <h2 class="section-title__title">{{__('home.whyChoseSubTitle')}}</h2>
                     </div>
-                    <p class="why-choose-one__text">Nullam eu nibh vitae est tempor molestie id sed ex. Quisque
-                        dignissim maximus ipsum, sed rutrum metus tincidunt et.</p>
+                    <p class="why-choose-one__text">{{__('home.whyChoseDescription')}}</p>
                     <div class="why-choose-one__list-box">
                         <ul class="list-unstyled why-choose-one__list">
                             <li>
@@ -46,11 +45,10 @@
                                     </div>
                                     <div class="why-choose-one__list-title-box">
                                         <div class="why-choose-one__list-title-inner">
-                                            <h3 class="why-choose-one__list-title">Fast & easy process</h3>
+                                            <h3 class="why-choose-one__list-title">{{__('home.whyChoseBenefits1Title')}}</h3>
                                         </div>
                                         <div class="why-choose-one__list-text-box">
-                                            <p class="why-choose-one__list-text">Lorem ipsum dolor sit amet,
-                                                sectetur adipiscing elit.</p>
+                                            <p class="why-choose-one__list-text">{{__('home.whyChoseBenefits1Description')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -62,11 +60,10 @@
                                     </div>
                                     <div class="why-choose-one__list-title-box">
                                         <div class="why-choose-one__list-title-inner">
-                                            <h3 class="why-choose-one__list-title">Fast & easy process</h3>
+                                            <h3 class="why-choose-one__list-title">{{__('home.whyChoseBenefits2Title')}}</h3>
                                         </div>
                                         <div class="why-choose-one__list-text-box">
-                                            <p class="why-choose-one__list-text">Lorem ipsum dolor sit amet,
-                                                sectetur adipiscing elit.</p>
+                                            <p class="why-choose-one__list-text">{{__('home.whyChoseBenefits2Description')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -78,11 +75,10 @@
                                     </div>
                                     <div class="why-choose-one__list-title-box">
                                         <div class="why-choose-one__list-title-inner">
-                                            <h3 class="why-choose-one__list-title">Control over policy</h3>
+                                            <h3 class="why-choose-one__list-title">{{__('home.whyChoseBenefits3Title')}}</h3>
                                         </div>
                                         <div class="why-choose-one__list-text-box">
-                                            <p class="why-choose-one__list-text">Lorem ipsum dolor sit amet,
-                                                sectetur adipiscing elit.</p>
+                                            <p class="why-choose-one__list-text">{{__('home.whyChoseBenefits3Description')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -94,11 +90,10 @@
                                     </div>
                                     <div class="why-choose-one__list-title-box">
                                         <div class="why-choose-one__list-title-inner">
-                                            <h3 class="why-choose-one__list-title">Save your money</h3>
+                                            <h3 class="why-choose-one__list-title">{{__('home.whyChoseBenefits4Title')}}</h3>
                                         </div>
                                         <div class="why-choose-one__list-text-box">
-                                            <p class="why-choose-one__list-text">Lorem ipsum dolor sit amet,
-                                                sectetur adipiscing elit.</p>
+                                            <p class="why-choose-one__list-text">{{__('home.whyChoseBenefits4Description')}}</p>
                                         </div>
                                     </div>
                                 </div>

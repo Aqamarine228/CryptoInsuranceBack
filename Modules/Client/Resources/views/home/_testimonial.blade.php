@@ -14,21 +14,16 @@
                             <div class="section-sub-title-box">
                                 <p class="section-sub-title">testimonials</p>
                                 <div class="section-title-shape-1">
-                                    <img src="{{Module::asset('client:images/shapes/section-title-shape-1.png')}}" alt="">
+                                    <img src="{{Module::asset('client:images/shapes/section-title-shape-1.png')}}"
+                                         alt="">
                                 </div>
                                 <div class="section-title-shape-2">
-                                    <img src="{{Module::asset('client:images/shapes/section-title-shape-2.png')}}" alt="">
+                                    <img src="{{Module::asset('client:images/shapes/section-title-shape-2.png')}}"
+                                         alt="">
                                 </div>
                             </div>
                             <h2 class="section-title__title">What our customers are <br> talking about</h2>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="testimonial-one__top-right">
-                        <p class="testimonial-one__top-text">Pellentesque habitant morbi tristique senectus
-                            netus et malesuada fames ac turp egestas. Aliquam viverra arcu. Donec aliquet
-                            blandit enim feugiat mattis.</p>
                     </div>
                 </div>
             </div>
@@ -61,142 +56,49 @@
                                     }
                                 }
                             }'>
-                        <div class="item">
-                            <div class="testimonial-one__single">
-                                <div class="testimonial-one__single-inner">
-                                    <div class="testimonial-one__shape-1">
-                                        <img src="{{Module::asset('client:images/shapes/testimonial-one-shape-1.png')}}" alt="">
-                                    </div>
-                                    <div class="testimonial-one__client-info">
-                                        <div class="testimonial-one__client-img-box">
-                                            <img src="{{Module::asset('client:images/testimonial/testimonial-1-1.jpg')}}" alt="">
-                                            <div class="testimonial-one__quote">
-                                                <img src="{{Module::asset('client:images/testimonial/testimonial-1-quote.png')}}"
-                                                     alt="">
+                        @for($i =1; $i < 5;$i++)
+                            <div class="item">
+                                <div class="testimonial-one__single">
+                                    <div class="testimonial-one__single-inner">
+                                        <div class="testimonial-one__shape-1">
+                                            <img
+                                                @if($i === 4)
+                                                    src="{{Module::asset("client:images/shapes/testimonial-one-shape-1.png")}}"
+                                                @else
+                                                    src="{{Module::asset("client:images/shapes/testimonial-one-shape-$i.png")}}"
+                                                @endif
+                                                alt="">
+                                        </div>
+                                        <div class="testimonial-one__client-info">
+                                            <div class="testimonial-one__client-img-box">
+                                                <img
+                                                    src="{{Module::asset("client:images/testimonial/testimonial-1-$i.jpg")}}"
+                                                    alt="">
+                                                <div class="testimonial-one__quote">
+                                                    <img
+                                                        src="{{Module::asset("client:images/testimonial/testimonial-1-quote.png")}}"
+                                                        alt="">
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-one__client-content">
+                                                <div class="testimonial-one__client-review">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <div class="testimonial-one__client-details">
+                                                    <h3 class="testimonial-one__client-name">{{__("home.testimonial{$i}Name")}}</h3>
+                                                    <p class="testimonial-one__client-sub-title">{{__("home.testimonial{$i}JobTitle")}}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="testimonial-one__client-content">
-                                            <div class="testimonial-one__client-review">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="testimonial-one__client-details">
-                                                <h3 class="testimonial-one__client-name">Smith Vectoria</h3>
-                                                <p class="testimonial-one__client-sub-title">director</p>
-                                            </div>
-                                        </div>
+                                        <p class="testimonial-one__text">{{__("home.testimonial{$i}Review")}}</p>
                                     </div>
-                                    <p class="testimonial-one__text">Pellentesque habitant morbi tristique
-                                        senectus netus et malesuada fames ac turp egestas. Aliquam viverra arcu.
-                                        Donec aliquet blandit enim feugiat mattis.</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-one__single">
-                                <div class="testimonial-one__single-inner">
-                                    <div class="testimonial-one__shape-1">
-                                        <img src="{{Module::asset('client:images/shapes/testimonial-one-shape-1.png')}}" alt="">
-                                    </div>
-                                    <div class="testimonial-one__client-info">
-                                        <div class="testimonial-one__client-img-box">
-                                            <img src="{{Module::asset('client:images/testimonial/testimonial-1-2.jpg')}}" alt="">
-                                            <div class="testimonial-one__quote">
-                                                <img src="{{Module::asset('client:images/testimonial/testimonial-1-quote.png')}}"
-                                                     alt="">
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-one__client-content">
-                                            <div class="testimonial-one__client-review">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="testimonial-one__client-details">
-                                                <h3 class="testimonial-one__client-name">Christine Eve</h3>
-                                                <p class="testimonial-one__client-sub-title">director</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="testimonial-one__text">Pellentesque habitant morbi tristique
-                                        senectus netus et malesuada fames ac turp egestas. Aliquam viverra arcu.
-                                        Donec aliquet blandit enim feugiat mattis.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-one__single">
-                                <div class="testimonial-one__single-inner">
-                                    <div class="testimonial-one__shape-1">
-                                        <img src="{{Module::asset('client:images/shapes/testimonial-one-shape-1.png')}}" alt="">
-                                    </div>
-                                    <div class="testimonial-one__client-info">
-                                        <div class="testimonial-one__client-img-box">
-                                            <img src="{{Module::asset('client:images/testimonial/testimonial-1-3.jpg')}}" alt="">
-                                            <div class="testimonial-one__quote">
-                                                <img src="{{Module::asset('client:images/testimonial/testimonial-1-quote.png')}}"
-                                                     alt="">
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-one__client-content">
-                                            <div class="testimonial-one__client-review">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="testimonial-one__client-details">
-                                                <h3 class="testimonial-one__client-name">Hallen Smith</h3>
-                                                <p class="testimonial-one__client-sub-title">director</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="testimonial-one__text">Pellentesque habitant morbi tristique
-                                        senectus netus et malesuada fames ac turp egestas. Aliquam viverra arcu.
-                                        Donec aliquet blandit enim feugiat mattis.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-one__single">
-                                <div class="testimonial-one__single-inner">
-                                    <div class="testimonial-one__shape-1">
-                                        <img src="{{Module::asset('client:images/shapes/testimonial-one-shape-1.png')}}" alt="">
-                                    </div>
-                                    <div class="testimonial-one__client-info">
-                                        <div class="testimonial-one__client-img-box">
-                                            <img src="{{Module::asset('client:images/testimonial/testimonial-1-4.jpg')}}" alt="">
-                                            <div class="testimonial-one__quote">
-                                                <img src="{{Module::asset('client:images/testimonial/testimonial-1-quote.png')}}"
-                                                     alt="">
-                                            </div>
-                                        </div>
-                                        <div class="testimonial-one__client-content">
-                                            <div class="testimonial-one__client-review">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="testimonial-one__client-details">
-                                                <h3 class="testimonial-one__client-name">Kevin Martin</h3>
-                                                <p class="testimonial-one__client-sub-title">director</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="testimonial-one__text">Pellentesque habitant morbi tristique
-                                        senectus netus et malesuada fames ac turp egestas. Aliquam viverra arcu.
-                                        Donec aliquet blandit enim feugiat mattis.</p>
-                                </div>
-                            </div>
-                        </div>
+                        @endfor
                     </div>
                 </div>
             </div>

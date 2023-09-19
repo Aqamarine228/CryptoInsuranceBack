@@ -12,9 +12,8 @@
                             <div class="feature-one__shape">
                                 <img src="{{Module::asset('client:images/shapes/feature-one-shape-1.png')}}" alt="">
                             </div>
-                            <h3 class="feature-one__title"><a href="about.html">Safe your money</a></h3>
-                            <p class="feature-one__text">Lorem ipsum dolor amet consectetur adipiscing elit do
-                                eiusmod tempor incid idunt ut labore.</p>
+                            <h3 class="feature-one__title"><a href="about.html">{{__('home.feature1Title')}}</a></h3>
+                            <p class="feature-one__text">{{__('home.feature1Description')}}</p>
                         </div>
                     </div>
                 </div>
@@ -28,9 +27,8 @@
                             <div class="feature-one__shape">
                                 <img src="{{Module::asset('client:images/shapes/feature-one-shape-1.png')}}" alt="">
                             </div>
-                            <h3 class="feature-one__title"><a href="about.html">Get free quote</a></h3>
-                            <p class="feature-one__text">Lorem ipsum dolor amet consectetur adipiscing elit do
-                                eiusmod tempor incid idunt ut labore.</p>
+                            <h3 class="feature-one__title"><a href="about.html">{{__('home.feature2Title')}}</a></h3>
+                            <p class="feature-one__text">{{__('home.feature2Description')}}</p>
                         </div>
                     </div>
                 </div>
@@ -44,9 +42,8 @@
                             <div class="feature-one__shape">
                                 <img src="{{Module::asset('client:images/shapes/feature-one-shape-1.png')}}" alt="">
                             </div>
-                            <h3 class="feature-one__title"><a href="about.html">Fast & reliable</a></h3>
-                            <p class="feature-one__text">Lorem ipsum dolor amet consectetur adipiscing elit do
-                                eiusmod tempor incid idunt ut labore.</p>
+                            <h3 class="feature-one__title"><a href="about.html">{{__('home.feature3Title')}}</a></h3>
+                            <p class="feature-one__text">{{__('home.feature3Description')}}</p>
                         </div>
                     </div>
                 </div>

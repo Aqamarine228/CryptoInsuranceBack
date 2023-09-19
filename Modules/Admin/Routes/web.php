@@ -51,6 +51,8 @@ Route::middleware('auth:admin')->group(function () {
         [InsuranceOptionFieldController::class, 'delete']
     )
         ->name('insurance-option.field.destroy');
+    Route::put('/insurance-option/{insuranceOption}/picture', [InsuranceOptionController::class, 'updatePicture'])
+        ->name('insurance-option.update-picture');
     Route::resource('insurance-pack', InsurancePackController::class)->except('show');
 
     Route::prefix('/insurance-request')->name('insurance-request.')->group(function () {

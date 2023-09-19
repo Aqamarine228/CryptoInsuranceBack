@@ -3,7 +3,6 @@
 namespace Modules\ClientApi\Http\Controllers;
 
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\ClientApi\Models\User;
@@ -22,7 +21,7 @@ class EmailVerificationController extends BaseClientApiController
         $user = User::find($request->route('id'));
 
         if (!$user) {
-            return $this->respondErrorMessage("Bad user");
+            return $this->respondErrorMessage(__("errors.badUser"));
         }
 
         if (! hash_equals(sha1($user->getEmailForVerification()), (string) $request->route('hash'))) {

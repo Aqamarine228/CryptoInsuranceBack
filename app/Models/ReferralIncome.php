@@ -9,6 +9,7 @@ class ReferralIncome extends Model
 {
     protected $casts = [
         'currency' => Currency::class,
+        'amount' => 'float'
     ];
 
 }

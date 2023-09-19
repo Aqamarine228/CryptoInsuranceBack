@@ -1,0 +1,16 @@
+{
+    "errors.badUser": "Bad user",
+    "errors.incorrectCredentials": "The provided credentials are incorrect",
+    "errors.userIsAlreadyAReferral": "User is already a referral",
+    "errors.referralRequestAlreadySubmitted": "Referral request already submitted",
+
+    "emails.verifyEmail.pageTitle": "Email Verification",
+    "emails.verifyEmail.title": "Please Verify your email",
+    "emails.verifyEmail.description": "Please validate your email address in order to get started using product.",
+    "emails.verifyEmail.verifyButton": "Verify Your Email",
+    "emails.verifyEmail.alternativeLink": "Or verify using this link",
+    "emails.verifyEmail.needHelp": "Need help",
+    "emails.verifyEmail.contactInformation": "Please send and feedback or bug info to:",
+
+    "referralIncomeType.insurance": "Bought Insurance"
+}

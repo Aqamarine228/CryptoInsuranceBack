@@ -15,10 +15,9 @@ class ReferralResource extends \Illuminate\Http\Resources\Json\JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'income' => $this->inviterIncome()->sum('amount'),
-            'created_at' => $this->created_at,
+            'name' => $this->first_name,
+            'income' => (float)$this->inviter_income_sum_amount,
+            'last_income' => $this->latestInviterIncome?->created_at,
         ];
     }
 }

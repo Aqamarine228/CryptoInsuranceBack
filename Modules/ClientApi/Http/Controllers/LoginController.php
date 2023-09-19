@@ -18,7 +18,7 @@ class LoginController extends BaseClientApiController
         $user = User::where('email', $validated['email'])->first();
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
-            return $this->respondErrorMessage('The provided credentials are incorrect');
+            return $this->respondErrorMessage(__("errors.incorrectCredentials"));
         }
 
         return $this->respondSuccess($user->createToken($user->email)->plainTextToken);

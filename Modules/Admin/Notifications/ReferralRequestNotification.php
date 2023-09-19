@@ -25,9 +25,11 @@ class ReferralRequestNotification extends Notification
     {
         $locale = $notifiable->locale;
         return (new MailMessage)
-            ->view("emails.$locale.referral-request", [
+            ->subject(__($this->referralRequest->approved_at ? 'emails.referralRequest.subject.approved' : 'emails.referralRequest.subject.declined'))
+            ->view("emails.referral-request", [
                 'status' => $this->referralRequest->status,
-                'reason' => $this->referralRequest["rejection_reason_$locale"]
+                'reason' => $this->referralRequest["rejection_reason_$locale"],
+                'locale' => $locale
             ]);
     }
 

@@ -12,7 +12,9 @@
 */
 
 
-use Modules\Client\Http\Controllers\LocaleController;
+use Modules\Client\Http\Controllers\AboutController;
+use Modules\Client\Http\Controllers\ContactController;
+use Modules\Client\Http\Controllers\Error404Controller;
 use Modules\Client\Http\Controllers\NewsController;
 use Modules\Client\Http\Middleware\LocalizationMiddleware;
 use Modules\Client\Http\Controllers\HomeController;
@@ -29,4 +31,8 @@ Route::prefix('/{locale}')
         Route::get('/news/{post}', [NewsController::class, 'show'])->name('news.show');
         Route::get('/news/tag/{postTag}', [NewsController::class, 'indexByTag'])->name('news.tag');
         Route::get('/news/category/{postCategory}', [NewsController::class, 'indexByCategory'])->name('news.category');
+        Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+        Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact');
+        Route::get('/about', AboutController::class)->name('about');
+        Route::get('/404', Error404Controller::class)->name('error404');
     });

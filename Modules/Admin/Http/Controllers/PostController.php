@@ -85,7 +85,7 @@ class PostController extends BaseAdminController
             'y1' => 'required|numeric'
         ]);
 
-        $imageName = $this->cropAndUploadImagesByName(
+        $imageName = $this->cropAndUploadImage(
             $validated['picture'],
             $post,
         );
@@ -101,7 +101,7 @@ class PostController extends BaseAdminController
         return back();
     }
 
-    protected function cropAndUploadImagesByName(UploadedFile $image, Post $post): string
+    protected function cropAndUploadImage(UploadedFile $image): string
     {
         $fileName = GenerateFileName::execute('png');
 

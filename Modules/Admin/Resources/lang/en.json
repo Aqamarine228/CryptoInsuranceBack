@@ -1,0 +1,10 @@
+{
+    "emails.referralRequest.subject.approved": "Referral Request Approved",
+    "emails.referralRequest.subject.declined": "Referral Request Declined",
+    "emails.referralRequest.pageTitle": "Referral Request",
+    "emails.referralRequest.title.approved": "Referral Request Approved",
+    "emails.referralRequest.title.declined": "Referral Request Declined",
+    "emails.referralRequest.description.approved": "Congratulations! Your referral request was approved, please check out referral page on our site in order to gain additional information",
+    "emails.referralRequest.description.declined": "Unfortunately your referral request was declined",
+    "emails.referralRequest.declinationReason": "Declination Reason"
+}

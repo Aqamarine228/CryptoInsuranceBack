@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Actions\GenerateFileName;
 use App\Actions\GenerateSlug;
 use App\Enums\InsuranceOptionFieldType;
 use App\Rules\AllLanguagesRule;
@@ -9,7 +10,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Http\Resources\InsuranceOptionResource;
 use Modules\Admin\Models\InsuranceOption;
@@ -93,4 +96,47 @@ class InsuranceOptionController extends BaseAdminController
 
         return new JsonResponse(InsuranceOptionResource::collection($options));
     }
+
+    public function updatePicture(Request $request, InsuranceOption $insuranceOption): RedirectResponse
+    {
+        $validated = $request->validate([
+            'picture' => ['required', 'image', 'max:4096'],
+            'width' => 'required|numeric',
+            'height' => 'required|numeric',
+            'x1' => 'required|numeric',
+            'y1' => 'required|numeric'
+        ]);
+
+        $imageName = $this->cropAndUploadImage(
+            $validated['picture'],
+            ...$request->only(['width', 'height', 'x1', 'y1'])
+        );
+
+        if ($insuranceOption->picture) {
+            Storage::delete(InsuranceOption::getPicturePath($insuranceOption->picture));
+        }
+
+        $insuranceOption->update([
+            'picture' => $imageName
+        ]);
+
+        return back();
+    }
+
+    protected function cropAndUploadImage(UploadedFile $image, int $width, int $height, int $x1, int $y1): string
+    {
+        $fileName = GenerateFileName::execute('png');
+
+        $image = Image::make($image)->crop($width, $height, $x1, $y1);
+
+        $originalImage = $image->encode('png');
+
+        Storage::put(
+            InsuranceOption::getPicturePath($fileName),
+            $originalImage->stream()
+        );
+
+        return $fileName;
+    }
+
 }

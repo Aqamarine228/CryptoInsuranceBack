@@ -2,12 +2,15 @@
 
 namespace Modules\ClientApi\Models;
 
+use App\Models\FilterableByColumn;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\ClientApi\Notifications\VerifyEmailNotification;
 
 class User extends \App\Models\User
 {
+    use FilterableByColumn;
 
     protected $fillable = [
         'email',
@@ -64,6 +67,11 @@ class User extends \App\Models\User
     public function inviterIncome(): HasMany
     {
         return $this->hasMany(ReferralIncome::class, 'referral_id');
+    }
+
+    public function latestInviterIncome(): HasOne
+    {
+        return $this->hasOne(ReferralIncome::class, 'referral_id')->latestOfMany();
     }
 
     public function referrals(): HasMany

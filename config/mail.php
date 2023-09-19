@@ -122,4 +122,6 @@ return [
         ],
     ],
 
+    'support_email' => 'support@cryptoshield.com'
+
 ];

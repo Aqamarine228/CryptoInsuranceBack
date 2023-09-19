@@ -25,7 +25,8 @@ class VerifyEmailNotification extends Notification
     protected function buildMailMessage($locale, $url): MailMessage
     {
         return (new MailMessage)
-            ->view("emails.$locale.verification", ['url' => $url]);
+            ->subject(__('emails.verifyEmail.pageTitle'))
+            ->view("emails.verification", ['url' => $url, 'locale' => $locale]);
     }
 
     protected function verificationUrl($notifiable): string

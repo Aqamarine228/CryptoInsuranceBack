@@ -23,6 +23,7 @@ class InsuranceOption extends \App\Models\InsuranceOption
         'slug',
         'price',
         'currency',
+        'picture',
     ];
 
     public function searchableAs(): string
@@ -37,5 +38,14 @@ class InsuranceOption extends \App\Models\InsuranceOption
     public function fields(): HasMany
     {
         return $this->hasMany(InsuranceOptionField::class);
+    }
+
+    /**
+     * Methods
+     */
+
+    public static function getPicturePath(string $filename): string
+    {
+        return config('alphanews.media.filesystem.images_path') . "/$filename";
     }
 }

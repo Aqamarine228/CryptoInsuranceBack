@@ -1,6 +1,6 @@
 <section class="about-one">
     <div class="about-one-bg wow slideInRight" data-wow-delay="100ms" data-wow-duration="2500ms"
-         style="background-image: url({{Module::asset('client:images/backgrounds/about-one-bg.png')}});"></div>
+         style="background-image: url({{Module::asset('client:images/backgrounds/about-one-bg.jpg')}});"></div>
     <div class="container">
         <div class="row">
             <div class="col-xl-6">
@@ -14,8 +14,7 @@
                             <img src="{{Module::asset('client:images/resources/about-one-img-2.jpg')}}" alt="">
                         </div>
                         <div class="about-one__experience">
-                            <h2 class="about-one__experience-year">30</h2>
-                            <p class="about-one__experience-text">Years of <br> Experience</p>
+                            <p class="about-one__experience-text">{{__('home.aboutBadge')}}</p>
                         </div>
                         <div class="about-one__shape-1">
                             <img src="{{Module::asset('client:images/shapes/about-one-shape-1.jpg')}}" alt="">
@@ -27,7 +26,7 @@
                 <div class="about-one__right">
                     <div class="section-title text-left">
                         <div class="section-sub-title-box">
-                            <p class="section-sub-title">About company</p>
+                            <p class="section-sub-title">{{__('home.aboutTitle')}}</p>
                             <div class="section-title-shape-1">
                                 <img src="{{Module::asset('client:images/shapes/section-title-shape-1.png')}}" alt="">
                             </div>
@@ -35,17 +34,16 @@
                                 <img src="{{Module::asset('client:images/shapes/section-title-shape-2.png')}}" alt="">
                             </div>
                         </div>
-                        <h2 class="section-title__title">We provide the best insurance policy</h2>
+                        <h2 class="section-title__title">{{__('home.aboutQuote')}}</h2>
                     </div>
-                    <p class="about-one__text-1">Duis aute irure dolor in reprehenderit in velit esse cillum
-                        dolore eu nulla pariatur.</p>
+                    <p class="about-one__text-1">{{__('home.aboutSubTitle')}}</p>
                     <ul class="list-unstyled about-one__points">
                         <li>
                             <div class="icon">
                                 <i class="fa fa-check"></i>
                             </div>
                             <div class="text">
-                                <p>Refresing to get such a personal touch.</p>
+                                <p>{{__('home.aboutBenefits1')}}</p>
                             </div>
                         </li>
                         <li>
@@ -53,7 +51,7 @@
                                 <i class="fa fa-check"></i>
                             </div>
                             <div class="text">
-                                <p>Duis aute irure dolor in reprehenderit in voluptate.</p>
+                                <p>{{__('home.aboutBenefits2')}}</p>
                             </div>
                         </li>
                         <li>
@@ -61,24 +59,15 @@
                                 <i class="fa fa-check"></i>
                             </div>
                             <div class="text">
-                                <p>Velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                <p>{{__('home.aboutBenefits3')}}</p>
                             </div>
                         </li>
                     </ul>
-                    <p class="about-one__text-2">Nullam eu nibh vitae est tempor molestie id sed ex. Quisque
-                        dignissim maximus ipsum, sed rutrum metus tincidunt et. Sed eget tincidunt ipsum.</p>
+                    <p class="about-one__text-2">{{__('home.aboutDescription')}}</p>
                     <div class="about-one__btn-call">
                         <div class="about-one__btn-box">
-                            <a href="about.html" class="thm-btn about-one__btn">Discover More</a>
-                        </div>
-                        <div class="about-one__call">
-                            <div class="about-one__call-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="about-one__call-content">
-                                <a href="tel:9200368090">+92 (003) 68-090</a>
-                                <p>Call to Our Experts</p>
-                            </div>
+                            <a href="{{route('client.about')}}"
+                               class="thm-btn about-one__btn">{{__('home.aboutDiscoverMore')}}</a>
                         </div>
                     </div>
                 </div>
