@@ -3,6 +3,7 @@
 namespace Modules\ClientApi\Models;
 
 use App\Enums\Currency;
+use App\Enums\InsuranceInvoiceStatus;
 use App\Models\Payable;
 use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,7 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
         'currency',
         'user_id',
         'insurance_subscription_option_id',
+        'status',
     ];
 
     public function getPrice(): float
@@ -47,6 +49,7 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
                 'expires_at' => now()->addSeconds($this->subscriptionOption->duration),
             ]);
             $insurance->options()->sync($this->options->pluck('id'));
+            $this->update(['status' => InsuranceInvoiceStatus::PAID]);
             $user = $this->user;
             if ($user->hasReferral()) {
                 $this->referralIncome()->create([

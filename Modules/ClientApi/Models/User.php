@@ -19,6 +19,7 @@ class User extends \App\Models\User
         'last_name',
         'inviter_id',
         'locale',
+        'balance',
     ];
 
     public function sendEmailVerificationNotification(): void

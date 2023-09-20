@@ -26,7 +26,8 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'has_referral_request' => $this->referralRequests()->pending()->exists(),
             'has_insurance' => $this->insurances()->active()->exists(),
+            'has_insurance_request' => $this->insuranceRequests()->pending()->exists(),
+            'balance' => $this->balance,
         ];
     }
-
 }

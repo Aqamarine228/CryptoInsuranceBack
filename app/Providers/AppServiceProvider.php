@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Facades\Payments\Payments;
+use App\Facades\Payments\CoinbasePayments;
+use App\Facades\Payments\ShkeeperPayments;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,8 +23,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFour();
-        $this->app->singleton(Payments::class, function () {
-            return new Payments();
+        $this->app->singleton(ShkeeperPayments::class, function () {
+            return new ShkeeperPayments();
+        });
+        $this->app->singleton(CoinbasePayments::class, function () {
+            return new CoinbasePayments();
         });
     }
 }

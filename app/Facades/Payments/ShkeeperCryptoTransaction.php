@@ -4,7 +4,7 @@ namespace App\Facades\Payments;
 
 use App\Enums\Cryptocurrency;
 
-class CryptoTransaction
+class ShkeeperCryptoTransaction
 {
     public function __construct(
         public Cryptocurrency $currency,

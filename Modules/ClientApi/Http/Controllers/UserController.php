@@ -13,5 +13,4 @@ class UserController extends BaseClientApiController
     {
         return $this->respondSuccess(new UserResource($request->user()));
     }
-
 }

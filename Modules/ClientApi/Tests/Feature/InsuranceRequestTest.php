@@ -7,6 +7,7 @@ use App\Enums\InsuranceRequestStatus;
 use Modules\ClientApi\Database\Factories\InsuranceFactory;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFactory;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFieldFactory;
+use Modules\ClientApi\Database\Factories\InsuranceRequestFactory;
 use Modules\ClientApi\Models\InsuranceRequest;
 use Modules\ClientApi\Tests\ClientApiTestCase;
 
@@ -73,5 +74,16 @@ class InsuranceRequestTest extends ClientApiTestCase
                 'insurance_option_field_id' => $field->id,
             ]);
         }
+    }
+
+    public function testInsuranceRequestAlreadySubmitted(): void
+    {
+        $insurance = InsuranceFactory::new()->state([
+            'user_id' => $this->user->id,
+        ])->create();
+        $insuranceOption = InsuranceOptionFactory::new()->create();
+        $insurance->options()->sync($insurance->id);
+        InsuranceRequestFactory::new()->state(['user_id' => $this->user->id])->create();
+        $this->postJson("/api/v1/insurance-request/$insuranceOption->id")->assertBadRequest();
     }
 }

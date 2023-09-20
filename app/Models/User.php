@@ -27,16 +27,17 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'balance' => 'float',
     ];
 
     public function createToken(
         string            $name,
         array             $abilities = ['*'],
-        DateTimeInterface $expiresAt = null
+        DateTimeInterface|null $expiresAt = null
     ): NewAccessToken {
         $plainTextToken = Str::random(40);
         $token = Sanctum::$personalAccessTokenModel::unguarded(
-            function () use ($name, $abilities, $expiresAt, $plainTextToken) {
+            function () use ($name, $plainTextToken, $abilities, $expiresAt) {
                 return Sanctum::$personalAccessTokenModel::create([
                     'tokenable_type' => $this::class,
                     'tokenable_id' => $this->id,
@@ -56,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return new MorphMany($query, $this->downcast(), $type, $id, $localKey);
     }
 
-    public function downcast(): User
+    public function downcast(): self
     {
         return Model::unguarded(fn () => (new User)->fill($this->toArray()));
     }

@@ -4,7 +4,9 @@ namespace Modules\ClientApi\Http\Controllers;
 
 use App\Enums\Cryptocurrency;
 use App\Enums\Currency;
-use App\Facades\Payments\Payments;
+use App\Enums\InsuranceInvoiceStatus;
+use App\Facades\Payments\CoinbasePayments;
+use App\Facades\Payments\ShkeeperPayments;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -37,6 +39,7 @@ class InsuranceInvoiceController extends BaseClientApiController
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
+            'status' => InsuranceInvoiceStatus::UNPAID,
         ]);
 
         $insuranceInvoice->options()->sync($validated['insurance_options']);
@@ -59,11 +62,18 @@ class InsuranceInvoiceController extends BaseClientApiController
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
+            'status' => InsuranceInvoiceStatus::UNPAID,
         ]);
 
         $insuranceInvoice->options()->sync($insurancePack->options->pluck('id'));
 
         return $this->respondSuccess(new InsuranceInvoiceResource($insuranceInvoice));
+    }
+
+    public function createCoinbaseInvoice(InsuranceInvoice $insuranceInvoice): JsonResponse
+    {
+        $transactionUrl = App::make(CoinbasePayments::class)->createInvoice($insuranceInvoice);
+        return $this->respondSuccess($transactionUrl);
     }
 
     public function createShkeeperTransaction(Request $request, InsuranceInvoice $insuranceInvoice): JsonResponse
@@ -72,7 +82,7 @@ class InsuranceInvoiceController extends BaseClientApiController
             'cryptocurrency' => ['required', new Enum(Cryptocurrency::class)],
         ]);
 
-        $transaction = App::make(Payments::class)
+        $transaction = App::make(ShkeeperPayments::class)
             ->createShkeeperTransaction($insuranceInvoice, Cryptocurrency::from($validated['cryptocurrency']));
 
         return $this->respondSuccess([

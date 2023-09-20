@@ -60,7 +60,7 @@ class ReferralsTest extends ClientApiTestCase
         ])->count(10)->create();
         $this->getJson('/api/v1/referrals')->assertOk()->assertJson(fn(AssertableJson $json) => $json
             ->where('success', true)
-            ->where('response.data', ReferralResource::collection($referrals)->response()->getData(true)['data'])
+            ->where('response.data', ReferralResource::collection($referrals->limit(5))->response()->getData(true)['data'])
         );
     }
 }

@@ -81,6 +81,10 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
             '/{insuranceInvoice}/transaction',
             [InsuranceInvoiceController::class, 'createShkeeperTransaction']
         );
+        Route::post(
+            '/{insuranceInvoice}/coinbase',
+            [InsuranceInvoiceController::class, 'createCoinbaseInvoice']
+        );
         Route::get('/{insuranceInvoice}', [InsuranceInvoiceController::class, 'show']);
     });
 });

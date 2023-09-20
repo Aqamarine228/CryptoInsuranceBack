@@ -8,11 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Modules\ClientApi\Models\InsuranceOption;
+use Modules\ClientApi\Models\User;
 
 class InsuranceRequestController extends BaseClientApiController
 {
     public function __invoke(Request $request, InsuranceOption $insuranceOption): JsonResponse
     {
+        if (!$this->userIsAbleToSubmitRequest($request->user())) {
+            return $this->respondErrorMessage(__('errors.referralRequestAlreadyExists'));
+        }
+
         $validated = $request->validate($this->createValidationRules($insuranceOption));
         $insuranceOption->load('fields');
         $fields = $this
@@ -25,6 +30,11 @@ class InsuranceRequestController extends BaseClientApiController
             $insuranceRequest->fields()->createMany($fields);
         });
         return $this->respondSuccess('Insurance request created successfully');
+    }
+
+    private function userIsAbleToSubmitRequest(User $user): bool
+    {
+        return !$user->insuranceRequests()->pending()->exists();
     }
 
     private function createValidationRules(InsuranceOption $insuranceOption): array

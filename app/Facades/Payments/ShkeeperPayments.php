@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class Payments
+class ShkeeperPayments
 {
 
     private Shkeeper $shkeeper;
@@ -21,7 +21,7 @@ class Payments
         $this->shkeeper = new Shkeeper(config('services.shkeeper.api_key'));
     }
 
-    public function createShkeeperTransaction(Payable $payable, Cryptocurrency $cryptocurrency): CryptoTransaction
+    public function createShkeeperTransaction(Payable $payable, Cryptocurrency $cryptocurrency): ShkeeperCryptoTransaction
     {
         $id = Str::uuid();
         $transaction = DB::transaction(function () use ($id, $payable, $cryptocurrency) {
@@ -34,6 +34,7 @@ class Payments
                 'payable_id' => $payable->getId(),
                 'user_id' => $payable->getUserId(),
             ]));
+
             return $this->shkeeper->createTransaction(
                 $id,
                 $payable->getCurrency(),
@@ -43,7 +44,7 @@ class Payments
             );
         });
 
-        return new CryptoTransaction(
+        return new ShkeeperCryptoTransaction(
             currency: $cryptocurrency,
             amount: $transaction->amount,
             wallet: $transaction->wallet,

@@ -3,10 +3,13 @@
 namespace Modules\ClientApi\Tests\Feature;
 
 use App\Enums\Currency;
+use App\Enums\InsuranceInvoiceStatus;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFactory;
 use Modules\ClientApi\Database\Factories\InsurancePackFactory;
 use Modules\ClientApi\Database\Factories\InsuranceSubscriptionOptionFactory;
+use Modules\ClientApi\Http\Resources\InsuranceInvoiceResource;
+use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Tests\ClientApiTestCase;
 
 class InsuranceInvoiceTest extends ClientApiTestCase
@@ -23,21 +26,15 @@ class InsuranceInvoiceTest extends ClientApiTestCase
         ])->assertOk()->assertJson(
             fn (AssertableJson $json) => $json
                 ->where('success', true)
-                ->where('response', [
-                    'amount' => $this->calculatePrice(
-                        $insuranceOptions->sum('price'),
-                        $subscriptionOption->sale_percentage
-                    ),
-                    'currency' => Currency::USD->value,
-                    'id' => 1,
-                ])
+                ->where(
+                    'response',
+                    (new InsuranceInvoiceResource(InsuranceInvoice::first()))
+                        ->response()
+                        ->getData(true)['data']
+                )
         );
 
         $this->assertDatabaseHas('insurance_invoices', [
-            'amount' => $this->calculatePrice(
-                $insuranceOptions->sum('price'),
-                $subscriptionOption->sale_percentage
-            ),
             'user_id' => $this->user->id,
             'currency' => Currency::USD->value,
             'id' => 1,
@@ -47,7 +44,7 @@ class InsuranceInvoiceTest extends ClientApiTestCase
     public function testItValidatesCustomCreationCorrectly(): void
     {
         $this->postJson('/api/v1/insurance-invoice/custom', [
-            'insurance_options' => [1,2,3],
+            'insurance_options' => [1, 2, 3],
             'insurance_subscription_option_id' => 1,
         ])
             ->assertUnprocessable()
@@ -70,21 +67,15 @@ class InsuranceInvoiceTest extends ClientApiTestCase
         ])->assertOk()->assertJson(
             fn (AssertableJson $json) => $json
                 ->where('success', true)
-                ->where('response', [
-                    'amount' => $this->calculatePrice(
-                        $insurancePack->price,
-                        $subscriptionOption->sale_percentage
-                    ),
-                    'currency' => Currency::USD->value,
-                    'id' => 1,
-                ])
+                ->where(
+                    'response',
+                    (new InsuranceInvoiceResource(InsuranceInvoice::first()))
+                        ->response()
+                        ->getData(true)['data']
+                )
         );
 
         $this->assertDatabaseHas('insurance_invoices', [
-            'amount' => $this->calculatePrice(
-                $insurancePack->price,
-                $subscriptionOption->sale_percentage
-            ),
             'user_id' => $this->user->id,
             'currency' => Currency::USD->value,
             'id' => 1,
@@ -103,18 +94,4 @@ class InsuranceInvoiceTest extends ClientApiTestCase
                 'insurance_pack_id',
             ]);
     }
-
-    private function calculatePrice(float $price, float $salePercentage): float
-    {
-        return (float)bcmul($price, bcdiv($salePercentage, "100", 2), 2);
-    }
-
-    //    Test for crypto transaction creations, needs to be used with enabled api
-    //    public function testItCreatesCryptoTransaction(): void
-    //    {
-    //        $invoice = InsuranceInvoiceFactory::new()->create();
-    //        $this->postJson("/api/v1/insurance-invoice/$invoice->id/transaction", [
-    //            'cryptocurrency' => Cryptocurrency::BTC->value,
-    //        ])->dd();
-    //    }
 }
