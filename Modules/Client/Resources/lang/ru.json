@@ -112,5 +112,7 @@
     "footer.contact": "Контакт",
     "footer.newsLetter": "Информационный бюллетень",
     "footer.subscribeToNews": "Подпишитесь на нашу рассылку, чтобы получать последние обновления и новости.",
-    "footer.emailAddress": "Адрес электронной почты"
+    "footer.emailAddress": "Адрес электронной почты",
+
+    "header.getStarted": "Начать"
 }

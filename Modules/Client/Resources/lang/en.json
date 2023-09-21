@@ -127,5 +127,7 @@
     "footer.contact": "Contact",
     "footer.newsLetter": "Newsletter",
     "footer.subscribeToNews": "Subscribe our newsletter to get our latest update & news.",
-    "footer.emailAddress": "Email Adress"
+    "footer.emailAddress": "Email Adress",
+
+    "header.getStarted": "Get Started"
 }

@@ -72,7 +72,7 @@
                             <div class="main-menu__main-menu-box-search-get-quote-btn">
                                 <div class="main-menu__main-menu-box-get-quote-btn-box">
                                     <a href="contact.html"
-                                       class="thm-btn main-menu__main-menu-box-get-quote-btn">Get a Quote</a>
+                                       class="thm-btn main-menu__main-menu-box-get-quote-btn">{{__('header.getStarted')}}</a>
                                 </div>
                             </div>
                         </div>
