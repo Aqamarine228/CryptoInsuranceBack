@@ -17,6 +17,7 @@ use Modules\ClientApi\Http\Controllers\ReferralsController;
 use Modules\ClientApi\Http\Controllers\RegisterController;
 use Modules\ClientApi\Http\Controllers\UserController;
 use Modules\ClientApi\Http\Middleware\ShkeeperMiddleware;
+use Modules\ClientApi\Models\DatabaseNotification;
 use Modules\ClientApi\Models\InsuranceRequest;
 
 /*
@@ -63,6 +64,8 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
         Route::get('/', [DatabaseNotificationController::class, 'index']);
         Route::delete('/', [DatabaseNotificationController::class, 'destroy']);
         Route::post('/mark-as-read', [DatabaseNotificationController::class, 'markAsRead']);
+        Route::post('/{databaseNotification}', [DatabaseNotificationController::class, 'show'])
+        ->can('show', [DatabaseNotification::class, 'databaseNotification']);
     });
 
     Route::post('/insurance-request/{insuranceOption}', InsuranceRequestController::class)

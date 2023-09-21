@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'has_insurance' => $this->insurances()->active()->exists(),
             'has_insurance_request' => $this->insuranceRequests()->pending()->exists(),
             'balance' => $this->balance,
+            'unread_notifications_count' => $this->notifications()->unread()->count()
         ];
     }
 }
