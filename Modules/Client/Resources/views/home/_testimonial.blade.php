@@ -12,7 +12,7 @@
                     <div class="testimonial-one__top-left">
                         <div class="section-title text-left">
                             <div class="section-sub-title-box">
-                                <p class="section-sub-title">testimonials</p>
+                                <p class="section-sub-title">{{__('home.testimonialTitle')}}</p>
                                 <div class="section-title-shape-1">
                                     <img src="{{Module::asset('client:images/shapes/section-title-shape-1.png')}}"
                                          alt="">
@@ -22,7 +22,7 @@
                                          alt="">
                                 </div>
                             </div>
-                            <h2 class="section-title__title">What our customers are <br> talking about</h2>
+                            <h2 class="section-title__title">{{__('home.testimonialSubTitle')}}</h2>
                         </div>
                     </div>
                 </div>
