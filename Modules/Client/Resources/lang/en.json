@@ -129,5 +129,7 @@
     "footer.subscribeToNews": "Subscribe our newsletter to get our latest update & news.",
     "footer.emailAddress": "Email Adress",
 
-    "header.getStarted": "Get Started"
+    "header.getStarted": "Get Started",
+    "header.login": "Login",
+    "header.register": "Register"
 }

@@ -62,6 +62,7 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
 
     Route::prefix('/notifications')->group(function () {
         Route::get('/', [DatabaseNotificationController::class, 'index']);
+        Route::get('/{databaseNotification}', [DatabaseNotificationController::class, 'show']);
         Route::delete('/', [DatabaseNotificationController::class, 'destroy']);
         Route::post('/mark-as-read', [DatabaseNotificationController::class, 'markAsRead']);
         Route::post('/{databaseNotification}', [DatabaseNotificationController::class, 'show'])

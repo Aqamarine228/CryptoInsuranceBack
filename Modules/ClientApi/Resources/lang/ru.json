@@ -1,3 +1,15 @@
 {
-
+    "errors.badUser": "Плохой пользователь",
+    "errors.incorrectCredentials": "Предоставленные учетные данные неверны",
+    "errors.userIsAlreadyAReferral": "Пользователь уже является рефералом",
+    "errors.referralRequestAlreadySubmitted": "Запрос на реферал уже отправлен",
+    "errors.referralRequestAlreadyExists": "Все еще есть ожидающий реферальный запрос",
+    "emails.verifyEmail.pageTitle": "Подтверждение электронной почты",
+    "emails.verifyEmail.title": "Пожалуйста, подтвердите свой адрес электронной почты",
+    "emails.verifyEmail.description": "Пожалуйста, подтвердите свой адрес электронной почты, чтобы начать использовать продукт.",
+    "emails.verifyEmail.verifyButton": "Подтвердите свой адрес электронной почты",
+    "emails.verifyEmail.alternativeLink": "Или подтвердите, используя эту ссылку",
+    "emails.verifyEmail.needHelp": "Нужна помощь",
+    "emails.verifyEmail.contactInformation": "Пожалуйста, отправьте отзыв или информацию об ошибке по адресу:",
+    "referralIncomeType.insurance": "Купленна страховка"
 }

@@ -1,2 +1,10 @@
 {
+    "emails.referralRequest.subject.approved": "Запрос на реферал одобрен",
+    "emails.referralRequest.subject.declined": "Запрос на реферал отклонен",
+    "emails.referralRequest.pageTitle": "Запрос реферала",
+    "emails.referralRequest.title.approved": "Запрос на реферал одобрен",
+    "emails.referralRequest.title.declined": "Запрос на реферал отклонен",
+    "emails.referralRequest.description.approved": "Поздравляем! Ваш запрос на реферал был одобрен, пожалуйста, посетите страницу рефералов на нашем сайте, чтобы получить дополнительную информацию",
+    "emails.referralRequest.description.declined": "К сожалению, ваш запрос на реферал был отклонен",
+    "emails.referralRequest.declinationReason": "Причина отклонения"
 }

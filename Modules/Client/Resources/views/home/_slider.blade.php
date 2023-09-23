@@ -20,7 +20,7 @@
                                 </h2>
                                 <p class="main-slider__text">{{__('home.sliderDescription')}}</p>
                                 <div class="main-slider__btn-box">
-                                    <a href="about.html"
+                                    <a href="{{config('frontend.register_link')}}"
                                        class="thm-btn main-slider__btn">{{__('home.sliderGetStarted')}}</a>
                                 </div>
                             </div>
