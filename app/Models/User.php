@@ -52,6 +52,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
     }
 
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    public function getEmailAttribute($value)
+    {
+        return strtolower($value);
+    }
+
     protected function newMorphMany(Builder $query, Model $parent, $type, $id, $localKey): MorphMany
     {
         return new MorphMany($query, $this->downcast(), $type, $id, $localKey);

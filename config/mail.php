@@ -47,7 +47,7 @@ return [
         ],
 
         'ses' => [
-            'transport' => 'ses',
+            'transport' => 'sesv2',
         ],
 
         'mailgun' => [
