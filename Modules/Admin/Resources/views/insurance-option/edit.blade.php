@@ -220,9 +220,9 @@
             </div>
         </div>
     </div>
-    @include('admin::insurance-option._image')
-    @include('admin::insurance-option._crop-image-modal')
     @if($insuranceOption->exists)
+        @include('admin::insurance-option._image')
+        @include('admin::insurance-option._crop-image-modal')
         <form
             action="{{route('admin.insurance-option.destroy', $insuranceOption->id)}}"
             method="post"

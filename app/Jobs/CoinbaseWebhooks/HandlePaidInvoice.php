@@ -20,6 +20,6 @@ class HandlePaidInvoice implements ShouldQueue
 
     public function handle(): void
     {
-        PaymentTransaction::where('uuid', $this->webhookCall->payload['id'])->first()->payable->paid();
+        PaymentTransaction::where('uuid', $this->webhookCall->payload['event']['data']['id'])->first()->payable->paid();
     }
 }
