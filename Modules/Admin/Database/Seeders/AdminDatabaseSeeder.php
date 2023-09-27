@@ -4,6 +4,7 @@ namespace Modules\Admin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Models\MediaFolder;
 
 class AdminDatabaseSeeder extends Seeder
 {
@@ -15,7 +16,13 @@ class AdminDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        // $this->call("OthersTableSeeder");
+        MediaFolder::firstOrCreate([
+            'id' => 1,
+            'name' => 'images',
+        ]);
+        MediaFolder::firstOrCreate([
+            'id' => 2,
+            'name' => 'advertising',
+        ]);
     }
 }
