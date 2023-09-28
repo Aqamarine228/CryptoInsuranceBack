@@ -21,7 +21,7 @@ class ReferralsTest extends ClientApiTestCase
         $this->postJson('/api/v1/register', [
             'first_name' => 'Referral',
             'last_name' => 'Referred',
-            'email' => 'goodReferral@example.com',
+            'email' => 'goodreferral@example.com',
             'password' => UserFactory::STRONG_PASSWORD,
             'password_confirmation' => UserFactory::STRONG_PASSWORD,
             'inviter_id' => $referralId,
@@ -40,7 +40,7 @@ class ReferralsTest extends ClientApiTestCase
         $this->postJson('/api/v1/register', [
             'first_name' => 'Referral',
             'last_name' => 'Referred',
-            'email' => 'goodReferral@example.com',
+            'email' => 'goodreferral@example.com',
             'password' => UserFactory::STRONG_PASSWORD,
             'password_confirmation' => UserFactory::STRONG_PASSWORD,
             'inviter_id' => $this->faker->uuid,
@@ -58,9 +58,13 @@ class ReferralsTest extends ClientApiTestCase
         $referrals = UserFactory::new()->state([
             'inviter_id' => $this->user->id,
         ])->count(10)->create();
-        $this->getJson('/api/v1/referrals')->assertOk()->assertJson(fn(AssertableJson $json) => $json
+        $this->getJson('/api/v1/referrals')->assertOk()->assertJson(
+            fn (AssertableJson $json) => $json
             ->where('success', true)
-            ->where('response.data', ReferralResource::collection($referrals->limit(5))->response()->getData(true)['data'])
+            ->where(
+                'response.data',
+                ReferralResource::collection($referrals->limit(5))->response()->getData(true)['data']
+            )
         );
     }
 }

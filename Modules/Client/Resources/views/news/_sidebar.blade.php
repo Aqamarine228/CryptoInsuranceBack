@@ -25,23 +25,5 @@
                 @endforeach
             </ul>
         </div>
-        <div class="sidebar__single sidebar__category">
-            <h3 class="sidebar__title">{{__('news.categories')}}</h3>
-            <ul class="sidebar__category-list list-unstyled">
-                @foreach($categories as $category)
-                    <li><a href="{{route('client.news.category', $category->slug)}}">{{$category->name}}<span
-                                class="fas fa-angle-double-right"></span></a>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-        <div class="sidebar__single sidebar__tags">
-            <h3 class="sidebar__title">{{__('news.mostPopularTags')}}</h3>
-            <div class="sidebar__tags-list">
-                @foreach($tags as $tag)
-                    <a href="{{route('client.news.tag', $tag->slug)}}">{{$tag->name}}</a>
-                @endforeach
-            </div>
-        </div>
     </div>
 </div>

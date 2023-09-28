@@ -81,18 +81,6 @@
                         <p>Posts</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.post-category.index') }}" class="nav-link">
-                        <i class="fas fa-project-diagram nav-icon"></i>
-                        <p>Post Categories</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.post-tag.index') }}" class="nav-link">
-                        <i class="fas fa-tag nav-icon"></i>
-                        <p>Post Tags</p>
-                    </a>
-                </li>
             </ul>
         </nav>
     </div>

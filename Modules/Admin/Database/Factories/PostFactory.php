@@ -28,7 +28,6 @@ class PostFactory extends Factory
         return array_merge([
             'picture' => null,
             'published_at' => null,
-            'post_category_id' => null,
             'slug' => null,
         ], $localizedData);
     }

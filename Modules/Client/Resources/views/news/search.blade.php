@@ -38,7 +38,7 @@
                                         <p class="error-page__text">{{__('news.nothingFoundText')}}</p>
                                         <div class="error-page__form">
                                             <div class="error-page__form-input">
-                                                <form action="https://layerdrops.com/insurwp/" class="error-page__form"
+                                                <form action="{{route('client.news.search')}}" class="error-page__form"
                                                       method="get">
                                                     <div class="error-page__form-input">
                                                         <input

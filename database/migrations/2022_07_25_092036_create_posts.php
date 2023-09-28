@@ -18,7 +18,6 @@ return new class() extends Migration {
             $table->string('short_title_ru')->nullable();
             $table->string('short_content_en')->nullable();
             $table->string('short_content_ru')->nullable();
-            $table->foreignId('post_category_id')->nullable()->constrained();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

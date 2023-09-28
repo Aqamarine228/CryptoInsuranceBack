@@ -12,6 +12,7 @@
 */
 
 
+use Illuminate\Support\Facades\Route;
 use Modules\Client\Http\Controllers\AboutController;
 use Modules\Client\Http\Controllers\ContactController;
 use Modules\Client\Http\Controllers\Error404Controller;
@@ -29,8 +30,6 @@ Route::prefix('/{locale}')
         Route::get('/news', [NewsController::class, 'index'])->name('news.index');
         Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
         Route::get('/news/{post}', [NewsController::class, 'show'])->name('news.show');
-        Route::get('/news/tag/{postTag}', [NewsController::class, 'indexByTag'])->name('news.tag');
-        Route::get('/news/category/{postCategory}', [NewsController::class, 'indexByCategory'])->name('news.category');
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact');
         Route::get('/about', AboutController::class)->name('about');

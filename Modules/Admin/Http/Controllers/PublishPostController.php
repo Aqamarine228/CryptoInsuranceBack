@@ -21,11 +21,9 @@ class PublishPostController extends BaseAdminController
 
         if (!$post->publishable()) {
             Messages::error("Post is not publishable because:");
-            $post->hasCategory() ?: Messages::error("Parent category is not selected");
             $post->hasTitle() ?: Messages::error("Not all titles are filled");
             $post->hasShortTitle() ?: Messages::error("Not all short titles are filled");
             $post->hasPicture() ?: Messages::error("Post has no picture");
-            $post->hasTags() ?: Messages::error("Post has no selected tags");
             $post->hasContent() ?: Messages::error("Not all content fields are filled");
             $post->hasShortContent() ?: Messages::error("Not all short content fields are filled");
             return back();

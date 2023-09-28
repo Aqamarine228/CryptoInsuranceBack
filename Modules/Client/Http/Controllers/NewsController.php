@@ -3,18 +3,14 @@
 namespace Modules\Client\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\Client\Models\PostTag;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Client\Models\Post;
-use Modules\Client\Models\PostCategory;
 
 class NewsController extends BaseClientController
 {
 
     private const POSTS_PER_PAGE_COUNT = 5;
     private const LATEST_POSTS_COUNT = 3;
-
-    private const POPULAR_TAGS_COUNT = 10;
 
     public function index(): Renderable
     {
@@ -36,31 +32,8 @@ class NewsController extends BaseClientController
         ], $this->getRequiredParameters()));
     }
 
-    public function indexByTag($locale, PostTag $postTag): Renderable
-    {
-        $posts = $postTag->posts()->published()->latest()->paginate(self::POSTS_PER_PAGE_COUNT);
-
-        return $this->view('news.tag', array_merge([
-            'posts' => $posts,
-            'tag' => $postTag,
-        ], $this->getRequiredParameters()));
-    }
-
-    public function indexByCategory($locale, PostCategory $postCategory): Renderable
-    {
-        $posts = $postCategory->posts()->published()->latest()->paginate(self::POSTS_PER_PAGE_COUNT);
-
-        return $this->view('news.category', array_merge([
-            'posts' => $posts,
-            'category' => $postCategory,
-        ], $this->getRequiredParameters()));
-    }
-
     public function show($locale, Post $post): Renderable
     {
-        $post->load('tags');
-        $post->load('category');
-
         return $this->view('news.show', array_merge([
             'post' => $post,
         ], $this->getRequiredParameters()));
@@ -70,8 +43,6 @@ class NewsController extends BaseClientController
     {
         return [
             'latestPosts' => Post::published()->latest()->limit(self::LATEST_POSTS_COUNT)->get(),
-            'categories' => PostCategory::all(),
-            'tags' => PostTag::popular()->limit(self::POPULAR_TAGS_COUNT)->get(),
         ];
     }
 }

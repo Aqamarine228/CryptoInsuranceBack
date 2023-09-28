@@ -39,7 +39,3 @@ RUN php artisan event:cache
 RUN php artisan route:clear
 RUN php artisan view:clear
 RUN php artisan optimize:clear
-
-
-
-

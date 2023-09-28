@@ -28,8 +28,6 @@ class PostController extends BaseAdminController
 
     public function edit(Post $post): Renderable
     {
-        $post->load('tags');
-        $post->load('category');
         return $this->view('post.edit', [
             'post' => $post,
         ]);
@@ -57,17 +55,6 @@ class PostController extends BaseAdminController
         $validated = $request->validate([
             'short_title' => new AllLanguagesRule('nullable', 'string', 'max:255'),
             'short_content' => new AllLanguagesRule('nullable', 'string', 'max:255'),
-        ]);
-
-        $post->update($validated);
-
-        return back();
-    }
-
-    public function updateCategory(Request $request, Post $post): RedirectResponse
-    {
-        $validated = $request->validate([
-            'post_category_id' => 'required|integer|exists:post_categories,id',
         ]);
 
         $post->update($validated);
@@ -117,22 +104,6 @@ class PostController extends BaseAdminController
         return $fileName;
     }
 
-    public function updateTags(Request $request, Post $post): RedirectResponse
-    {
-        $validated = $request->validate([
-            'tags' => 'nullable|array',
-            'tags.*' => 'required|exists:post_tags,id'
-        ]);
-
-        if (!array_key_exists('tags', $validated)) {
-            $validated['tags'] = [];
-        }
-
-        $post->tags()->sync($validated['tags']);
-
-        return back();
-    }
-
     public function store(): RedirectResponse
     {
         $post = $this->getEmptyPost();
@@ -152,7 +123,7 @@ class PostController extends BaseAdminController
 
     private function getEmptyPost(): Post|null
     {
-        $postQuery = Post::whereNull('picture')->whereNull('post_category_id');
+        $postQuery = Post::whereNull('picture');
 
         foreach (locale()->supported() as $locale) {
             $postQuery = $postQuery
@@ -161,12 +132,6 @@ class PostController extends BaseAdminController
                 ->whereNull('short_title_' . $locale)
                 ->whereNull('short_content_' . $locale);
         }
-        $emptyPost = $postQuery->latest()->first();
-
-        if ($emptyPost !== null && $emptyPost->tags()->count() === 0) {
-            return $emptyPost;
-        }
-
-        return null;
+        return $postQuery->latest()->first();
     }
 }

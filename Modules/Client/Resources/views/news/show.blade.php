@@ -38,20 +38,6 @@
                                     <h3 class="news-details__title">{{$post->title}}</h3>
                                     {!! $post->content !!}
                                 </div>
-                                <div class="news-details__bottom">
-                                    <p class="news-details__tags mb-1">
-                                        <span>{{__('news.category')}}</span>
-                                        <a href="{{route('client.news.category', $post->category->slug)}}">
-                                            {{$post->category->name}}
-                                        </a>
-                                    </p>
-                                    <p class="news-details__tags">
-                                        <span>{{trans_choice('news.tag', 2)}}</span>
-                                        @foreach($post->tags as $tag)
-                                            <a href="{{route('client.news.tag', $tag->slug)}}">{{$tag->name}}</a>
-                                        @endforeach
-                                    </p>
-                                </div>
                             </div>
                         </div>
                         @include('client::news._sidebar')

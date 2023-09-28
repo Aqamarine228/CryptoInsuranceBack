@@ -24,7 +24,7 @@ class HomeController extends BaseClientController
 
     private function getNews(): Collection
     {
-        return Post::published()->latest()->with('category')->limit(self::POSTS_PER_PAGE_COUNT)->get();
+        return Post::published()->latest()->limit(self::POSTS_PER_PAGE_COUNT)->get();
     }
 
     private function getInsuranceOptions(): Collection

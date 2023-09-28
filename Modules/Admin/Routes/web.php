@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionFieldController;

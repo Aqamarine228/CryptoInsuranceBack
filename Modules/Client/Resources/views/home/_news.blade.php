@@ -18,9 +18,6 @@
                     <div class="news-one__single">
                         <div class="news-one__img">
                             <img src="{{$post->picture}}" alt="">
-                            <div class="news-one__tag">
-                                <p><i class="far fa-folder"></i>{{Str::upper($post->category->name)}}</p>
-                            </div>
                             <div class="news-one__arrow-box">
                                 <a href="{{route('client.news.show', $post->slug)}}" class="news-one__arrow">
                                     <span class="icon-right-arrow1"></span>

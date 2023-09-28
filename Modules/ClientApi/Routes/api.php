@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Modules\ClientApi\Http\Controllers\DatabaseNotificationController;
 use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\InsuranceController;
@@ -10,6 +11,7 @@ use Modules\ClientApi\Http\Controllers\InsuranceRequestController;
 use Modules\ClientApi\Http\Controllers\InsuranceSubscriptionOptionController;
 use Modules\ClientApi\Http\Controllers\LoginController;
 use Modules\ClientApi\Http\Controllers\LogoutController;
+use Modules\ClientApi\Http\Controllers\NewsController;
 use Modules\ClientApi\Http\Controllers\PaymentTransactionController;
 use Modules\ClientApi\Http\Controllers\ReferralIncomeController;
 use Modules\ClientApi\Http\Controllers\ReferralRequestController;
@@ -71,6 +73,9 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
 
     Route::post('/insurance-request/{insuranceOption}', InsuranceRequestController::class)
         ->can('create', [InsuranceRequest::class, 'insuranceOption']);
+
+    Route::get('/news', [NewsController::class, 'index']);
+    Route::get('/news/{post}', [NewsController::class, 'show']);
 
     Route::get('/insurance-pack', [InsurancePackController::class, 'index']);
     Route::get('/insurance-option', [InsuranceOptionController::class, 'index']);

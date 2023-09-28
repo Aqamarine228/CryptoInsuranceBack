@@ -4,11 +4,9 @@ namespace Modules\Admin\Tests\Feature;
 
 use App\Actions\GenerateFileName;
 use Illuminate\Http\UploadedFile;
-use Modules\Admin\Database\Factories\PostTagFactory;
-use Modules\Admin\Database\Factories\PostCategoryFactory;
+use Illuminate\Support\Facades\Storage;
 use Modules\Admin\Database\Factories\PostFactory;
 use Modules\Admin\Tests\AdminTestCase;
-use Storage;
 
 class PostTest extends AdminTestCase
 {
@@ -20,7 +18,6 @@ class PostTest extends AdminTestCase
         $data = [
             'picture' => null,
             'published_at' => null,
-            'post_category_id' => null,
             'slug' => null,
         ];
 
@@ -66,31 +63,6 @@ class PostTest extends AdminTestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('posts', $data);
-    }
-
-    public function testItUpdatesCategorySuccessfully(): void
-    {
-        $post = PostFactory::new()->create();
-        $postCategory = PostCategoryFactory::new()->create();
-        $this
-            ->putJson(route('admin.post.update.category', $post->id), ['post_category_id' => $postCategory->id])
-            ->assertRedirect();
-
-        $this->assertDatabaseHas('posts', ['id' => $post->id, 'post_category_id' => $postCategory->id]);
-    }
-
-    public function testItUpdatesTagsSuccessfully(): void
-    {
-        $post = PostFactory::new()->create();
-        $postTags = PostTagFactory::new()->count(3)->create();
-
-        $this
-            ->putJson(route('admin.post.update.tags', $post->id), ['tags' => $postTags->pluck('id')])
-            ->assertRedirect();
-
-        foreach ($postTags as $postTag) {
-            $this->assertDatabaseHas('post_post_tag', ['post_id' => $post->id, 'post_tag_id' => $postTag->id]);
-        }
     }
 
     public function testItUpdatesImageSuccessfully(): void

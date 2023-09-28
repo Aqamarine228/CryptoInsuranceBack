@@ -3,8 +3,6 @@
 namespace Modules\Client\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
@@ -55,19 +53,5 @@ class Post extends \App\Models\Post
     public function getPictureAttribute($value): string
     {
         return Storage::url(config('alphanews.media.filesystem.images_path') . '/' . $value);
-    }
-
-    /**
-     * Relations
-     */
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(PostTag::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(PostCategory::class, 'post_category_id', 'id');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\MediaFolder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +16,16 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        MediaFolder::firstOrCreate([
-            'id' => 1,
-            'name' => 'images',
-        ]);
-        MediaFolder::firstOrCreate([
-            'id' => 2,
-            'name' => 'advertising',
-        ]);
+        Model::unguarded(function () {
+            MediaFolder::firstOrCreate([
+                'id' => 1,
+                'name' => 'images',
+            ]);
+            MediaFolder::firstOrCreate([
+                'id' => 2,
+                'name' => 'advertising',
+            ]);
+        });
     }
 
     public function down(): void
