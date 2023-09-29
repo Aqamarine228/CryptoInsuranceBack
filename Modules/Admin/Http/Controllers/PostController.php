@@ -19,7 +19,7 @@ class PostController extends BaseAdminController
 {
     public function index(): Renderable
     {
-        $posts = Post::latest()->with('category')->paginate();
+        $posts = Post::latest()->paginate();
 
         return $this->view('post.index', [
             'posts' => $posts
