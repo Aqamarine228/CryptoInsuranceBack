@@ -16,6 +16,7 @@ class InsuranceInvoiceFactory extends Factory
             'amount' => $this->faker->randomNumber(3),
             'currency' => Currency::USD->value,
             'insurance_subscription_option_id' => InsuranceSubscriptionOptionFactory::new()->create()->id,
+            'coverage' => $this->faker->randomNumber(9, false),
             'user_id' => UserFactory::new()->create()->id,
         ];
     }

@@ -19,6 +19,7 @@ class InsuranceResource extends JsonResource
         return [
             'expires_at' => $this->expires_at,
             'options' => InsuranceOptionResource::collection($this->options),
+            'coverage' => $this->coverage,
             'created_at' => $this->created_at,
         ];
     }

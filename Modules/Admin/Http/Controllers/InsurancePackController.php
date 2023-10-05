@@ -8,7 +8,6 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Modules\Admin\Components\Messages;
 use Modules\Admin\Models\InsurancePack;
 
@@ -37,6 +36,7 @@ class InsurancePackController extends BaseAdminController
             'price' => 'required|numeric|min:1',
             'insurance_options' => 'required|array',
             'insurance_options.*' => 'required|exists:insurance_options,id',
+            'coverage' => 'required|numeric|min:1',
         ]);
 
         $names = [];
@@ -50,6 +50,7 @@ class InsurancePackController extends BaseAdminController
             $insurancePack = InsurancePack::create([
                 'price' => $validated['price'],
                 'slug' => GenerateSlug::execute($validated['name_'.locale()->default()]),
+                'coverage' => $validated['coverage'],
                 ...$names,
                 ...$descriptions
             ]);
@@ -78,6 +79,7 @@ class InsurancePackController extends BaseAdminController
             'name' => new AllLanguagesRule('required', 'string', 'max:255'),
             'description' => new AllLanguagesRule('required', 'string', 'max:250'),
             'price' => 'numeric|min:1',
+            'coverage' => 'numeric|min:1'
         ]);
 
         $validatedInsuranceOptions = $request->validate([

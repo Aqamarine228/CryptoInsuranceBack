@@ -24,8 +24,8 @@ class NotificationsTest extends ClientApiTestCase
                 ->where(
                     'response',
                     DatabaseNotificationResource::collection(
-                        $this->user->notifications()->paginate(5)
-                    )->response()->getData(true)
+                        $this->user->notifications()->get()
+                    )->response()->getData(true)['data']
                 )
         );
     }

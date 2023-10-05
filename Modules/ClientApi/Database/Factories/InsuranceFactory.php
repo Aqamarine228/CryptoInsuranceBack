@@ -19,6 +19,7 @@ class InsuranceFactory extends Factory
     {
         return [
             'expires_at' => now()->addWeek(),
+            'coverage' => $this->faker->randomNumber(9, false),
             'user_id' => UserFactory::new()->create()->id,
         ];
     }

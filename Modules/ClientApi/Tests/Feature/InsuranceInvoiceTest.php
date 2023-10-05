@@ -5,10 +5,12 @@ namespace Modules\ClientApi\Tests\Feature;
 use App\Enums\Currency;
 use App\Enums\InsuranceInvoiceStatus;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Modules\ClientApi\Database\Factories\InsuranceCoverageOptionFactory;
 use Modules\ClientApi\Database\Factories\InsuranceOptionFactory;
 use Modules\ClientApi\Database\Factories\InsurancePackFactory;
 use Modules\ClientApi\Database\Factories\InsuranceSubscriptionOptionFactory;
 use Modules\ClientApi\Http\Resources\InsuranceInvoiceResource;
+use Modules\ClientApi\Models\InsuranceCoverageOption;
 use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Tests\ClientApiTestCase;
 
@@ -19,10 +21,12 @@ class InsuranceInvoiceTest extends ClientApiTestCase
     {
         $insuranceOptions = InsuranceOptionFactory::new()->count(10)->create();
         $subscriptionOption = InsuranceSubscriptionOptionFactory::new()->create();
+        $coverageOption = InsuranceCoverageOptionFactory::new()->create();
 
         $this->postJson('/api/v1/insurance-invoice/custom', [
             'insurance_options' => $insuranceOptions->pluck('id')->toArray(),
             'insurance_subscription_option_id' => $subscriptionOption->id,
+            'insurance_coverage_option_id' => $coverageOption->id,
         ])->assertOk()->assertJson(
             fn (AssertableJson $json) => $json
                 ->where('success', true)

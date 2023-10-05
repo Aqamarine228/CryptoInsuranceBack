@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Validation\Rules\Enum;
 use Modules\ClientApi\Http\Resources\InsuranceInvoiceResource;
+use Modules\ClientApi\Models\InsuranceCoverageOption;
 use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\InsurancePack;
@@ -29,16 +30,20 @@ class InsuranceInvoiceController extends BaseClientApiController
             'insurance_options' => 'required|array',
             'insurance_options.*' => 'required|exists:insurance_options,id',
             'insurance_subscription_option_id' => 'required|exists:insurance_subscription_options,id',
+            'insurance_coverage_option_id' => 'required|exists:insurance_coverage_options,id'
         ]);
 
         $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
+        $coverageOption = InsuranceCoverageOption::find($validated['insurance_coverage_option_id']);
         $summedPrice = InsuranceOption::whereIn('id', $validated['insurance_options'])->sum('price');
+        $summedPrice = $coverageOption->addToPrice($summedPrice);
 
         $insuranceInvoice = InsuranceInvoice::create([
             'amount' => $subscriptionOption->calculateEndPrice($summedPrice),
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
+            'coverage' => $coverageOption->coverage,
             'status' => InsuranceInvoiceStatus::UNPAID,
         ]);
 
@@ -59,6 +64,7 @@ class InsuranceInvoiceController extends BaseClientApiController
 
         $insuranceInvoice = InsuranceInvoice::create([
             'amount' => $subscriptionOption->calculateEndPrice($insurancePack->price),
+            'coverage' => $insurancePack->coverage,
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],

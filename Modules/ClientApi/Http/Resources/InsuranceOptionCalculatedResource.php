@@ -4,6 +4,7 @@ namespace Modules\ClientApi\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\ClientApi\Models\InsuranceCoverageOption;
 use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\InsuranceSubscriptionOption;
 
@@ -14,8 +15,11 @@ use Modules\ClientApi\Models\InsuranceSubscriptionOption;
  */
 class InsuranceOptionCalculatedResource extends JsonResource
 {
-    public function __construct($resource, private InsuranceSubscriptionOption $subscriptionOption)
-    {
+    public function __construct(
+        $resource,
+        private InsuranceSubscriptionOption $subscriptionOption,
+        private InsuranceCoverageOption $insuranceCoverageOption,
+    ) {
         parent::__construct($resource);
     }
 
@@ -25,7 +29,9 @@ class InsuranceOptionCalculatedResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => (float)$this->subscriptionOption->calculateEndPrice($this->price),
+            'price' => (float)$this->subscriptionOption->calculateEndPrice(
+                $this->insuranceCoverageOption->addToPrice($this->price)
+            ),
             'currency' => $this->currency,
         ];
     }

@@ -30,7 +30,7 @@ class ReferralsTest extends ClientApiTestCase
         $this->assertDatabaseHas('users', [
             'first_name' => 'Referral',
             'last_name' => 'Referred',
-            'email' => 'goodReferral@example.com',
+            'email' => 'goodreferral@example.com',
             'inviter_id' => $referral->id,
         ]);
     }
@@ -49,7 +49,7 @@ class ReferralsTest extends ClientApiTestCase
         $this->assertDatabaseMissing('users', [
             'first_name' => 'Referral',
             'last_name' => 'Referred',
-            'email' => 'goodReferral@example.com',
+            'email' => 'goodreferral@example.com',
         ]);
     }
 
@@ -63,7 +63,7 @@ class ReferralsTest extends ClientApiTestCase
             ->where('success', true)
             ->where(
                 'response.data',
-                ReferralResource::collection($referrals->limit(5))->response()->getData(true)['data']
+                ReferralResource::collection($referrals->take(5))->response()->getData(true)['data']
             )
         );
     }

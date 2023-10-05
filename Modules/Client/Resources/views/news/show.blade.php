@@ -3,7 +3,7 @@
 @section('content')
     <section class="page-header">
         <div class="page-header-bg"
-             style="background-image: url({{Module::asset('client:images/backgrounds/page-header-bg.jpg')}})">
+             style="background-image: url({{Module::asset('client:images/backgrounds/page-header-bg-2.jpg')}})">
         </div>
         <div class="page-header-shape-1"><img src="{{Module::asset('client:images/shapes/page-header-shape-1.png')}}"
                                               alt=""></div>

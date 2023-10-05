@@ -18,7 +18,7 @@ class InsurancePack extends \App\Models\InsurancePack
         'description_ru',
         'slug',
         'price',
-
+        'coverage',
     ];
 
     /**

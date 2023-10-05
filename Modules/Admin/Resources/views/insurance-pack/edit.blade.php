@@ -65,7 +65,8 @@
                                     >
                                 </div>
                                 <div class="form-group">
-                                    <label for="Description {{Str::upper($locale)}}">Description {{Str::upper($locale)}}</label>
+                                    <label
+                                        for="Description {{Str::upper($locale)}}">Description {{Str::upper($locale)}}</label>
                                     <textarea
                                         type="text"
                                         class="form-control"
@@ -79,6 +80,17 @@
                                 <label for="Price">Price Per Day</label>
                                 <input type="number" step=".01" class="form-control" name="price" placeholder="Price"
                                        value="{{$insurancePack->price}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="Coverage">Coverage</label>
+                                <input
+                                    type="number"
+                                    step=".01"
+                                    class="form-control"
+                                    name="coverage"
+                                    placeholder="Coverage"
+                                    value="{{$insurancePack->coverage}}"
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="Price">Options</label>

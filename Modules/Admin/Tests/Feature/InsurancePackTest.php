@@ -65,6 +65,7 @@ class InsurancePackTest extends AdminTestCase
         }
         return [
             'price' => 100,
+            'coverage' => 1337,
             'insurance_options' => $insuranceOptionIds,
             ...$data,
         ];

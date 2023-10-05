@@ -10,6 +10,7 @@ class User extends \App\Models\User
 
     protected $fillable = [
         'referral_id',
+        'balance',
     ];
 
 
@@ -25,6 +26,11 @@ class User extends \App\Models\User
     /**
      * Relations
      */
+
+    public function insurances(): HasMany
+    {
+        return $this->hasMany(Insurance::class);
+    }
 
     public function referralRequests(): HasMany
     {

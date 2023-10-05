@@ -11,6 +11,7 @@ class Insurance extends \App\Models\Insurance
     protected $fillable = [
         'user_id',
         'expires_at',
+        'coverage',
     ];
 
     /**

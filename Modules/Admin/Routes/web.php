@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\InsuranceCoverageOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionFieldController;
 use Modules\Admin\Http\Controllers\InsurancePackController;
@@ -39,6 +40,8 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::resource('insurance-subscription-option', InsuranceSubscriptionOptionController::class)
         ->except('show');
+
+    Route::resource('insurance-coverage-option', InsuranceCoverageOptionController::class)->except('show');
 
     Route::post('/insurance-option/{insuranceOption}/fields', [InsuranceOptionFieldController::class, 'add'])
         ->name('insurance-option.field.add');

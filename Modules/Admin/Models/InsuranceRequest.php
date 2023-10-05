@@ -6,6 +6,7 @@ use App\Enums\InsuranceRequestStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class InsuranceRequest extends \App\Models\InsuranceRequest
 {
@@ -32,10 +33,16 @@ class InsuranceRequest extends \App\Models\InsuranceRequest
 
     public function approve(): void
     {
-        $this->update([
-            'status' => InsuranceRequestStatus::APPROVED,
-            'approved_at' => now(),
-        ]);
+        DB::transaction(function () {
+            $this->update([
+                'status' => InsuranceRequestStatus::APPROVED,
+                'approved_at' => now(),
+            ]);
+
+            $this->user->update([
+                'balance' => $this->user->balance += $this->coverage,
+            ]);
+        });
     }
 
     public function reject($reasons): void

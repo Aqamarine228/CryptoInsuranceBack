@@ -10,6 +10,15 @@ class Post extends \App\Models\Post
     protected array $localizable = ['short_content', 'short_title'];
 
     /**
+     * Scopes
+     */
+
+    public function scopePublished($q)
+    {
+        return $q->whereNotNull('published_at');
+    }
+
+    /**
      * Attributes
      */
 

@@ -25,6 +25,7 @@ class InsuranceRequestController extends BaseClientApiController
         DB::transaction(function () use ($fields, $insuranceOption, $request) {
             $insuranceRequest = $request->user()->insuranceRequests()->create([
                 'insurance_option_id' => $insuranceOption->id,
+                'coverage' => $request->user()->insurances()->active()->first()->coverage
             ]);
 
             $insuranceRequest->fields()->createMany($fields);

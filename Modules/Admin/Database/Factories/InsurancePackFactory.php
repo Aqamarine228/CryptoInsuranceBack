@@ -22,7 +22,8 @@ class InsurancePackFactory extends Factory
             'description_ru' => $this->faker->text(250),
             'price' => $this->faker->randomNumber(1, 100),
             'slug' => Str::slug($nameEn),
-            'currency' => Currency::USD->value
+            'currency' => Currency::USD->value,
+            'coverage' => $this->faker->randomNumber(9, false),
         ];
     }
 }

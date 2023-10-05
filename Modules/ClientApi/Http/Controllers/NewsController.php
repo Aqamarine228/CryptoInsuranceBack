@@ -9,11 +9,11 @@ use Modules\ClientApi\Models\Post;
 class NewsController extends BaseClientApiController
 {
 
-    const NEWS_PER_PAGE_COUNT = 5;
+    const NEWS_PER_PAGE_COUNT = 3;
 
     public function index(): JsonResponse
     {
-        return $this->respondSuccess(PostResource::collection(Post::latest()->paginate(self::NEWS_PER_PAGE_COUNT)));
+        return $this->respondSuccess(PostResource::collection(Post::published()->latest()->paginate(self::NEWS_PER_PAGE_COUNT)));
     }
 
     public function show(Post $post): JsonResponse

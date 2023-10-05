@@ -18,11 +18,6 @@ class InsuranceTest extends ClientApiTestCase
         foreach ($subscriptionOptions as $subscriptionOption) {
             $result[] = [
                 'subscription_option_id' => $subscriptionOption->id,
-                'price' => bcmul(
-                    bcdiv($subscriptionOption->sale_percentage, "100", 2),
-                    (string)$options->pluck('price')->sum(),
-                    2
-                ),
                 'duration' => $subscriptionOption->duration,
             ];
         }

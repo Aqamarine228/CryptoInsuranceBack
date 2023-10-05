@@ -18,6 +18,7 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
         'currency',
         'user_id',
         'insurance_subscription_option_id',
+        'coverage',
         'status',
     ];
 
@@ -47,6 +48,7 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
             $insurance = Insurance::create([
                 'user_id' => $this->user_id,
                 'expires_at' => now()->addSeconds($this->subscriptionOption->duration),
+                'coverage' => $this->coverage,
             ]);
             $insurance->options()->sync($this->options->pluck('id'));
             $this->update(['status' => InsuranceInvoiceStatus::PAID]);

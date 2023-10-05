@@ -63,7 +63,15 @@
                     <a href="{{ route('admin.insurance-subscription-option.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-subscript"></i>
                         <p>
-                            Insurance Subscription Options
+                            Insurance Subscriptions
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.insurance-coverage-option.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-comment-dollar"></i>
+                        <p>
+                            Insurance Coverages
                         </p>
                     </a>
                 </li>

@@ -27,6 +27,9 @@
                                 </li>
                             @endfor
                             <li class="list-group-item">
+                                <b>Coverage</b> <a class="float-right">{{$insuranceRequest->coverage}}$</a>
+                            </li>
+                            <li class="list-group-item">
                                 <b>Request Created At</b> <a class="float-right">{{$insuranceRequest->created_at}}</a>
                             </li>
                             <div class="d-flex">
