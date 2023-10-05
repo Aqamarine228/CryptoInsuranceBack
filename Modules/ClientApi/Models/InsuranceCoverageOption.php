@@ -11,7 +11,7 @@ class InsuranceCoverageOption extends \App\Models\InsuranceCoverageOption
 
     public function addToPrice(float $price): float
     {
-        $additionalPrice = bcmul($price, bcdiv($this->price_percentage, "100", 2), 2);
-        return bcadd($price, $additionalPrice);
+        $additionalPrice = bcmul($price, bcdiv($this->price_percentage, "100", 2), 5);
+        return bcadd($price, $additionalPrice, 5);
     }
 }
