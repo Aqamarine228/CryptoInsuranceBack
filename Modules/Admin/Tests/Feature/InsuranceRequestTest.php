@@ -33,7 +33,7 @@ class InsuranceRequestTest extends AdminTestCase
             assertNull($insuranceRequest["rejection_reason_$locale"]);
         }
 
-        self::assertSame($insuranceRequest->user->balance, $insuranceRequest->coverage);
+        self::assertSame((int)$insuranceRequest->user->balance, $insuranceRequest->coverage);
 
         Notification::assertSentTo(
             $insuranceRequest->user,

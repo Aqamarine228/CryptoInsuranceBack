@@ -16,6 +16,7 @@ class InsuranceRequestFactory extends Factory
             'user_id' => UserFactory::new()->create()->id,
             'insurance_option_id' => InsuranceOptionFactory::new()->create()->id,
             'status' => InsuranceRequestStatus::PENDING->value,
+            'coverage' => $this->faker->randomNumber([0, 9], 9),
         ];
     }
 }

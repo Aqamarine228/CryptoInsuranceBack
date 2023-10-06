@@ -18,7 +18,6 @@ class InsuranceOptionCalculatedResource extends JsonResource
     public function __construct(
         $resource,
         private InsuranceSubscriptionOption $subscriptionOption,
-        private InsuranceCoverageOption $insuranceCoverageOption,
     ) {
         parent::__construct($resource);
     }
@@ -29,9 +28,7 @@ class InsuranceOptionCalculatedResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => (float)$this->subscriptionOption->calculateEndPrice(
-                $this->insuranceCoverageOption->addToPrice($this->price)
-            ),
+            'price' => (float)$this->subscriptionOption->calculateEndPrice($this->price),
             'currency' => $this->currency,
         ];
     }

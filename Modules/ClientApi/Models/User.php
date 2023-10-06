@@ -33,7 +33,7 @@ class User extends \App\Models\User
 
     public function hasReferral(): bool
     {
-        return $this->inviter_id;
+        return (bool)$this->inviter_id;
     }
 
     /**

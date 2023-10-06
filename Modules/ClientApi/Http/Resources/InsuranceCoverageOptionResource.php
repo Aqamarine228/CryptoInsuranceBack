@@ -18,7 +18,7 @@ class InsuranceCoverageOptionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'price_percentage' => $this->price_percentage,
+            'price_percentage' => (float)$this->price_percentage,
             'coverage' => $this->coverage,
         ];
     }

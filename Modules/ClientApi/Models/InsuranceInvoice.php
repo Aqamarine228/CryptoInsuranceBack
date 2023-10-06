@@ -54,11 +54,15 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
             $this->update(['status' => InsuranceInvoiceStatus::PAID]);
             $user = $this->user;
             if ($user->hasReferral()) {
+                $incomeAmount = bcmul($this->amount, bcdiv(config('referrals.income_percent'), "100", 2), 2);
                 $this->referralIncome()->create([
-                    'amount' => bcmul($this->amount, bcdiv(config('referrals.income_percent'), "100", 2), 2),
+                    'amount' => $incomeAmount,
                     'user_id' => $user->inviter_id,
                     'referral_id' => $user->id,
                     'currency' => $this->currency,
+                ]);
+                $user->inviter->update([
+                    'balance' => bcadd($user->inviter->balance, $incomeAmount, 2),
                 ]);
             }
         });

@@ -19,6 +19,7 @@ use Modules\ClientApi\Http\Controllers\ReferralRequestController;
 use Modules\ClientApi\Http\Controllers\ReferralsController;
 use Modules\ClientApi\Http\Controllers\RegisterController;
 use Modules\ClientApi\Http\Controllers\UserController;
+use Modules\ClientApi\Http\Controllers\WithdrawalRequestController;
 use Modules\ClientApi\Http\Middleware\ShkeeperMiddleware;
 use Modules\ClientApi\Models\DatabaseNotification;
 use Modules\ClientApi\Models\InsuranceRequest;
@@ -78,13 +79,14 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
     Route::get('/news', [NewsController::class, 'index']);
     Route::get('/news/{post}', [NewsController::class, 'show']);
 
+    Route::post('/withdrawal-request', [WithdrawalRequestController::class, 'create']);
+
     Route::get('/insurance-pack', [InsurancePackController::class, 'index']);
     Route::get('/insurance-option', [InsuranceOptionController::class, 'index']);
     Route::get('/insurance-option/{insuranceOption}', [InsuranceOptionController::class, 'show']);
     Route::get('/insurance-subscription-option', [InsuranceSubscriptionOptionController::class, 'index']);
     Route::get('/insurance-coverage-option', [InsuranceCoverageOptionController::class, 'index']);
     Route::get('/insurance', [InsuranceController::class, 'show']);
-    Route::post('/insurance/price', [InsuranceController::class, 'calculatePrice']);
     Route::get('/insurance/statistics', [InsuranceController::class, 'statistic']);
     Route::get('/insurance/recent-activity', [InsuranceController::class, 'recentActivity']);
     Route::prefix('/insurance-invoice')->group(function () {
