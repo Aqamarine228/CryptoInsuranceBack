@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\ClientApi\Http\Controllers\DashboardController;
 use Modules\ClientApi\Http\Controllers\DatabaseNotificationController;
 use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\InsuranceController;
@@ -79,7 +80,10 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
     Route::get('/news', [NewsController::class, 'index']);
     Route::get('/news/{post}', [NewsController::class, 'show']);
 
+    Route::get('/withdrawal-request', [WithdrawalRequestController::class, 'index']);
     Route::post('/withdrawal-request', [WithdrawalRequestController::class, 'create']);
+
+    Route::get('/dashboard/recent-activity', [DashboardController::class, 'recentActivity']);
 
     Route::get('/insurance-pack', [InsurancePackController::class, 'index']);
     Route::get('/insurance-option', [InsuranceOptionController::class, 'index']);

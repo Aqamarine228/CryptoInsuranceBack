@@ -4,20 +4,29 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\ClientApi\Jobs\CreateInsuranceRequest;
+use Modules\ClientApi\Jobs\CreateWithdrawalRequest;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule
+            ->call(function () {
+                $job = new CreateWithdrawalRequest();
+                $job->delay(rand(0, 60 * 59));
+                dispatch($job);
+            })
+            ->hourly();
+        $schedule
+            ->call(function () {
+                $job = new CreateInsuranceRequest();
+                $job->delay(rand(0, 60 * 59));
+                dispatch($job);
+            })
+            ->hourly();
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');

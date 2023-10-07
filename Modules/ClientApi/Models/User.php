@@ -40,6 +40,11 @@ class User extends \App\Models\User
      * Relations
      */
 
+    public function withdrawalRequests(): HasMany
+    {
+        return $this->hasMany(WithdrawalRequest::class, 'user_id', 'id');
+    }
+
     public function referralRequests(): HasMany
     {
         return $this->hasMany(ReferralRequest::class, 'user_id', 'id');

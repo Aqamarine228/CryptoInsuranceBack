@@ -34,7 +34,7 @@ class ReferralIncomeController extends BaseClientApiController
                     ->with('referral')
                     ->when(
                         array_key_exists('filterable_columns', $validated) && $validated['filterable_columns'],
-                        fn($q) => $q->filterByColumns($validated['filterable_columns'])
+                        fn ($q) => $q->filterByColumns($validated['filterable_columns'])
                     )
                     ->filterByTimePeriod(TimePeriod::from($validated['time_period']))
                     ->paginate(self::RECORDS_PER_PAGE_COUNT)

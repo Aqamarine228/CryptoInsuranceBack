@@ -20,6 +20,7 @@ class InsuranceRecentActivityResource extends JsonResource
             'insurance_option' => new InsuranceOptionResource($this->option),
             'created_at' => $this->created_at,
             'coverage' => $this->coverage,
+            'type' => 'insurance',
         ];
     }
 }

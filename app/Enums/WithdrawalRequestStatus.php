@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum WithdrawalStatus: string
+enum WithdrawalRequestStatus: string
 {
     use EnumToArray;
     case PAID = 'paid';

@@ -7,7 +7,7 @@ enum Cryptocurrency: string
     use EnumToArray;
 
     case BTC = 'BTC';
-    case DODGE = 'DODGE';
+//    case DODGE = 'DODGE';
     case LTC = 'LTC';
     case USDC = 'USDC';
     case USDT = 'USDT';

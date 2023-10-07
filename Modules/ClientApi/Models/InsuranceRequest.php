@@ -12,6 +12,8 @@ class InsuranceRequest extends \App\Models\InsuranceRequest
     protected $fillable = [
         'insurance_option_id',
         'coverage',
+        'user_id',
+        'status',
     ];
 
     /**

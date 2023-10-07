@@ -4,13 +4,10 @@ namespace Modules\ClientApi\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Modules\ClientApi\Http\Resources\InsurancePriceResource;
 use Modules\ClientApi\Http\Resources\InsuranceRecentActivityResource;
 use Modules\ClientApi\Http\Resources\InsuranceResource;
 use Modules\ClientApi\Http\Resources\InsuranceStatisticResource;
-use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\InsuranceRequest;
-use Modules\ClientApi\Models\InsuranceSubscriptionOption;
 
 class InsuranceController extends BaseClientApiController
 {
