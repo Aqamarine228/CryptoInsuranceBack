@@ -40,7 +40,7 @@ class InsuranceOptionController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('required', 'string', 'max:255'),
             'description' => new AllLanguagesRule('required', 'string', 'max:250'),
-            'price' => 'required|decimal:0,2'
+            'price' => 'required|decimal:0,2|min:0.01'
         ]);
 
         $validated['slug'] = GenerateSlug::execute($validated["name_" . locale()->default()]);
@@ -63,7 +63,7 @@ class InsuranceOptionController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('string', 'max:255'),
             'description' => new AllLanguagesRule('string', 'max:250'),
-            'price' => 'decimal:0,2'
+            'price' => 'decimal:0,2|min:0.01'
         ]);
 
         $insuranceOption->update($validated);

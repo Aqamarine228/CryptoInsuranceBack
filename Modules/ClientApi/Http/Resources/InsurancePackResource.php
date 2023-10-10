@@ -24,7 +24,7 @@ class InsurancePackResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->subscriptionOption->calculateEndPrice($this->price),
+            'price' => $this->subscriptionOption->calculatePrice($this->price),
             'description' => $this->description,
             'options' => InsuranceOptionResource::collection($this->options),
             'coverage' => $this->coverage,

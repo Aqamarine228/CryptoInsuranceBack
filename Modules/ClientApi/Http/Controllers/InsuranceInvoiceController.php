@@ -36,10 +36,11 @@ class InsuranceInvoiceController extends BaseClientApiController
         $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
         $coverageOption = InsuranceCoverageOption::find($validated['insurance_coverage_option_id']);
         $summedPrice = InsuranceOption::whereIn('id', $validated['insurance_options'])->sum('price');
+        $summedPrice = $subscriptionOption->calculatePrice($summedPrice);
         $summedPrice = $coverageOption->addToPrice($summedPrice);
 
         $insuranceInvoice = InsuranceInvoice::create([
-            'amount' => $subscriptionOption->calculateEndPrice($summedPrice),
+            'amount' => $summedPrice,
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,
             'insurance_subscription_option_id' => $validated['insurance_subscription_option_id'],
@@ -63,7 +64,7 @@ class InsuranceInvoiceController extends BaseClientApiController
         $subscriptionOption = InsuranceSubscriptionOption::find($validated['insurance_subscription_option_id']);
 
         $insuranceInvoice = InsuranceInvoice::create([
-            'amount' => $subscriptionOption->calculateEndPrice($insurancePack->price),
+            'amount' => $subscriptionOption->calculatePrice($insurancePack->price),
             'coverage' => $insurancePack->coverage,
             'currency' => Currency::USD,
             'user_id' => $request->user()->id,

@@ -28,7 +28,7 @@ class InsuranceOptionCalculatedResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => (float)$this->subscriptionOption->calculateEndPrice($this->price),
+            'price' => (float)$this->subscriptionOption->calculatePrice($this->price),
             'currency' => $this->currency,
         ];
     }

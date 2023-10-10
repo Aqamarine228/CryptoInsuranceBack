@@ -75,7 +75,7 @@
                                     placeholder="Price Percentage"
                                     value="{{$coverageOption->price_percentage}}"
                                     min="0"
-                                    max="100"
+                                    max="100000"
                                 >
                             </div>
                         </div>

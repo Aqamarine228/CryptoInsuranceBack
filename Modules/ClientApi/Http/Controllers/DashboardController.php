@@ -11,7 +11,7 @@ use Modules\ClientApi\Models\WithdrawalRequest;
 
 class DashboardController extends BaseClientApiController
 {
-    const RECENT_ACTIVITY_PER_PAGE_COUNT = 9;
+    const RECENT_ACTIVITY_PER_PAGE_COUNT = 8;
 
     public function recentActivity(): JsonResponse
     {

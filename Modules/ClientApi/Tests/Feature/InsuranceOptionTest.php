@@ -22,7 +22,7 @@ class InsuranceOptionTest extends ClientApiTestCase
                 "id" => $option->id,
                 "name" => $option->name_en,
                 "description" => $option->description_en,
-                "price" => (float)$subscriptionOption->calculateEndPrice($option->price),
+                "price" => (float)$subscriptionOption->calculatePrice($option->price),
                 "currency" => $option->currency,
             ];
         }

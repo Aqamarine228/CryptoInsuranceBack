@@ -28,7 +28,7 @@ class InsuranceCoverageOptionController extends BaseAdminController
     {
         $validated = $request->validate([
             'coverage' => 'required|numeric|min:1',
-            'price_percentage' => 'required|numeric|between:0,100',
+            'price_percentage' => 'required|numeric|between:0,100000',
         ]);
 
         $insuranceCoverageOption = InsuranceCoverageOption::create($validated);
@@ -49,7 +49,7 @@ class InsuranceCoverageOptionController extends BaseAdminController
     {
         $validated = $request->validate([
             'coverage' => 'numeric|min:1',
-            'price_percentage' => 'numeric|between:0,100',
+            'price_percentage' => 'numeric|between:0,100000',
         ]);
 
         $insuranceCoverageOption->update($validated);

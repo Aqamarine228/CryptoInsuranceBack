@@ -22,7 +22,7 @@ class InsurancePriceResource extends JsonResource
     {
         return [
             'subscription_option_id' => $this->id,
-            'price' => $this->calculateEndPrice($this->price),
+            'price' => $this->calculatePrice($this->price),
             'duration' => $this->duration,
         ];
     }

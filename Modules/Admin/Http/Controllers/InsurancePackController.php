@@ -33,7 +33,7 @@ class InsurancePackController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('required', 'string', 'max:255'),
             'description' => new AllLanguagesRule('required', 'string', 'max:250'),
-            'price' => 'required|numeric|min:1',
+            'price' => 'required|numeric|min:0.01',
             'insurance_options' => 'required|array',
             'insurance_options.*' => 'required|exists:insurance_options,id',
             'coverage' => 'required|numeric|min:1',
@@ -78,7 +78,7 @@ class InsurancePackController extends BaseAdminController
         $validated = $request->validate([
             'name' => new AllLanguagesRule('required', 'string', 'max:255'),
             'description' => new AllLanguagesRule('required', 'string', 'max:250'),
-            'price' => 'numeric|min:1',
+            'price' => 'numeric|min:0.01',
             'coverage' => 'numeric|min:1'
         ]);
 
