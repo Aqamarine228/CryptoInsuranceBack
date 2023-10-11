@@ -12,10 +12,10 @@ class InsuranceStatisticResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'insurance_fund' => WidgetVariable::getInsuranceFund(),
-            'total_insurance_paid' => WidgetVariable::getTotalInsurancePaid() + InsuranceRequest::approved()
+            'insurance_fund' => WidgetVariable::getInsuranceFund()->value,
+            'total_insurance_paid' => WidgetVariable::getTotalInsurancePaid()->value + InsuranceRequest::approved()
                 ->sum('coverage'),
-            'insurance_paid_today' => WidgetVariable::getInsurancePaidToday() + InsuranceRequest::approved()
+            'insurance_paid_today' => WidgetVariable::getInsurancePaidToday()->value + InsuranceRequest::approved()
                 ->whereDate('created_at', today())
                 ->sum('coverage'),
         ];
