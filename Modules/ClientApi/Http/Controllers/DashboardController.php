@@ -4,14 +4,16 @@ namespace Modules\ClientApi\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Modules\ClientApi\Http\Resources\InsuranceInvoiceRecentActivityResource;
 use Modules\ClientApi\Http\Resources\InsuranceRecentActivityResource;
 use Modules\ClientApi\Http\Resources\WithdrawalRequestRecentActivityResource;
+use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Models\InsuranceRequest;
 use Modules\ClientApi\Models\WithdrawalRequest;
 
 class DashboardController extends BaseClientApiController
 {
-    const RECENT_ACTIVITY_PER_PAGE_COUNT = 20;
+    const RECENT_ACTIVITY_PER_PAGE_COUNT = 12;
 
     public function recentActivity(): JsonResponse
     {
@@ -27,8 +29,12 @@ class DashboardController extends BaseClientApiController
             WithdrawalRequest::paid()->latest()->limit(10)->get()
         );
 
+        $insuranceInvoices = InsuranceInvoiceRecentActivityResource::collection(
+            InsuranceInvoice::statusPaid()->latest()->limit(10)->get()
+        );
+
         $collection = new Collection();
-        $collection = $collection->concat($insuranceRequests)->concat($withdrawalRequests);
+        $collection = $collection->concat($insuranceRequests)->concat($withdrawalRequests)->concat($insuranceInvoices);
 
 
         return $this->respondSuccess(

@@ -4,13 +4,15 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\ClientApi\Jobs\CreateInsuranceInvoice;
 use Modules\ClientApi\Jobs\CreateInsuranceRequest;
 use Modules\ClientApi\Jobs\CreateWithdrawalRequest;
 
 class Kernel extends ConsoleKernel
 {
     const WITHDRAWAL_DELAY_LENGTH = 5;
-    const INSURANCE_DELAY_LENGTH = 4;
+    const INSURANCE_REQUEST_DELAY_LENGTH = 5;
+    const INSURANCE_INVOICE_DELAY_LENGTH = 4;
 
     protected function schedule(Schedule $schedule): void
     {
@@ -25,7 +27,15 @@ class Kernel extends ConsoleKernel
         $schedule
             ->call(function () {
                 $job = new CreateInsuranceRequest();
-                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_DELAY_LENGTH);
+                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_REQUEST_DELAY_LENGTH);
+                dispatch($job)->delay($delay);
+            })
+            ->hourly();
+
+        $schedule
+            ->call(function () {
+                $job = new CreateInsuranceInvoice();
+                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_INVOICE_DELAY_LENGTH);
                 dispatch($job)->delay($delay);
             })
             ->hourly();

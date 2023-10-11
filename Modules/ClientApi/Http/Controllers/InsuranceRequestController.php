@@ -22,8 +22,10 @@ class InsuranceRequestController extends BaseClientApiController
         $insurance = $this->getUserInsurance($request->user());
         $validated = $request->validate($this->createValidationRules($insurance, $insuranceOption));
         $insuranceOption->load('fields');
+
         $fields = $this
             ->fieldsFromValidated($validated, $insuranceOption->fields->pluck('id', 'slug'));
+
         DB::transaction(function () use ($fields, $insuranceOption, $request, $validated) {
             $insuranceRequest = $request->user()->insuranceRequests()->create([
                 'insurance_option_id' => $insuranceOption->id,
@@ -43,7 +45,7 @@ class InsuranceRequestController extends BaseClientApiController
     private function createValidationRules(Insurance $insurance, InsuranceOption $insuranceOption): array
     {
         $rules = [
-            'coverage' => ['required', 'min:0', "max:$insurance->coverage"]
+            'coverage' => ['required', 'numeric', 'min:100', "max:$insurance->coverage"]
         ];
         foreach ($insuranceOption->fields as $field) {
             $rules[$field->slug] = [];

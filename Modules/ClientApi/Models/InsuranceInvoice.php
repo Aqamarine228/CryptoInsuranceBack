@@ -69,6 +69,15 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
     }
 
     /**
+     * Scopes
+     */
+
+    public function scopeStatusPaid($q)
+    {
+        return $q->where('status', InsuranceInvoiceStatus::PAID);
+    }
+
+    /**
      * Relations
      */
 

@@ -27,7 +27,7 @@ class CreateInsuranceRequest implements ShouldQueue
             return;
         }
         InsuranceRequest::create([
-            'coverage' => $coverage,
+            'coverage' => mt_rand(100, $coverage),
             'insurance_option_id' => $insuranceOption->id,
             'approved_at' => now(),
             'status' => InsuranceRequestStatus::APPROVED->value,
