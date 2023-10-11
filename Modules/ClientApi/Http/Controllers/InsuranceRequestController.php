@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Modules\ClientApi\Models\Insurance;
 use Modules\ClientApi\Models\InsuranceOption;
 use Modules\ClientApi\Models\User;
 
@@ -18,14 +19,15 @@ class InsuranceRequestController extends BaseClientApiController
             return $this->respondErrorMessage(__('errors.referralRequestAlreadyExists'));
         }
 
-        $validated = $request->validate($this->createValidationRules($insuranceOption));
+        $insurance = $this->getUserInsurance($request->user());
+        $validated = $request->validate($this->createValidationRules($insurance, $insuranceOption));
         $insuranceOption->load('fields');
         $fields = $this
             ->fieldsFromValidated($validated, $insuranceOption->fields->pluck('id', 'slug'));
-        DB::transaction(function () use ($fields, $insuranceOption, $request) {
+        DB::transaction(function () use ($fields, $insuranceOption, $request, $validated) {
             $insuranceRequest = $request->user()->insuranceRequests()->create([
                 'insurance_option_id' => $insuranceOption->id,
-                'coverage' => $request->user()->insurances()->active()->first()->coverage
+                'coverage' => $validated['coverage']
             ]);
 
             $insuranceRequest->fields()->createMany($fields);
@@ -38,9 +40,11 @@ class InsuranceRequestController extends BaseClientApiController
         return !$user->insuranceRequests()->pending()->exists();
     }
 
-    private function createValidationRules(InsuranceOption $insuranceOption): array
+    private function createValidationRules(Insurance $insurance, InsuranceOption $insuranceOption): array
     {
-        $rules = [];
+        $rules = [
+            'coverage' => ['required', 'min:0', "max:$insurance->coverage"]
+        ];
         foreach ($insuranceOption->fields as $field) {
             $rules[$field->slug] = [];
             $field->required && $rules[$field->slug][] = 'required';
@@ -50,6 +54,11 @@ class InsuranceRequestController extends BaseClientApiController
         }
 
         return $rules;
+    }
+
+    private function getUserInsurance(User $user): Insurance
+    {
+        return $user->insurances()->active()->first();
     }
 
     private function fieldsFromValidated(array $validated, Collection $fields): array

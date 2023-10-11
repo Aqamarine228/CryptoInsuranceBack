@@ -10,6 +10,7 @@ use Modules\Admin\Http\Controllers\InsuranceRequestController;
 use Modules\Admin\Http\Controllers\InsuranceSubscriptionOptionController;
 use Modules\Admin\Http\Controllers\LoginController;
 use Modules\Admin\Http\Controllers\ReferralRequestController;
+use Modules\Admin\Http\Controllers\WidgetVariableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/{referralRequest}/reject', [ReferralRequestController::class, 'submitReject'])->name('reject');
         Route::get('/{referralRequest}/reject', [ReferralRequestController::class, 'reject'])->name('reject');
     });
+
+    Route::resource('widget-variable', WidgetVariableController::class)
+        ->except(['show', 'destroy', 'create', 'store']);
+
     Route::resource('insurance-option', InsuranceOptionController::class)->except('show');
     Route::get('/insurance-option/search', [InsuranceOptionController::class, 'search'])
         ->name('insurance-option.search');

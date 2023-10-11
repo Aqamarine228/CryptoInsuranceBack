@@ -9,20 +9,24 @@ use Modules\ClientApi\Jobs\CreateWithdrawalRequest;
 
 class Kernel extends ConsoleKernel
 {
+    const WITHDRAWAL_DELAY_LENGTH = 5;
+    const INSURANCE_DELAY_LENGTH = 4;
+
     protected function schedule(Schedule $schedule): void
     {
         $schedule
             ->call(function () {
                 $job = new CreateWithdrawalRequest();
-                $job->delay(rand(0, 60 * 59));
-                dispatch($job);
+                $delay = (int)substr(hrtime(false)[1], 0, self::WITHDRAWAL_DELAY_LENGTH);
+                dispatch($job)->delay($delay);
             })
             ->hourly();
+
         $schedule
             ->call(function () {
                 $job = new CreateInsuranceRequest();
-                $job->delay(rand(0, 60 * 59));
-                dispatch($job);
+                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_DELAY_LENGTH);
+                dispatch($job)->delay($delay);
             })
             ->hourly();
     }

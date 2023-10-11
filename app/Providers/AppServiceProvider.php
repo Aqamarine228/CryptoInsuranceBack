@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Facades\Payments\CoinbasePayments;
 use App\Facades\Payments\ShkeeperPayments;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
+        }
+
         Paginator::useBootstrapFour();
         $this->app->singleton(ShkeeperPayments::class, function () {
             return new ShkeeperPayments();

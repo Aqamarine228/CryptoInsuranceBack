@@ -52,14 +52,17 @@ class InsuranceRequestTest extends ClientApiTestCase
         $fields[0]->value = $this->faker->name;
         $fields[1]->value = $this->faker->numberBetween();
         $fields[4]->value = $this->faker->name;
+        $coverage = $this->faker->randomNumber(9, false);
 
         $this->postJson("/api/v1/insurance-request/$insuranceOption->id", [
+            'coverage' => $coverage,
             $fields[0]->slug => $fields[0]->value,
             $fields[1]->slug => $fields[1]->value,
             $fields[4]->slug => $fields[4]->value,
         ])->assertOk();
 
         $insuranceRequest = InsuranceRequest::where([
+            'coverage' => $coverage,
             'insurance_option_id' => $insuranceOption->id,
             'user_id' => $this->user->id,
             'status' => InsuranceRequestStatus::PENDING,

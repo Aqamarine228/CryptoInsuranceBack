@@ -75,6 +75,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.widget-variable.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-hashtag"></i>
+                        <p>
+                            Widget Variables
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item ">
                     <a href="{{ route('admin.media-folder.index') }}" class="nav-link ">
                         <i class="nav-icon fas fa-images"></i>

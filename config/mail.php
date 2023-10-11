@@ -122,6 +122,6 @@ return [
         ],
     ],
 
-    'support_email' => 'support@cryptoshield.com'
+    'support_email' => env('SUPPORT_EMAIL_ADDRESS', 'hello@gmail.com'),
 
 ];
