@@ -16,9 +16,9 @@ class InsuranceInvoiceFactory extends Factory
         return [
             'status' => InsuranceInvoiceStatus::UNPAID->value,
             'amount' => $this->faker->randomNumber(3),
+            'insurance_id' => InsuranceFactory::new()->create()->id,
             'currency' => Currency::USD->value,
             'insurance_subscription_option_id' => InsuranceSubscriptionOptionFactory::new()->create()->id,
-            'coverage' => $this->faker->randomNumber(9, false),
             'user_id' => UserFactory::new()->create()->id,
         ];
     }

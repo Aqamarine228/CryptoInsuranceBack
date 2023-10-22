@@ -18,6 +18,7 @@ class InsuranceRequestTest extends ClientApiTestCase
     {
         $insurance = InsuranceFactory::new()->state([
             'user_id' => $this->user->id,
+            'paid' => true,
         ])->create();
         $insuranceOption = InsuranceOptionFactory::new()->create();
         $insurance->options()->sync($insurance->id);
@@ -82,6 +83,7 @@ class InsuranceRequestTest extends ClientApiTestCase
     public function testInsuranceRequestAlreadySubmitted(): void
     {
         $insurance = InsuranceFactory::new()->state([
+            'paid' => true,
             'user_id' => $this->user->id,
         ])->create();
         $insuranceOption = InsuranceOptionFactory::new()->create();

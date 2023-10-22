@@ -8,6 +8,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Modules\ClientApi\Models\Insurance;
 use Modules\ClientApi\Models\InsuranceCoverageOption;
 use Modules\ClientApi\Models\InsuranceInvoice;
 use Modules\ClientApi\Models\InsuranceOption;
@@ -32,13 +34,26 @@ class CreateInsuranceInvoice implements ShouldQueue
             return;
         }
 
-        InsuranceInvoice::create([
-            'coverage' => $coverage->coverage,
-            'amount' => $coverage->addToPrice($subscriptionOption->calculatePrice($price)),
-            'insurance_subscription_option_id' => $subscriptionOption->id,
-            'currency' => Currency::USD->value,
-            'status' => InsuranceInvoiceStatus::PAID->value,
-            'user_id' => User::firstOrCreate(config('generators.user'), ['password' => '123'])->id,
-        ]);
+        DB::transaction(function () use ($coverage, $subscriptionOption, $price) {
+            $user = User::firstOrCreate(config('generators.user'), ['password' => '123']);
+            $insurance = Insurance::create([
+                'expires_at' => now(),
+                'paid' => false,
+                'coverage' => $coverage->coverage,
+                'exchange_name' => 'none',
+                'exchange_id' => 'none',
+                'max_wallets_count' => 3,
+                'user_id' => $user->id,
+            ]);
+
+            InsuranceInvoice::create([
+                'amount' => $coverage->addToPrice($subscriptionOption->calculatePrice($price)),
+                'insurance_subscription_option_id' => $subscriptionOption->id,
+                'insurance_id' => $insurance->id,
+                'currency' => Currency::USD->value,
+                'status' => InsuranceInvoiceStatus::PAID->value,
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }

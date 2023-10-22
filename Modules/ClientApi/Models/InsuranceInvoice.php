@@ -18,7 +18,7 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
         'currency',
         'user_id',
         'insurance_subscription_option_id',
-        'coverage',
+        'insurance_id',
         'status',
     ];
 
@@ -42,15 +42,18 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
         return $this->user_id;
     }
 
+    public function isPaid(): bool
+    {
+        return $this->status === InsuranceInvoiceStatus::PAID;
+    }
+
     public function paid(): void
     {
         DB::transaction(function () {
-            $insurance = Insurance::create([
-                'user_id' => $this->user_id,
+            $this->insurance->update([
                 'expires_at' => now()->addSeconds($this->subscriptionOption->duration),
-                'coverage' => $this->coverage,
+                'paid' => true,
             ]);
-            $insurance->options()->sync($this->options->pluck('id'));
             $this->update(['status' => InsuranceInvoiceStatus::PAID]);
             $user = $this->user;
             if ($user->hasReferral()) {
@@ -99,5 +102,10 @@ class InsuranceInvoice extends \App\Models\InsuranceInvoice implements Payable
     public function referralIncome(): MorphOne
     {
         return $this->morphOne(ReferralIncome::class, 'payable');
+    }
+
+    public function insurance(): BelongsTo
+    {
+        return $this->belongsTo(Insurance::class);
     }
 }

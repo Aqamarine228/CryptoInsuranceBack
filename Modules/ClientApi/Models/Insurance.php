@@ -12,6 +12,10 @@ class Insurance extends \App\Models\Insurance
         'user_id',
         'expires_at',
         'coverage',
+        'max_wallets_count',
+        'exchange_id',
+        'exchange_name',
+        'paid',
     ];
 
     /**
@@ -20,12 +24,17 @@ class Insurance extends \App\Models\Insurance
 
     public function scopeActive(Builder $query): void
     {
-        $query->whereDate('expires_at', '>', now());
+        $query->where('paid', true)->whereDate('expires_at', '>', now());
     }
 
     /**
      * Relations
      */
+
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(InsuranceWallet::class);
+    }
 
     public function options(): BelongsToMany
     {

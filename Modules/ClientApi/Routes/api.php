@@ -6,6 +6,7 @@ use Modules\ClientApi\Http\Controllers\DatabaseNotificationController;
 use Modules\ClientApi\Http\Controllers\EmailVerificationController;
 use Modules\ClientApi\Http\Controllers\InsuranceController;
 use Modules\ClientApi\Http\Controllers\InsuranceCoverageOptionController;
+use Modules\ClientApi\Http\Controllers\InsuranceInformationController;
 use Modules\ClientApi\Http\Controllers\InsuranceInvoiceController;
 use Modules\ClientApi\Http\Controllers\InsuranceOptionController;
 use Modules\ClientApi\Http\Controllers\InsurancePackController;
@@ -23,6 +24,7 @@ use Modules\ClientApi\Http\Controllers\UserController;
 use Modules\ClientApi\Http\Controllers\WithdrawalRequestController;
 use Modules\ClientApi\Http\Middleware\ShkeeperMiddleware;
 use Modules\ClientApi\Models\DatabaseNotification;
+use Modules\ClientApi\Models\Insurance;
 use Modules\ClientApi\Models\InsuranceRequest;
 
 /*
@@ -71,7 +73,7 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
         Route::delete('/', [DatabaseNotificationController::class, 'destroy']);
         Route::post('/mark-as-read', [DatabaseNotificationController::class, 'markAsRead']);
         Route::post('/{databaseNotification}', [DatabaseNotificationController::class, 'show'])
-        ->can('show', [DatabaseNotification::class, 'databaseNotification']);
+            ->can('show', [DatabaseNotification::class, 'databaseNotification']);
     });
 
     Route::post('/insurance-request/{insuranceOption}', InsuranceRequestController::class)
@@ -90,9 +92,20 @@ Route::middleware(['auth:api-v1', 'verified'])->group(function () {
     Route::get('/insurance-option/{insuranceOption}', [InsuranceOptionController::class, 'show']);
     Route::get('/insurance-subscription-option', [InsuranceSubscriptionOptionController::class, 'index']);
     Route::get('/insurance-coverage-option', [InsuranceCoverageOptionController::class, 'index']);
-    Route::get('/insurance', [InsuranceController::class, 'show']);
+
+    Route::get('/insurance', [InsuranceController::class, 'index']);
+
     Route::get('/insurance/statistics', [InsuranceController::class, 'statistic']);
     Route::get('/insurance/recent-activity', [InsuranceController::class, 'recentActivity']);
+
+    Route::get('/insurance/{insurance}', [InsuranceController::class, 'show'])
+        ->can('show', [Insurance::class, 'insurance']);
+
+    Route::get('/insurance/{insurance}/information', [InsuranceController::class, 'showWithInformation'])
+        ->can('show', [Insurance::class, 'insurance']);
+    Route::post('/insurance/{insurance}/information', [InsuranceInformationController::class, 'store'])
+        ->can('storeInformation', [Insurance::class, 'insurance']);
+
     Route::prefix('/insurance-invoice')->group(function () {
         Route::post('/custom', [InsuranceInvoiceController::class, 'createCustom']);
         Route::post('/from-pack', [InsuranceInvoiceController::class, 'createFromPack']);

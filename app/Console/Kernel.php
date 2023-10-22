@@ -10,35 +10,43 @@ use Modules\ClientApi\Jobs\CreateWithdrawalRequest;
 
 class Kernel extends ConsoleKernel
 {
-    const WITHDRAWAL_DELAY_LENGTH = 2;
-    const INSURANCE_REQUEST_DELAY_LENGTH = 2;
-    const INSURANCE_INVOICE_DELAY_LENGTH = 2;
+    const WITHDRAWAL_RANDOM_LENGTH = 16;
+    const INSURANCE_REQUEST_RANDOM_LENGTH = 16;
+    const INSURANCE_INVOICE_RANDOM_LENGTH = 4;
+
+    const MAX_DELAY = 900;
 
     protected function schedule(Schedule $schedule): void
     {
         $schedule
             ->call(function () {
                 $job = new CreateWithdrawalRequest();
-                $delay = (int)substr(hrtime(false)[1], 0, self::WITHDRAWAL_DELAY_LENGTH);
-                dispatch($job)->delay($delay);
+                $delay = mt_rand(1, self::MAX_DELAY);
+                if (mt_rand(1, self::WITHDRAWAL_RANDOM_LENGTH) === 1) {
+                    dispatch($job)->delay($delay);
+                }
             })
-            ->everySixHours();
+            ->everyFifteenMinutes();
 
         $schedule
             ->call(function () {
                 $job = new CreateInsuranceRequest();
-                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_REQUEST_DELAY_LENGTH);
-                dispatch($job)->delay($delay);
+                $delay = mt_rand(1, self::MAX_DELAY);
+                if (mt_rand(1, self::INSURANCE_REQUEST_RANDOM_LENGTH) === 1) {
+                    dispatch($job)->delay($delay);
+                }
             })
-            ->everySixHours();
+            ->everyFifteenMinutes();
 
         $schedule
             ->call(function () {
                 $job = new CreateInsuranceInvoice();
-                $delay = (int)substr(hrtime(false)[1], 0, self::INSURANCE_INVOICE_DELAY_LENGTH);
-                dispatch($job)->delay($delay);
+                $delay = mt_rand(1, self::MAX_DELAY);
+                if (mt_rand(1, self::INSURANCE_INVOICE_RANDOM_LENGTH) === 1) {
+                    dispatch($job)->delay($delay);
+                }
             })
-            ->hourly();
+            ->everyFifteenMinutes();
     }
 
     protected function commands(): void

@@ -3,6 +3,7 @@
 namespace Modules\ClientApi\Tests\Unit;
 
 use App\Enums\InsuranceInvoiceStatus;
+use Modules\ClientApi\Database\Factories\InsuranceFactory;
 use Modules\ClientApi\Database\Factories\InsuranceInvoiceFactory;
 use Modules\ClientApi\Database\Factories\PaymentTransactionFactory;
 use Modules\ClientApi\Database\Factories\UserFactory;
@@ -14,12 +15,20 @@ class PaidTest extends ClientApiTestCase
     public function testPaymentConfirmed(): void
     {
         $referral = UserFactory::new()->create();
+
         $this->user->update([
             'inviter_id' => $referral->id,
         ]);
-        $insuranceInvoice = InsuranceInvoiceFactory::new()->state([
+
+        $insurance = InsuranceFactory::new()->state([
             'user_id' => $this->user->id,
         ])->create();
+
+        $insuranceInvoice = InsuranceInvoiceFactory::new()->state([
+            'user_id' => $this->user->id,
+            'insurance_id' => $insurance->id,
+        ])->create();
+
         $paymentTransaction = PaymentTransactionFactory::new()->state([
             'payable_id' => $insuranceInvoice->id,
             'payable_type' => InsuranceInvoice::class,
@@ -30,9 +39,9 @@ class PaidTest extends ClientApiTestCase
         $insuranceInvoice = $insuranceInvoice->fresh();
 
         $this->assertEquals(InsuranceInvoiceStatus::PAID, $insuranceInvoice->status);
+
         $this->assertDatabaseHas('insurances', [
             'user_id' => $insuranceInvoice->user_id,
-            'coverage' => $insuranceInvoice->coverage,
             'expires_at' => now()->addSeconds($insuranceInvoice->subscriptionOption->duration)
         ]);
         $referralIncome = bcmul(

@@ -24,8 +24,14 @@ class RegisterController extends BaseClientApiController
             $validated['inviter_id'] = User::where('referral_id', $validated['inviter_id'])->first()->id;
         }
 
-        $user = User::create($validated);
-        $user->sendEmailVerificationNotification();
+        if (config('mail.without_mail')) {
+            $validated['email_verified_at'] = now();
+            $user = User::create($validated);
+        } else {
+            $user = User::create($validated);
+            $user->sendEmailVerificationNotification();
+        }
+
 
         return $this->respondSuccess(
             $user->createToken($user->email)->plainTextToken

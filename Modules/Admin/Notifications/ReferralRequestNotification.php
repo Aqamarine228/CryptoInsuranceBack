@@ -18,7 +18,13 @@ class ReferralRequestNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['mail', 'database'];
+        $via = ['database'];
+
+        if (!config('mail.without_mail')) {
+            $via[] = 'database';
+        }
+
+        return $via;
     }
 
     public function toMail($notifiable): MailMessage

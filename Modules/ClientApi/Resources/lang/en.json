@@ -4,6 +4,7 @@
     "errors.userIsAlreadyAReferral": "User is already a referral",
     "errors.referralRequestAlreadySubmitted": "Referral request already submitted",
     "errors.referralRequestAlreadyExists": "There is still pending referral request",
+    "errors.maxWalletsCount": "Maximum number of wallets exceeded",
 
     "emails.verifyEmail.pageTitle": "Email Verification",
     "emails.verifyEmail.title": "Please Verify your email",

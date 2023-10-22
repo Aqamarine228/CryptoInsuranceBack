@@ -19,8 +19,10 @@ class InsuranceFactory extends Factory
     {
         return [
             'expires_at' => now()->addWeek(),
+            'paid' => false,
             'coverage' => $this->faker->randomNumber(9, false),
             'user_id' => UserFactory::new()->create()->id,
+            'max_wallets_count' => config('insurance.default_wallets_count'),
         ];
     }
 }

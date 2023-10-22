@@ -18,7 +18,7 @@ class InsuranceInvoiceRecentActivityResource extends JsonResource
     {
         return [
             'amount' => (float)$this->amount,
-            'coverage' => (float)$this->coverage,
+            'coverage' => (float)$this->insurance->coverage,
             'type' => 'insurance_invoice',
         ];
     }

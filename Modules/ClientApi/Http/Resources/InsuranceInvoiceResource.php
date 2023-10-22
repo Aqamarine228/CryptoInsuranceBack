@@ -20,6 +20,7 @@ class InsuranceInvoiceResource extends JsonResource
             'status' => $this->status->value,
             'currency' => $this->currency,
             'created_at' => $this->created_at,
+            'insurance' => $this->insurance,
         ];
     }
 }
