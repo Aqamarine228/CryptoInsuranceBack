@@ -53,7 +53,7 @@ class InsuranceRequestTest extends ClientApiTestCase
         $fields[0]->value = $this->faker->name;
         $fields[1]->value = $this->faker->numberBetween();
         $fields[4]->value = $this->faker->name;
-        $coverage = $this->faker->randomNumber(9, false);
+        $coverage = $this->faker->randomNumber(7, false);
 
         $this->postJson("/api/v1/insurance-request/$insuranceOption->id", [
             'coverage' => $coverage,

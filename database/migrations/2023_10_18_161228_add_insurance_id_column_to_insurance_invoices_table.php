@@ -16,7 +16,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('insurance_invoices', function (Blueprint $table) {
-            $table->dropForeign('insurance_invoices_insurance_id_foreign');
             $table->dropColumn('insurance_id');
             $table->unsignedBigInteger('coverage');
         });

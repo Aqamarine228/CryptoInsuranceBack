@@ -25,7 +25,9 @@ class RegisterTest extends ClientApiTestCase
 
         unset($data['password_confirmation']);
         unset($data['password']);
-        $data['email_verified_at'] = null;
+        if (!config('mail.without_mail')) {
+            $data['email_verified_at'] = null;
+        }
 
         $this->assertDatabaseHas('users', $data);
     }

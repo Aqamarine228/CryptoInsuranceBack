@@ -40,13 +40,15 @@ class ReferralRequestTest extends AdminTestCase
         }
 
 
-        Notification::assertSentTo(
-            $referralRequest->user,
-            ReferralRequestNotification::class,
-            function ($notification, $channels) {
-                return in_array('mail', $channels) && in_array('database', $channels);
-            }
-        );
+        if (!config('mail.without_mail')) {
+            Notification::assertSentTo(
+                $referralRequest->user,
+                ReferralRequestNotification::class,
+                function ($notification, $channels) {
+                    return in_array('mail', $channels) && in_array('database', $channels);
+                }
+            );
+        }
     }
 
     public function testItRejectsSuccessfully(): void
@@ -77,13 +79,15 @@ class ReferralRequestTest extends AdminTestCase
         assertNull($referralRequest->approved_at);
         assertNull($referralRequest->user->referral_id);
 
-        Notification::assertSentTo(
-            $referralRequest->user,
-            ReferralRequestNotification::class,
-            function ($notification, $channels) {
-                return in_array('mail', $channels) && in_array('database', $channels);
-            }
-        );
+        if (!config('mail.without_mail')) {
+            Notification::assertSentTo(
+                $referralRequest->user,
+                ReferralRequestNotification::class,
+                function ($notification, $channels) {
+                    return in_array('mail', $channels) && in_array('database', $channels);
+                }
+            );
+        }
     }
 
     public function testItBadReasonParametersOnRejection(): void

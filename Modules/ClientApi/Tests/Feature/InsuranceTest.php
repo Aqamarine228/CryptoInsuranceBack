@@ -19,6 +19,7 @@ class InsuranceTest extends ClientApiTestCase
         ])->create();
 
         $insurances->load('options');
+        $insurances->load('wallets');
 
         $this->getJson('/api/v1/insurance')->assertJson(
             fn (AssertableJson $json) => $json
