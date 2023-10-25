@@ -7,8 +7,4 @@ use Illuminate\Database\Eloquent\Model;
 
 class InsuranceWallet extends Model
 {
-
-    protected $casts = [
-        'cryptocurrency' => Cryptocurrency::class,
-    ];
 }

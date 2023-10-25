@@ -35,7 +35,7 @@
                             <img src="{{Module::asset('client:images/resources/about-four-founder-img.jpg')}}" alt="">
                         </div>
                         <div class="about-four__founder-content">
-                            <h3 class="about-four__founder-name">Enrique E Alberty</h3>
+                            <h3 class="about-four__founder-name">Ramiaz Afzal</h3>
                             <p class="about-four__founder-sub-title">{{__('about.founder')}}</p>
                         </div>
                     </div>

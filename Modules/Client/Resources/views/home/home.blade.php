@@ -2,6 +2,7 @@
 
 @section('content')
     @include('client::home._slider')
+{{--    @include('client::home._steps')--}}
     @include('client::home._features')
     @include('client::home._about')
     @include('client::home._services')

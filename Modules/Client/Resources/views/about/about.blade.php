@@ -19,6 +19,7 @@
         </div>
     </section>
     @include('client::about._about-company')
+    @include('client::about._documents')
     @include('client::about._testimonials')
     @include('client::components._counter')
 @endsection

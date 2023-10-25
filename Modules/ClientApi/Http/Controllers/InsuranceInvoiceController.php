@@ -111,7 +111,7 @@ class InsuranceInvoiceController extends BaseClientApiController
             'exchange_name' => 'required|string|max:255',
             'wallets' => ['required', 'array', "max:{$insuranceInvoice->insurance->max_wallets_count}"],
             'wallets.*.value' => 'required|string|max:255',
-            'wallets.*.cryptocurrency' => ['required', new Enum(Cryptocurrency::class)],
+            'wallets.*.cryptocurrency' => ['required', 'string', 'max:255'],
         ]);
 
         if ($insuranceInvoice->isPaid()) {

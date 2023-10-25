@@ -11,7 +11,7 @@ return new class extends Migration {
         Schema::create('insurance_wallets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('insurance_id')->constrained()->cascadeOnDelete();
-            $table->enum('cryptocurrency', Cryptocurrency::values());
+            $table->string('cryptocurrency');
             $table->string('value');
             $table->timestamps();
         });

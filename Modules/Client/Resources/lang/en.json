@@ -77,11 +77,16 @@
     "contact.form.subject": "Subject",
     "contact.form.message": "Write a message",
     "contact.form.submit": "Submit",
+
     "about.aboutCompanyTitle": "About Company",
     "about.aboutCompanySubTitle": "We are the first of our kind, a liability company that has flexible limits.",
     "about.aboutCompanyMission": "Our mission is to be the world’s most customer-focused digital insurance platform",
     "about.aboutCompanyDescription": "This new insurance product is a liability insurance policy, offering a dynamic limit that increases or decreases in line with the price changes of crypto assets. This means that the insured will always be indemnified for the underlying value of their managed asset. Even if this fluctuates over the policy period.",
     "about.founder": "Founder",
+
+    "about.documentsTitle": "Legal Information",
+    "about.documentDescription": "We believe in transparency and accountability. We're proud to share our legal documents that underpin our business operations and provide the foundation for our services. In this section, you'll find a collection of essential documents related to our company's registration and legal standing.",
+
     "about.testimonialsTitle": "Testimonials",
     "about.testimonialsSubTitle": "What our happy customers are talking about our insurance company",
     "about.testimonialsDescription": "Discover why our customers love us! Read what our satisfied policyholders have to say about their experiences with our company. From exceptional service to competitive pricing and a hassle-free claims process, our clients trust us to protect what matters most to them. Join our growing community of happy customers and experience the peace of mind that comes with us.",
