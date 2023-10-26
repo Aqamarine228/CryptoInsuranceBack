@@ -13,6 +13,22 @@
     "news.searchFor": "Search results for",
     "news.nothingFound": "Nothing Found",
     "news.nothingFoundText": "Sorry, but nothing matched your search terms. Please try again with some different keywords.",
+
+    "home.stepsTitle": "WORK PROCESS",
+    "home.stepsSubTitle": "Our easy work process in 4 steps",
+
+    "home.step1Title": "Select Insurance",
+    "home.step1Description": "Select the right coverage and options tailored to your needs. ",
+
+    "home.step2Title": "Make A Claim",
+    "home.step2Description": "Select needed insurance option, and fill out the form.",
+
+    "home.step3Title": "Wait Until Approval",
+    "home.step3Description": "Wait until our experts handle your request and give decision.",
+
+    "home.step4Title": "Claim Your Money",
+    "home.step4Description": "After approval money will immediately be sent to your account and be able for withdrawal",
+
     "home.newsFeed": "recent news feed",
     "home.latestNews": "Latest news & articles",
     "home.latestNewsBolded": "from the blog",
