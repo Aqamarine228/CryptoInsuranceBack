@@ -12,5 +12,6 @@
     {{--    @include('client::home._team-one')--}}
     @include('client::home._testimonial')
     @include('client::home._news')
+    @include('client::home._faq')
     {{--    @include('client::home._tracking')--}}
 @endsection

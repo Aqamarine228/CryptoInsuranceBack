@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\FAQController;
 use Modules\Admin\Http\Controllers\InsuranceCoverageOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionController;
 use Modules\Admin\Http\Controllers\InsuranceOptionFieldController;
@@ -75,6 +76,8 @@ Route::middleware('auth:admin')->group(function () {
         Route::post('/{insuranceRequest}/reject', [InsuranceRequestController::class, 'rejectSubmit'])
             ->name('reject');
     });
+
+    Route::resource('faq', FAQController::class)->except('show');
 });
 
 include __DIR__ . '/posts.php';

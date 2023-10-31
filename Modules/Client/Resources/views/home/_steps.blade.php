@@ -16,6 +16,7 @@
             <div class="process-shape-1">
                 <img src="{{Module::asset('client:images/shapes/process-shape-1.png')}}" alt="">
             </div>
+
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-6">
                     <div class="process__single">

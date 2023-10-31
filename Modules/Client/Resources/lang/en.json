@@ -3,6 +3,7 @@
     "pages.news": "News",
     "pages.about": "About",
     "pages.contact": "Contact",
+
     "news.search": "Search",
     "news.readMore": "Read More",
     "news.latest": "Latest News",
@@ -84,6 +85,8 @@
     "home.testimonial4Name": "Kevin Smith",
     "home.testimonial4JobTitle": "CTO at Dynamic",
     "home.testimonial4Review": "I've been involved in the cryptocurrency space for several years, and like many, I've always been concerned about the security of my digital assets. After extensive research, I decided to give this service a try, and I couldn't be happier with their services.",
+
+    "home.faqTitle": "Frequently Asked Questions",
 
     "contact.contactUs": "Contact Us",
     "contact.title": "Feel free to contact our experts",

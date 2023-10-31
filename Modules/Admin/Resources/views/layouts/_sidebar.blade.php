@@ -97,6 +97,12 @@
                         <p>Posts</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.faq.index') }}" class="nav-link">
+                        <i class="fas fa-question nav-icon"></i>
+                        <p>FAQs</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
